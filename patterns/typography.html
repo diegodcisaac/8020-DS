@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8020-DS · Tipografia</title>
+<link rel="stylesheet" href="../tokens/8020.css">
+<link rel="stylesheet" href="../assets/book.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  /* CSS local SO desta pagina. Scaffolding de specimen, via papeis semanticos. */
+
+  /* Specimen de papel vivo: rotulo a esquerda, exemplo no tamanho real a direita. */
+  .ty-roles { display: grid; gap: 1px; background: var(--line); border-radius: var(--radius); overflow: hidden; }
+  .ty-role { display: grid; grid-template-columns: 200px 1fr; gap: 28px; align-items: baseline; background: var(--paper); padding: 22px 24px; }
+  .ty-role-tag { font-size: var(--fs-micro); font-weight: var(--w-label); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--muted); }
+  .ty-role-tag b { display: block; color: var(--ink); font-weight: var(--w-label); font-size: var(--fs-small); letter-spacing: 0; text-transform: none; margin-top: 4px; }
+  .ty-role-spec { color: var(--ink); min-width: 0; }
+
+  /* cada papel renderizado no seu tamanho/peso reais */
+  .ty-display   { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-display);   line-height: var(--lh-tight); letter-spacing: -.03em; }
+  .ty-statement { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-statement); line-height: 1.12; letter-spacing: -.02em; }
+  .ty-title     { font-family: var(--font-display); font-weight: var(--w-title);   font-size: var(--fs-title);     line-height: var(--lh-tight); letter-spacing: -.02em; }
+  .ty-h2        { font-family: var(--font-display); font-weight: var(--w-title);   font-size: var(--fs-h2);        line-height: var(--lh-tight); }
+  .ty-lead      { font-family: var(--font-body);    font-weight: var(--w-medium);  font-size: var(--fs-lead);      line-height: var(--lh-body); color: var(--ink-body); }
+  .ty-body      { font-family: var(--font-body);    font-weight: var(--w-body);    font-size: var(--fs-body);      line-height: var(--lh-body); color: var(--ink-body); }
+  .ty-small     { font-family: var(--font-body);    font-weight: var(--w-body);    font-size: var(--fs-small);     line-height: var(--lh-body); color: var(--ink-body); }
+  .ty-eyebrow   { font-family: var(--font-body);    font-weight: var(--w-label);   font-size: var(--fs-micro);     letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--muted); }
+  /* assinatura do display dentro dos specimens de papel */
+  .ty-display em, .ty-statement em, .ty-title em { font-style: italic; font-weight: var(--w-black); font-size: 1.06em; }
+
+  /* assinatura do display em escala grande (secao 3) */
+  .ty-signature { display: grid; gap: clamp(20px, 3vw, 36px); }
+  .ty-signature p { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-statement); line-height: 1.1; letter-spacing: -.02em; color: var(--ink); margin: 0; max-width: 18ch; }
+  .ty-signature p em { font-style: italic; font-weight: var(--w-black); font-size: 1.12em; }
+
+  /* ladder de pesos */
+  .ty-ladder { display: grid; gap: 1px; background: var(--line); border-radius: var(--radius); overflow: hidden; }
+  .ty-rung { display: grid; grid-template-columns: 220px 1fr; gap: 24px; align-items: baseline; background: var(--paper); padding: 14px 24px; }
+  .ty-rung-tag { font-size: var(--fs-micro); font-weight: var(--w-label); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--muted); }
+  .ty-rung-word { font-family: var(--font-display); font-size: clamp(28px, 3.6vw, 40px); line-height: 1; letter-spacing: -.02em; color: var(--ink); }
+  .ty-rung-word.w400 { font-weight: 400; } .ty-rung-word.w500 { font-weight: 500; }
+  .ty-rung-word.w600 { font-weight: 600; } .ty-rung-word.w700 { font-weight: 700; }
+  .ty-rung-word.w800 { font-weight: 800; } .ty-rung-word.w900 { font-weight: 900; }
+
+  /* eyebrow specimen isolado */
+  .ty-eyebrow-demo { font-family: var(--font-body); font-weight: var(--w-label); font-size: var(--fs-micro); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--muted); margin: 0; }
+
+  /* numerais tabulares: duas colunas comparativas */
+  .num { font-variant-numeric: tabular-nums; }
+  .ty-numgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border-radius: var(--radius); overflow: hidden; }
+  .ty-numcol { background: var(--paper); padding: 22px 24px; }
+  .ty-numcol h4 { font-family: var(--font-display); font-weight: var(--w-label); font-size: var(--fs-small); color: var(--ink); margin: 0 0 4px; }
+  .ty-numcol .ty-numcol-sub { font-size: var(--fs-micro); color: var(--muted); margin: 0 0 14px; }
+  .ty-numlist { list-style: none; margin: 0; padding: 0; }
+  .ty-numlist li { display: flex; justify-content: space-between; gap: 18px; padding: 7px 0; border-bottom: 1px solid var(--hairline); font-size: var(--fs-lead); color: var(--ink-body); }
+  .ty-numlist li:last-child { border-bottom: 0; }
+  .ty-numlist .ty-numlabel { font-size: var(--fs-small); color: var(--muted); font-weight: var(--w-medium); }
+  .ty-numlist .ty-numval { font-weight: var(--w-title); color: var(--ink); }
+  .ty-numlist.is-proportional .ty-numval { font-variant-numeric: proportional-nums; }
+  .ty-numlist.is-tabular .ty-numval { font-variant-numeric: tabular-nums; }
+
+  @media (max-width: 600px) {
+    .ty-role, .ty-rung { grid-template-columns: 1fr; gap: 10px; }
+    .ty-numgrid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body class="doc">
+
+<header class="doc-head">
+  <a class="doc-brand" href="../index.html"><img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing"><span>Sistema de Design</span></a>
+  <nav class="doc-nav" aria-label="Páginas do sistema">
+    <a href="colors.html">Cores</a>
+    <a href="variants.html">Variantes</a>
+    <a href="typography.html" aria-current="page">Tipografia</a>
+    <a href="graphic-elements.html">Elementos</a>
+    <a href="images.html">Imagens</a>
+    <a href="cards.html">Cards</a>
+    <a href="facilitacao-visual.html">Facilitação</a>
+    <a href="diagrams.html">Diagramas</a>
+    <a href="charts.html">Gráficos</a>
+    <a href="layouts.html">Deck</a>
+    <a href="book-layout.html">Book</a>
+  </nav>
+</header>
+
+<header class="doc-hero"><div class="doc-wrap">
+  <p class="doc-eyebrow">Tipografia</p>
+  <h1>Uma família, seis vozes e uma <em>assinatura</em></h1>
+  <p class="doc-lead">A casa fala em Montserrat, do corpo miúdo ao título de capa. Cada papel tem tamanho e peso fixos, e o display carrega a marca registrada: o último termo salta e vira itálico.</p>
+</div></header>
+
+<!-- ============ 01 == A FAMILIA ============ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">01</span><p class="doc-kicker">A família</p></div>
+  <h2>Montserrat, do título ao <em>rodapé</em></h2>
+  <p>Uma única família resolve a página inteira. Montserrat é geométrica o bastante para sustentar display de capa e legível o bastante para corpo denso de leitura. Está embutida no sistema, servida localmente sob licença aberta, sem chamada externa e sem alternativa de fonte travando o layout. O carregamento já vem dos tokens via <span class="doc-code">@font-face</span>: a página nunca depende de fonte de terceiros para renderizar certo.</p>
+  <p>A variável cobre toda a faixa de peso, então usamos seis cortes funcionais. Nada de fonte secundária para dado ou citação: <span class="doc-code">--font-data</span> e <span class="doc-code">--font-display</span> apontam para a mesma Montserrat. A diferença entre uma voz e outra vem do peso, do tamanho e do espacejamento, nunca de trocar de família.</p>
+
+  <div class="doc-grid doc-3" style="margin-top:8px">
+    <div class="doc-specimen tight">
+      <span class="doc-specimen-label">Corpo · 400</span>
+      <p style="font-weight:400;color:var(--ink-body);margin:0">Texto de leitura corrida, peso regular, em preto sobre o campo laranja.</p>
+    </div>
+    <div class="doc-specimen tight">
+      <span class="doc-specimen-label">Título · 700</span>
+      <p style="font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--ink);margin:0;line-height:1.1">Título de seção em peso forte</p>
+    </div>
+    <div class="doc-specimen tight">
+      <span class="doc-specimen-label">Display · 900</span>
+      <p style="font-family:var(--font-display);font-weight:900;font-style:italic;font-size:30px;color:var(--ink);margin:0;line-height:1">laranja</p>
+    </div>
+  </div>
+
+  <div class="doc-note do" style="margin-top:18px">
+    <span class="doc-note-tag">Faça</span>
+    <p style="margin:0">Resolva qualquer hierarquia trocando peso e tamanho dentro de Montserrat. A família é uma só.</p>
+  </div>
+  <div class="doc-note dont" style="margin-top:10px">
+    <span class="doc-note-tag">Evite</span>
+    <p style="margin:0">Introduzir uma segunda família para citações, números ou rótulos. Isso quebra a unidade da casa e adiciona carga de fonte sem ganho.</p>
+  </div>
+</div></section>
+
+<!-- ============ 02 == PAPEIS E ESCALA ============ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">02</span><p class="doc-kicker">Papéis e escala</p></div>
+  <h2>Cada voz tem tamanho e peso <em>fixos</em></h2>
+  <p>A escala não é livre. Cada papel ocupa um degrau definido em token, com peso determinado, e o autor escolhe o papel pela função do texto, não pelo tamanho que parece bonito. Os tamanhos grandes usam <span class="doc-code">clamp()</span> para respirar entre celular e desktop sem nunca colapsar a hierarquia.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Referência de papéis</span>
+    <table class="doc-table">
+      <thead>
+        <tr><th scope="col">Papel</th><th scope="col">Uso</th><th scope="col">Tamanho</th><th scope="col">Peso</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="doc-code">display</span></td><td>Capa, abertura, título de impacto</td><td class="num">44 a 92 px</td><td class="num">800</td></tr>
+        <tr><td><span class="doc-code">statement</span></td><td>Declaração massiva no meio do texto</td><td class="num">30 a 52 px</td><td class="num">800</td></tr>
+        <tr><td><span class="doc-code">title</span></td><td>Título de seção</td><td class="num">26 a 40 px</td><td class="num">700 a 800</td></tr>
+        <tr><td><span class="doc-code">h2</span></td><td>Subtítulo, abertura de bloco</td><td class="num">20 a 28 px</td><td class="num">700</td></tr>
+        <tr><td><span class="doc-code">lead</span></td><td>Linha de entrada, resumo da seção</td><td class="num">18 a 22 px</td><td class="num">500</td></tr>
+        <tr><td><span class="doc-code">body</span></td><td>Leitura corrida</td><td class="num">16 px</td><td class="num">400</td></tr>
+        <tr><td><span class="doc-code">small</span></td><td>Legenda, nota, metadado</td><td class="num">13,5 px</td><td class="num">400 a 500</td></tr>
+        <tr><td><span class="doc-code">micro / eyebrow</span></td><td>Rótulo em caixa-alta, tracking aberto</td><td class="num">11 px</td><td class="num">600</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Cada papel, no tamanho real</h3>
+  <p>O specimen abaixo renderiza cada degrau no seu tamanho e peso verdadeiros, lado a lado com o rótulo. É a referência viva: o que se lê aqui é exatamente o que sai na página.</p>
+
+  <div class="doc-specimen plain">
+    <div class="ty-roles">
+      <div class="ty-role">
+        <span class="ty-role-tag">display<b>fs-display · 800</b></span>
+        <div class="ty-role-spec ty-display">A casa fala em <em>laranja</em></div>
+      </div>
+      <div class="ty-role">
+        <span class="ty-role-tag">statement<b>fs-statement · 800</b></span>
+        <div class="ty-role-spec ty-statement">Dados viram <em>narrativa</em></div>
+      </div>
+      <div class="ty-role">
+        <span class="ty-role-tag">title<b>fs-title · 700</b></span>
+        <div class="ty-role-spec ty-title">Título de seção</div>
+      </div>
+      <div class="ty-role">
+        <span class="ty-role-tag">h2<b>fs-h2 · 700</b></span>
+        <div class="ty-role-spec ty-h2">Abertura de um bloco de conteúdo</div>
+      </div>
+      <div class="ty-role">
+        <span class="ty-role-tag">lead<b>fs-lead · 500</b></span>
+        <div class="ty-role-spec ty-lead">A linha de entrada apresenta a seção em poucas palavras, com peso médio e respiro de leitura.</div>
+      </div>
+      <div class="ty-role">
+        <span class="ty-role-tag">body<b>fs-body · 400</b></span>
+        <div class="ty-role-spec ty-body">O corpo carrega o argumento. Peso regular, altura de linha confortável, preto sobre o campo laranja para máxima legibilidade na leitura corrida que sustenta o documento inteiro.</div>
+      </div>
+      <div class="ty-role">
+        <span class="ty-role-tag">small<b>fs-small · 400</b></span>
+        <div class="ty-role-spec ty-small">Legenda de figura, nota de rodapé e metadado vivem neste degrau, discretos mas legíveis.</div>
+      </div>
+      <div class="ty-role">
+        <span class="ty-role-tag">micro · eyebrow<b>fs-micro · 600</b></span>
+        <div class="ty-role-spec ty-eyebrow">Rótulo de seção</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="doc-when"><b>Quando usar cada papel:</b> escolha pela função. <span class="doc-code">display</span> só na capa e em aberturas de impacto. <span class="doc-code">statement</span> para a declaração que precisa parar o leitor. <span class="doc-code">lead</span> sempre como primeira linha de uma seção. Não suba um papel de degrau só para ocupar espaço.</p>
+</div></section>
+
+<!-- ============ 03 == A ASSINATURA DO DISPLAY ============ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">A assinatura do display</p></div>
+  <h2>O último termo salta e vira <em>itálico</em></h2>
+  <p>É a marca registrada do display da casa. O título nasce em caixa-baixa com inicial maiúscula, e o termo final ganha um corpo maior, peso máximo e itálico, marcado no HTML com <span class="doc-code">&lt;em&gt;</span>. O olho corre a frase em tom neutro e aterrissa na palavra que carrega o sentido. É o que dá ritmo e personalidade a um sistema que, no resto, é deliberadamente sóbrio.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">A assinatura em escala</span>
+    <div class="ty-signature">
+      <p>A casa fala em <em>laranja</em></p>
+      <p>Dados viram <em>narrativa</em></p>
+      <p>Uma família, uma <em>voz</em></p>
+    </div>
+  </div>
+
+  <p class="doc-when"><b>Quando aplicar a assinatura:</b> em todo título de papel <span class="doc-code">display</span>, <span class="doc-code">statement</span> e <span class="doc-code">title</span>. O <span class="doc-code">&lt;em&gt;</span> envolve <b>somente o termo final</b>, e esse termo deve ser a palavra-chave do título, não uma preposição ou artigo. Um título, um <span class="doc-code">&lt;em&gt;</span>: nunca dois saltos na mesma linha, ou a ênfase se anula.</p>
+
+  <div class="doc-grid doc-2" style="margin-top:8px">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <p style="margin:0">Caixa-baixa com inicial maiúscula, e o termo de sentido no fim: <span class="doc-code">A casa fala em &lt;em&gt;laranja&lt;/em&gt;</span></p>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Evite</span>
+      <p style="margin:0">Título em caixa-alta inteira, ênfase no meio da frase, ou dois <span class="doc-code">&lt;em&gt;</span> competindo na mesma linha.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ 04 == EYEBROW ============ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">04</span><p class="doc-kicker">Eyebrow</p></div>
+  <h2>O rótulo que abre a <em>seção</em></h2>
+  <p>O eyebrow é a sobrancelha de texto que antecede um título e diz ao leitor onde ele está. Mora no degrau micro, em 11 px, peso 600, caixa-alta, com tracking aberto de <span class="doc-code">.16em</span> e cor <span class="doc-code">--muted</span>. O espacejamento generoso é o que diferencia um rótulo de um texto comum: ele soa institucional, não conversacional.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Eyebrow sobre título</span>
+    <p class="ty-eyebrow-demo">Plataforma de marca</p>
+    <p style="font-family:var(--font-display);font-weight:800;font-size:var(--fs-title);line-height:var(--lh-tight);letter-spacing:-.02em;color:var(--ink);margin:8px 0 0">O território que a marca <em style="font-style:italic;font-weight:900;font-size:1.06em">ocupa</em></p>
+  </div>
+
+  <p class="doc-when"><b>Quando usar:</b> uma linha curta, de duas a quatro palavras, imediatamente acima de um título. Serve de bússola de seção. Não escreva frase no eyebrow nem repita literalmente o título logo abaixo.</p>
+</div></section>
+
+<!-- ============ 05 == PESOS (LADDER) ============ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">05</span><p class="doc-kicker">Pesos</p></div>
+  <h2>A mesma palavra, em seis <em>pesos</em></h2>
+  <p>A variável de Montserrat cobre toda a faixa, mas o sistema fixa seis degraus de peso, cada um com função declarada em token. A escada abaixo mostra a mesma palavra subindo de 400 a 900: o salto de regular para black é o que separa corpo de display.</p>
+
+  <div class="doc-specimen plain">
+    <div class="ty-ladder">
+      <div class="ty-rung"><span class="ty-rung-tag">400 · body<br>--w-body</span><span class="ty-rung-word w400">Marketing</span></div>
+      <div class="ty-rung"><span class="ty-rung-tag">500 · medium<br>--w-medium</span><span class="ty-rung-word w500">Marketing</span></div>
+      <div class="ty-rung"><span class="ty-rung-tag">600 · label<br>--w-label</span><span class="ty-rung-word w600">Marketing</span></div>
+      <div class="ty-rung"><span class="ty-rung-tag">700 · title<br>--w-title</span><span class="ty-rung-word w700">Marketing</span></div>
+      <div class="ty-rung"><span class="ty-rung-tag">800 · display<br>--w-display</span><span class="ty-rung-word w800">Marketing</span></div>
+      <div class="ty-rung"><span class="ty-rung-tag">900 · black<br>--w-black</span><span class="ty-rung-word w900">Marketing</span></div>
+    </div>
+  </div>
+
+  <p class="doc-when"><b>Quando usar cada peso:</b> 400 no corpo, 500 em leads e ênfase leve, 600 em rótulos e eyebrows, 700 em títulos de seção, 800 em display e statement, 900 reservado ao termo da assinatura em itálico. O peso 900 não aparece em texto reto, só no salto do <span class="doc-code">&lt;em&gt;</span>.</p>
+</div></section>
+
+<!-- ============ 06 == NUMERAIS TABULARES ============ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">06</span><p class="doc-kicker">Numerais tabulares</p></div>
+  <h2>Números que não <em>dançam</em></h2>
+  <p>Em qualquer coluna de dado, os algarismos precisam alinhar verticalmente. Sem isso, um <span class="doc-code">1</span> ocupa menos largura que um <span class="doc-code">8</span> e a coluna fica trêmula, com as casas desencontradas a cada linha. A solução é <span class="doc-code">font-variant-numeric: tabular-nums</span>, que dá a todo algarismo a mesma largura. O sistema já aplica isso por padrão na classe <span class="doc-code">.num</span> e em elementos de dado, conforme os tokens.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Proporcional contra tabular</span>
+    <div class="ty-numgrid">
+      <div class="ty-numcol">
+        <h4>Proporcional</h4>
+        <p class="ty-numcol-sub">Largura variável: a coluna treme</p>
+        <ul class="ty-numlist is-proportional">
+          <li><span class="ty-numlabel">Alcance</span><span class="ty-numval">1.184.207</span></li>
+          <li><span class="ty-numlabel">Engajamento</span><span class="ty-numval">98.310</span></li>
+          <li><span class="ty-numlabel">Cliques</span><span class="ty-numval">11.119</span></li>
+          <li><span class="ty-numlabel">Conversões</span><span class="ty-numval">8.806</span></li>
+        </ul>
+      </div>
+      <div class="ty-numcol">
+        <h4>Tabular</h4>
+        <p class="ty-numcol-sub">Largura fixa: as casas alinham</p>
+        <ul class="ty-numlist is-tabular">
+          <li><span class="ty-numlabel">Alcance</span><span class="ty-numval num">1.184.207</span></li>
+          <li><span class="ty-numlabel">Engajamento</span><span class="ty-numval num">98.310</span></li>
+          <li><span class="ty-numlabel">Cliques</span><span class="ty-numval num">11.119</span></li>
+          <li><span class="ty-numlabel">Conversões</span><span class="ty-numval num">8.806</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <p class="doc-when"><b>Quando usar tabular:</b> toda tabela de dado, lista de métricas alinhada à direita, contagem grande, rótulo de eixo de gráfico e qualquer número que precise comparar visualmente linha a linha. Texto corrido pode ficar com numeral proporcional, que lê melhor dentro da frase.</p>
+
+  <div class="doc-note do" style="margin-top:8px">
+    <span class="doc-note-tag">Faça</span>
+    <p style="margin:0">Marque colunas de dado com <span class="doc-code">.num</span>, ou confie no padrão dos tokens para <span class="doc-code">.stat-number</span> e <span class="doc-code">[data-count]</span>.</p>
+  </div>
+  <div class="doc-note dont" style="margin-top:10px">
+    <span class="doc-note-tag">Evite</span>
+    <p style="margin:0">Deixar uma tabela de números em numeral proporcional. As casas desalinham e a leitura da coluna vira esforço.</p>
+  </div>
+</div></section>
+
+<footer class="doc-foot"><div class="doc-wrap">
+  <img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+  <div class="doc-addr"><span>São Paulo · SP</span><span>Campo Grande · MS</span><span>Cuiabá · MT</span></div>
+  <p class="doc-foot-meta">Sistema de Design 80 20 · Montserrat · campo-laranja, palco escuro, papel claro</p>
+</div></footer>
+
+</body>
+</html>

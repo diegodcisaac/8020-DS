@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8020-DS · Diagramas</title>
+<link rel="stylesheet" href="../tokens/8020.css">
+<link rel="stylesheet" href="../assets/book.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  /* ---- scaffolding local de specimen (so esta pagina) ----
+     Todo diagrama e SVG real. As classes abaixo so dao moldura,
+     largura responsiva e tipografia interna do SVG. Cor sempre por papel. */
+
+  /* moldura de cada diagrama: SVG ocupa a largura, altura por viewBox */
+  .dg { display: block; width: 100%; height: auto; overflow: visible; }
+
+  /* tipografia interna dos SVG (rotulos em <text>) */
+  .dg text { font-family: var(--font-display); fill: var(--surface-ink); }
+  .dg .dg-node-t { font-weight: var(--w-label); font-size: 13px; }
+  .dg .dg-node-s { font-weight: var(--w-body); font-size: 11px; fill: rgba(255,255,255,.78); }
+  .dg .dg-edge-t { font-family: var(--font-body); font-weight: var(--w-label); font-size: 10.5px; fill: var(--ink); text-transform: uppercase; letter-spacing: .06em; }
+  .dg .dg-axis-t { font-family: var(--font-body); font-weight: var(--w-label); font-size: 11px; fill: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+  .dg .dg-num { font-family: var(--font-display); font-weight: var(--w-black); fill: var(--ink); }
+  .dg .dg-on-accent { fill: var(--accent-ink); }
+  .dg .dg-on-azul { fill: #fff; }
+
+  /* helper de coluna dupla de specimen quando o diagrama for largo */
+  .dg-pair { display: grid; grid-template-columns: 1fr; gap: 18px; }
+  @media (min-width: 760px) { .dg-pair { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body class="doc">
+
+<header class="doc-head">
+  <a class="doc-brand" href="../index.html"><img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing"><span>Sistema de Design</span></a>
+  <nav class="doc-nav" aria-label="Páginas do sistema">
+    <a href="colors.html">Cores</a>
+    <a href="variants.html">Variantes</a>
+    <a href="typography.html">Tipografia</a>
+    <a href="graphic-elements.html">Elementos</a>
+    <a href="images.html">Imagens</a>
+    <a href="cards.html">Cards</a>
+    <a href="facilitacao-visual.html">Facilitação</a>
+    <a href="diagrams.html" aria-current="page">Diagramas</a>
+    <a href="charts.html">Gráficos</a>
+    <a href="layouts.html">Deck</a>
+    <a href="book-layout.html">Book</a>
+  </nav>
+</header>
+
+<header class="doc-hero"><div class="doc-wrap">
+  <p class="doc-eyebrow">Diagramas em SVG</p>
+  <h1>Toda relação se desenha em <em>vetor</em></h1>
+  <p class="doc-lead">Fluxos, hierarquias, ciclos e jornadas vivem em SVG real, nunca em caixas de div com largura em porcentagem. Os nós são retângulos ou polígonos, os rótulos são texto vetorial, e o que liga um nó a outro é sempre uma curva de Bézier com seta por marcador. O catálogo abaixo cobre cada tipo de relação que a casa precisa contar.</p>
+</div></header>
+
+<!-- ============================ 01 FLUXOGRAMA ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">01</span><p class="doc-kicker">Fluxograma</p></div>
+  <h2>Caixas ligadas por curvas que mostram o <em>caminho</em></h2>
+  <p>O fluxograma é a forma base de todos os outros diagramas: nós retangulares ligados por conectores em curva, com uma seta indicando a direção do fluxo. A regra técnica que sustenta a casa inteira está aqui: o conector é sempre uma <span class="doc-code">&lt;path&gt;</span> com curva de Bézier cúbica, desenhado <strong>antes</strong> dos nós para que a caixa fique por cima da linha, e a seta vem de um <span class="doc-code">&lt;marker&gt;</span> em <span class="doc-code">&lt;defs&gt;</span> com identificador único por SVG.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Fluxograma de entrada e ramificação</span>
+    <svg class="dg" viewBox="0 0 720 300" role="img" aria-label="Fluxograma: a Entrada leva ao Tratamento, que se ramifica para Saída aprovada e para Revisão; a Revisão retorna ao Tratamento.">
+      <title>Fluxograma de tratamento com ramificação e retorno</title>
+      <desc>Entrada conecta a Tratamento. Tratamento conecta a Saída aprovada e a Revisão. Revisão retorna a Tratamento, formando um laço de correção.</desc>
+      <defs>
+        <marker id="arw-fl" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/></marker>
+      </defs>
+      <!-- conectores ANTES dos nodes (z-order) -->
+      <g fill="none" stroke="var(--line)" stroke-width="2" color="var(--line)">
+        <path d="M150,80 C205,80 215,80 250,80" marker-end="url(#arw-fl)"/>
+        <path d="M450,80 C520,80 540,55 560,55" marker-end="url(#arw-fl)"/>
+        <path d="M450,95 C520,120 540,150 560,170" marker-end="url(#arw-fl)"/>
+      </g>
+      <!-- laco de retorno em cor de acento, curva mais ampla -->
+      <path d="M560,205 C400,255 350,210 350,128" fill="none" stroke="var(--accent)" stroke-width="2" color="var(--accent)" marker-end="url(#arw-fl)"/>
+      <!-- nodes -->
+      <g>
+        <rect x="40" y="56" width="110" height="48" rx="8" fill="var(--surface)"/>
+        <text class="dg-node-t" x="95" y="85" text-anchor="middle">Entrada</text>
+
+        <rect x="250" y="56" width="200" height="48" rx="8" fill="var(--surface)"/>
+        <text class="dg-node-t" x="350" y="85" text-anchor="middle">Tratamento</text>
+
+        <rect x="560" y="31" width="120" height="48" rx="8" fill="var(--accent)"/>
+        <text class="dg-node-t dg-on-accent" x="620" y="60" text-anchor="middle">Saída aprovada</text>
+
+        <rect x="560" y="170" width="120" height="48" rx="8" fill="var(--surface)"/>
+        <text class="dg-node-t" x="620" y="199" text-anchor="middle">Revisão</text>
+      </g>
+      <text class="dg-edge-t" x="455" y="245" text-anchor="middle" fill="var(--accent)">retorno</text>
+    </svg>
+    <p class="doc-when"><b>Quando usar:</b> qualquer processo com mais de um caminho possível, em que uma etapa pode voltar atrás. O único nó em joia é o desfecho que você quer que o olho encontre primeiro.</p>
+  </div>
+
+  <div class="doc-grid doc-2">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <p>Conector em <span class="doc-code">&lt;path&gt;</span> com curva de Bézier, desenhado antes do nó. Seta por <span class="doc-code">&lt;marker&gt;</span> com identificador único. Um nó em acento, no máximo, para o desfecho.</p>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <p>Linha reta para ligar etapas de fluxo, triângulo de seta desenhado à mão (não acompanha a rotação), ou um <span class="doc-code">&lt;div&gt;</span> com borda no lugar do nó vetorial.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================ 02 PROCESSO LINEAR ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">02</span><p class="doc-kicker">Processo linear</p></div>
+  <h2>Passos numerados que seguem em <em>sequência</em></h2>
+  <p>Quando não há ramificação, só ordem, o processo linear é a forma mais limpa: passos numerados, em fila, ligados por curvas curtas que confirmam a direção. O número fica grande dentro do nó, o rótulo embaixo. Serve para roteiro de método, etapas de um projeto, passos de um onboarding.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Quatro passos em fila</span>
+    <svg class="dg" viewBox="0 0 720 170" role="img" aria-label="Processo linear de quatro passos em sequência: 1 Escutar, 2 Enquadrar, 3 Construir, 4 Entregar.">
+      <title>Processo linear de quatro passos</title>
+      <desc>Quatro passos numerados ligados em sequência: Escutar, Enquadrar, Construir e Entregar.</desc>
+      <defs>
+        <marker id="arw-pl" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/></marker>
+      </defs>
+      <!-- conectores antes -->
+      <g fill="none" stroke="var(--line)" stroke-width="2" color="var(--line)">
+        <path d="M168,70 C188,70 192,70 212,70" marker-end="url(#arw-pl)"/>
+        <path d="M336,70 C356,70 360,70 380,70" marker-end="url(#arw-pl)"/>
+        <path d="M504,70 C524,70 528,70 548,70" marker-end="url(#arw-pl)"/>
+      </g>
+      <!-- nodes -->
+      <g>
+        <rect x="40" y="40" width="128" height="60" rx="10" fill="var(--surface)"/>
+        <text class="dg-num" x="58" y="78" font-size="26">1</text>
+        <text class="dg-node-t" x="104" y="74" text-anchor="middle">Escutar</text>
+
+        <rect x="208" y="40" width="128" height="60" rx="10" fill="var(--surface)"/>
+        <text class="dg-num" x="226" y="78" font-size="26">2</text>
+        <text class="dg-node-t" x="276" y="74" text-anchor="middle">Enquadrar</text>
+
+        <rect x="376" y="40" width="128" height="60" rx="10" fill="var(--surface)"/>
+        <text class="dg-num" x="394" y="78" font-size="26">3</text>
+        <text class="dg-node-t" x="444" y="74" text-anchor="middle">Construir</text>
+
+        <rect x="544" y="40" width="136" height="60" rx="10" fill="var(--accent)"/>
+        <text class="dg-num dg-on-accent" x="562" y="78" font-size="26">4</text>
+        <text class="dg-node-t dg-on-accent" x="616" y="74" text-anchor="middle">Entregar</text>
+      </g>
+    </svg>
+    <p class="doc-when"><b>Quando usar:</b> roteiro de método ou etapas de projeto em que a ordem importa e não há desvios. O passo final em acento marca a entrega.</p>
+  </div>
+</div></section>
+
+<!-- ============================ 03 ARVORE DE DECISAO ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">Árvore de decisão</p></div>
+  <h2>O losango que pergunta e abre dois <em>caminhos</em></h2>
+  <p>A pergunta que decide um fluxo vira um losango (um <span class="doc-code">&lt;polygon&gt;</span> de quatro pontos). De cada vértice lateral sai um caminho rotulado: Sim de um lado, Não do outro. Os rótulos das saídas vão sobre a curva, em texto curto e maiúsculo, para que a leitura do galho seja imediata.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Decisão com saídas Sim e Não</span>
+    <svg class="dg" viewBox="0 0 720 320" role="img" aria-label="Árvore de decisão: a pergunta Tem dado que sustente abre dois caminhos. Sim leva a Publicar; Não leva a Suavizar ou remover.">
+      <title>Árvore de decisão com saídas Sim e Não</title>
+      <desc>Uma pergunta em losango se ramifica: a saída Sim leva ao nó Publicar; a saída Não leva ao nó Suavizar ou remover.</desc>
+      <defs>
+        <marker id="arw-dec" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/></marker>
+      </defs>
+      <!-- entrada + ramos antes dos nodes -->
+      <g fill="none" stroke="var(--line)" stroke-width="2" color="var(--line)">
+        <path d="M360,40 C360,55 360,60 360,72" marker-end="url(#arw-dec)"/>
+        <path d="M280,128 C200,150 170,200 160,230" marker-end="url(#arw-dec)"/>
+        <path d="M440,128 C540,150 560,200 568,230" marker-end="url(#arw-dec)"/>
+      </g>
+      <!-- entrada -->
+      <rect x="290" y="14" width="140" height="32" rx="8" fill="var(--surface)"/>
+      <text class="dg-node-t" x="360" y="35" text-anchor="middle">Afirmação forte</text>
+      <!-- losango de decisao -->
+      <polygon points="360,72 440,128 360,184 280,128" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.5"/>
+      <text class="dg-node-t" x="360" y="124" text-anchor="middle">Tem dado</text>
+      <text class="dg-node-t" x="360" y="140" text-anchor="middle">que sustente?</text>
+      <!-- rotulos das saidas -->
+      <text class="dg-edge-t" x="205" y="178" text-anchor="middle" fill="var(--accent-verde)">Sim</text>
+      <text class="dg-edge-t" x="520" y="178" text-anchor="middle" fill="var(--negative)">Não</text>
+      <!-- desfechos -->
+      <rect x="92" y="230" width="136" height="52" rx="10" fill="var(--accent-verde)"/>
+      <text class="dg-node-t" x="160" y="260" text-anchor="middle" fill="var(--accent-ink)">Publicar</text>
+      <rect x="500" y="230" width="160" height="52" rx="10" fill="var(--negative)"/>
+      <text class="dg-node-t dg-on-azul" x="580" y="254" text-anchor="middle">Suavizar</text>
+      <text class="dg-node-t dg-on-azul" x="580" y="270" text-anchor="middle">ou remover</text>
+    </svg>
+    <p class="doc-when"><b>Quando usar:</b> regra de decisão com resposta binária. Verde para o caminho que aprova, azul para o que barra ou exige correção, nunca o vermelho.</p>
+  </div>
+
+  <div class="doc-note dont">
+    <span class="doc-note-tag">Não faça</span>
+    <p>Mais de duas saídas no mesmo losango sem rótulo claro. Se a decisão tem três ou mais respostas, prefira um nó retangular com galhos rotulados, para não sobrecarregar o vértice.</p>
+  </div>
+</div></section>
+
+<!-- ============================ 04 HIERARQUIA / ORGANOGRAMA ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">04</span><p class="doc-kicker">Hierarquia</p></div>
+  <h2>Uma raiz que desce em <em>galhos</em></h2>
+  <p>O organograma mostra subordinação ou desdobramento: um nó-raiz no topo e filhos abaixo, ligados por curvas que descem. Serve para estrutura de equipe, decomposição de um tema em frentes, ou pilares de uma plataforma. A raiz pode receber o acento; os filhos ficam em superfície.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Raiz e três filhos</span>
+    <svg class="dg" viewBox="0 0 720 250" role="img" aria-label="Hierarquia: a raiz Plataforma se desdobra em três frentes, Conteúdo, Canal e Medição.">
+      <title>Hierarquia de uma raiz e três filhos</title>
+      <desc>O nó raiz Plataforma conecta a três nós filhos: Conteúdo, Canal e Medição.</desc>
+      <defs>
+        <marker id="arw-hi" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="currentColor"/></marker>
+      </defs>
+      <!-- conectores antes -->
+      <g fill="none" stroke="var(--line)" stroke-width="2" color="var(--line)">
+        <path d="M360,72 C200,110 150,130 130,158" marker-end="url(#arw-hi)"/>
+        <path d="M360,72 C360,110 360,130 360,158" marker-end="url(#arw-hi)"/>
+        <path d="M360,72 C520,110 570,130 590,158" marker-end="url(#arw-hi)"/>
+      </g>
+      <!-- raiz -->
+      <rect x="280" y="24" width="160" height="48" rx="10" fill="var(--accent)"/>
+      <text class="dg-node-t dg-on-accent" x="360" y="53" text-anchor="middle">Plataforma</text>
+      <!-- filhos -->
+      <g>
+        <rect x="60" y="158" width="140" height="48" rx="10" fill="var(--surface)"/>
+        <text class="dg-node-t" x="130" y="187" text-anchor="middle">Conteúdo</text>
+        <rect x="290" y="158" width="140" height="48" rx="10" fill="var(--surface)"/>
+        <text class="dg-node-t" x="360" y="187" text-anchor="middle">Canal</text>
+        <rect x="520" y="158" width="140" height="48" rx="10" fill="var(--surface)"/>
+        <text class="dg-node-t" x="590" y="187" text-anchor="middle">Medição</text>
+      </g>
+    </svg>
+    <p class="doc-when"><b>Quando usar:</b> estrutura de subordinação, decomposição de um tema em frentes, ou os pilares de uma plataforma. A raiz em acento ancora a leitura de cima para baixo.</p>
+  </div>
+</div></section>
+
+<!-- ============================ 05 REDE / RADIAL ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">05</span><p class="doc-kicker">Rede radial</p></div>
+  <h2>Um centro que irradia para os <em>satélites</em></h2>
+  <p>Quando vários elementos giram em torno de um único, a rede radial deixa essa relação visível: o nó central no meio, os satélites distribuídos em volta, ligados por curvas que partem do centro. Diferente da hierarquia, aqui não há topo nem base, só órbita. Serve para mapear o que conversa com um tema central.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Centro e seis satélites</span>
+    <svg class="dg" viewBox="0 0 720 360" role="img" aria-label="Rede radial: o nó central Marca conecta a seis satélites distribuídos em volta, Voz, Cor, Tipo, Forma, Imagem e Dado.">
+      <title>Rede radial de centro e seis satélites</title>
+      <desc>O nó central Marca irradia para seis satélites: Voz, Cor, Tipo, Forma, Imagem e Dado.</desc>
+      <defs>
+        <marker id="arw-rd" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="currentColor"/></marker>
+      </defs>
+      <!-- conectores do centro (360,180) para cada satelite, em curva leve -->
+      <g fill="none" stroke="var(--line)" stroke-width="1.8" color="var(--line)">
+        <path d="M360,150 C360,110 360,95 360,70" marker-end="url(#arw-rd)"/>
+        <path d="M388,165 C440,135 480,120 520,100" marker-end="url(#arw-rd)"/>
+        <path d="M388,195 C440,225 480,240 520,260" marker-end="url(#arw-rd)"/>
+        <path d="M360,210 C360,250 360,265 360,290" marker-end="url(#arw-rd)"/>
+        <path d="M332,195 C280,225 240,240 200,260" marker-end="url(#arw-rd)"/>
+        <path d="M332,165 C280,135 240,120 200,100" marker-end="url(#arw-rd)"/>
+      </g>
+      <!-- satelites -->
+      <g>
+        <rect x="318" y="40" width="84" height="34" rx="8" fill="var(--surface)"/><text class="dg-node-t" x="360" y="62" text-anchor="middle">Voz</text>
+        <rect x="520" y="78" width="84" height="34" rx="8" fill="var(--surface)"/><text class="dg-node-t" x="562" y="100" text-anchor="middle">Cor</text>
+        <rect x="520" y="248" width="84" height="34" rx="8" fill="var(--surface)"/><text class="dg-node-t" x="562" y="270" text-anchor="middle">Tipo</text>
+        <rect x="318" y="290" width="84" height="34" rx="8" fill="var(--surface)"/><text class="dg-node-t" x="360" y="312" text-anchor="middle">Forma</text>
+        <rect x="116" y="248" width="84" height="34" rx="8" fill="var(--surface)"/><text class="dg-node-t" x="158" y="270" text-anchor="middle">Imagem</text>
+        <rect x="116" y="78" width="84" height="34" rx="8" fill="var(--surface)"/><text class="dg-node-t" x="158" y="100" text-anchor="middle">Dado</text>
+      </g>
+      <!-- centro em acento -->
+      <circle cx="360" cy="180" r="46" fill="var(--accent)"/>
+      <text class="dg-node-t dg-on-accent" x="360" y="185" text-anchor="middle">Marca</text>
+    </svg>
+    <p class="doc-when"><b>Quando usar:</b> mostrar tudo que orbita um conceito central, sem implicar ordem ou subordinação. O centro em acento; os satélites em superfície.</p>
+  </div>
+</div></section>
+
+<!-- ============================ 06 SWIMLANE ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">06</span><p class="doc-kicker">Swimlane</p></div>
+  <h2>Raias que mostram quem faz cada <em>parte</em></h2>
+  <p>Quando um fluxo atravessa responsáveis diferentes, as raias horizontais deixam claro quem entrega o quê. Cada raia tem um rótulo à esquerda, e as caixas se distribuem ao longo do tempo. O conector cruza de uma raia para outra quando a bola passa de mão, e essa passagem é a informação principal do diagrama.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Três raias com passagem de etapa</span>
+    <svg class="dg" viewBox="0 0 720 280" role="img" aria-label="Swimlane com três raias, Estratégia, Criação e Cliente. O briefing desce de Estratégia para Criação, vira proposta, sobe para aprovação do Cliente e retorna para produção na Criação.">
+      <title>Swimlane de três raias com fluxo entre elas</title>
+      <desc>Três raias horizontais: Estratégia, Criação e Cliente. Briefing parte de Estratégia, passa para Proposta na Criação, sobe para Aprovação do Cliente e retorna para Produção na Criação.</desc>
+      <defs>
+        <marker id="arw-sw" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/></marker>
+      </defs>
+      <!-- faixas das raias -->
+      <g>
+        <rect x="0" y="20" width="720" height="76" fill="rgba(255,255,255,.05)"/>
+        <rect x="0" y="100" width="720" height="76" fill="rgba(255,255,255,.09)"/>
+        <rect x="0" y="180" width="720" height="76" fill="rgba(255,255,255,.05)"/>
+        <line x1="150" y1="20" x2="150" y2="256" stroke="var(--hairline)" stroke-width="1"/>
+      </g>
+      <!-- rotulos das raias -->
+      <text class="dg-axis-t" x="20" y="62" >Estratégia</text>
+      <text class="dg-axis-t" x="20" y="142">Criação</text>
+      <text class="dg-axis-t" x="20" y="222">Cliente</text>
+      <!-- conectores entre raias ANTES dos nodes -->
+      <g fill="none" stroke="var(--line)" stroke-width="2" color="var(--line)">
+        <path d="M300,58 C340,58 350,90 350,114" marker-end="url(#arw-sw)"/>
+        <path d="M460,138 C500,138 510,170 510,194" marker-end="url(#arw-sw)"/>
+        <path d="M620,194 C640,150 640,138 580,138" marker-end="url(#arw-sw)"/>
+      </g>
+      <!-- nodes por raia -->
+      <g>
+        <rect x="180" y="40" width="120" height="36" rx="8" fill="var(--surface)"/><text class="dg-node-t" x="240" y="63" text-anchor="middle">Briefing</text>
+        <rect x="340" y="120" width="120" height="36" rx="8" fill="var(--surface)"/><text class="dg-node-t" x="400" y="143" text-anchor="middle">Proposta</text>
+        <rect x="500" y="200" width="120" height="36" rx="8" fill="var(--accent)"/><text class="dg-node-t dg-on-accent" x="560" y="223" text-anchor="middle">Aprovação</text>
+        <rect x="500" y="120" width="120" height="36" rx="8" fill="var(--surface)"/><text class="dg-node-t" x="560" y="143" text-anchor="middle">Produção</text>
+      </g>
+    </svg>
+    <p class="doc-when"><b>Quando usar:</b> fluxo que troca de responsável e você quer expor exatamente onde a bola passa de mão. A caixa de aprovação em acento sinaliza o momento de decisão do cliente.</p>
+  </div>
+</div></section>
+
+<!-- ============================ 07 CICLO ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">07</span><p class="doc-kicker">Ciclo</p></div>
+  <h2>Quatro etapas que fecham o <em>loop</em></h2>
+  <p>O ciclo conta um processo que se repete: as etapas se dispõem em círculo e os conectores curvos seguem sempre na mesma rotação, fechando o anel. A última seta volta para a primeira etapa, deixando claro que não há fim, só recomeço. Serve para rituais recorrentes: planejar, executar, medir, ajustar.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Ciclo de quatro etapas</span>
+    <svg class="dg" viewBox="0 0 720 340" role="img" aria-label="Ciclo de quatro etapas em loop: Planejar no topo, Executar à direita, Medir embaixo e Ajustar à esquerda, com setas que retornam ao início.">
+      <title>Ciclo de quatro etapas que se fecha</title>
+      <desc>Quatro etapas dispostas em círculo: Planejar, Executar, Medir e Ajustar. As setas seguem no sentido horário e a última retorna à primeira, fechando o ciclo.</desc>
+      <defs>
+        <marker id="arw-cy" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/></marker>
+      </defs>
+      <!-- arcos do ciclo ANTES dos nodes, sentido horario, centro (360,170) -->
+      <g fill="none" stroke="var(--line)" stroke-width="2.2" color="var(--line)">
+        <path d="M432,78 C500,98 540,140 552,196" marker-end="url(#arw-cy)"/>
+        <path d="M520,272 C470,300 380,300 320,288" marker-end="url(#arw-cy)"/>
+        <path d="M168,196 C180,140 220,98 288,78" marker-end="url(#arw-cy)"/>
+        <path d="M288,262 C220,242 180,200 168,150" marker-end="url(#arw-cy)" stroke="var(--accent)" color="var(--accent)"/>
+      </g>
+      <!-- etapas -->
+      <g>
+        <circle cx="360" cy="58" r="44" fill="var(--surface)"/><text class="dg-node-t" x="360" y="63" text-anchor="middle">Planejar</text>
+        <circle cx="572" cy="218" r="44" fill="var(--surface)"/><text class="dg-node-t" x="572" y="223" text-anchor="middle">Executar</text>
+        <circle cx="360" cy="290" r="44" fill="var(--surface)"/><text class="dg-node-t" x="360" y="295" text-anchor="middle">Medir</text>
+        <circle cx="148" cy="218" r="44" fill="var(--surface)"/><text class="dg-node-t" x="148" y="223" text-anchor="middle">Ajustar</text>
+      </g>
+    </svg>
+    <p class="doc-when"><b>Quando usar:</b> ritual ou rotina que não termina, só recomeça. O arco de retorno em acento reforça que o ciclo se fecha e reinicia.</p>
+  </div>
+</div></section>
+
+<!-- ============================ 08 PIRAMIDE ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">08</span><p class="doc-kicker">Pirâmide</p></div>
+  <h2>Camadas que sustentam o <em>topo</em></h2>
+  <p>A pirâmide ordena por base e cume: a camada de baixo é a mais larga e mais fundamental, o topo é o ponto de chegada. Cada faixa é um trapézio (<span class="doc-code">&lt;polygon&gt;</span>) com rótulo. Funciona para hierarquias de necessidade, maturidade de um processo, ou a lógica do que vem antes para que o topo exista.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Pirâmide de quatro camadas</span>
+    <div class="dg-pair">
+      <svg class="dg" viewBox="0 0 420 320" role="img" aria-label="Pirâmide de quatro camadas, da base ao topo: Dados, Estrutura, Narrativa e Decisão.">
+        <title>Pirâmide de quatro camadas</title>
+        <desc>Quatro camadas empilhadas da base ao topo: Dados na base, depois Estrutura, depois Narrativa, e Decisão no cume.</desc>
+        <!-- base larga -->
+        <polygon points="20,300 400,300 350,232 70,232" fill="rgba(255,255,255,.10)"/>
+        <text class="dg-node-t" x="210" y="272" text-anchor="middle">Dados</text>
+        <polygon points="70,228 350,228 305,160 115,160" fill="rgba(255,255,255,.18)"/>
+        <text class="dg-node-t" x="210" y="200" text-anchor="middle">Estrutura</text>
+        <polygon points="115,156 305,156 260,88 160,88" fill="rgba(255,255,255,.30)"/>
+        <text class="dg-node-t" x="210" y="128" text-anchor="middle">Narrativa</text>
+        <!-- cume em acento -->
+        <polygon points="160,84 260,84 210,16" fill="var(--accent)"/>
+        <text class="dg-node-t dg-on-accent" x="210" y="68" text-anchor="middle" font-size="11">Decisão</text>
+      </svg>
+      <div>
+        <p class="doc-when" style="margin-top:0;"><b>Quando usar:</b> sempre que o topo só existe porque as camadas de baixo o sustentam. A base é o alicerce; o cume, o ponto de chegada que merece o acento.</p>
+        <div class="doc-note do" style="margin-top:16px;">
+          <span class="doc-note-tag">Faça</span>
+          <p>Tom mais claro à medida que sobe, para o olho ler a ascensão. Acento só no cume. Cada camada com um rótulo curto.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================ 09 CAMADAS ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">09</span><p class="doc-kicker">Camadas</p></div>
+  <h2>Retangulos empilhados que mostram a <em>pilha</em></h2>
+  <p>Diferente da pirâmide, a pilha de camadas trata cada nível como igual em largura: o que muda é a ordem de baixo para cima. Serve para uma arquitetura em camadas, uma stack de decisões, ou a sobreposição de planos de uma comunicação. Cada faixa é um retângulo com rótulo à esquerda e uma nota curta à direita.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Pilha de quatro níveis</span>
+    <svg class="dg" viewBox="0 0 720 280" role="img" aria-label="Pilha de quatro camadas, de baixo para cima: Tokens, Componentes, Padrões e Peça.">
+      <title>Pilha de quatro camadas</title>
+      <desc>Quatro retângulos empilhados, de baixo para cima: Tokens, Componentes, Padrões e Peça. Cada camada se apoia na de baixo.</desc>
+      <!-- da base ao topo -->
+      <g>
+        <rect x="60" y="208" width="600" height="56" rx="8" fill="rgba(255,255,255,.10)"/>
+        <text class="dg-node-t" x="84" y="241">Tokens</text>
+        <text class="dg-node-s" x="640" y="241" text-anchor="end">cor, tipo, espaço, forma</text>
+
+        <rect x="60" y="146" width="600" height="56" rx="8" fill="rgba(255,255,255,.16)"/>
+        <text class="dg-node-t" x="84" y="179">Componentes</text>
+        <text class="dg-node-s" x="640" y="179" text-anchor="end">cards, faixas, citações</text>
+
+        <rect x="60" y="84" width="600" height="56" rx="8" fill="rgba(255,255,255,.24)"/>
+        <text class="dg-node-t" x="84" y="117">Padrões</text>
+        <text class="dg-node-s" x="640" y="117" text-anchor="end">diagramas, gráficos, layouts</text>
+
+        <rect x="60" y="22" width="600" height="56" rx="8" fill="var(--accent)"/>
+        <text class="dg-node-t dg-on-accent" x="84" y="55">Peça</text>
+        <text class="dg-node-s" x="640" y="55" text-anchor="end" fill="rgba(10,10,10,.7)">deck, book, landing</text>
+      </g>
+    </svg>
+    <p class="doc-when"><b>Quando usar:</b> arquitetura em camadas em que cada nível se apoia no de baixo mas todos pesam igual na largura. O nível de saída, no topo, recebe o acento.</p>
+  </div>
+</div></section>
+
+<!-- ============================ 10 VENN ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">10</span><p class="doc-kicker">Venn</p></div>
+  <h2>Círculos que se cruzam na <em>interseção</em></h2>
+  <p>Quando dois ou três conjuntos compartilham algo, o diagrama de Venn mostra a sobreposição. Os círculos usam preenchimento com opacidade, para que a interseção fique visualmente mais densa, e o rótulo do que é comum vai exatamente onde eles se cruzam. Serve para encontrar o ponto onde marca, público e momento coincidem.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Três conjuntos e o centro comum</span>
+    <svg class="dg" viewBox="0 0 720 340" role="img" aria-label="Diagrama de Venn de três círculos, Marca, Público e Momento, com a interseção central rotulada Relevância.">
+      <title>Venn de três conjuntos com interseção central</title>
+      <desc>Três círculos sobrepostos: Marca, Público e Momento. A região onde os três se cruzam recebe o rótulo Relevância.</desc>
+      <g>
+        <circle cx="290" cy="150" r="120" fill="rgba(255,255,255,.16)" stroke="var(--line)" stroke-width="1.5"/>
+        <circle cx="430" cy="150" r="120" fill="rgba(255,255,255,.16)" stroke="var(--line)" stroke-width="1.5"/>
+        <circle cx="360" cy="250" r="120" fill="rgba(255,255,255,.16)" stroke="var(--line)" stroke-width="1.5"/>
+      </g>
+      <!-- rotulos dos conjuntos -->
+      <text class="dg-node-t" x="222" y="110" text-anchor="middle">Marca</text>
+      <text class="dg-node-t" x="498" y="110" text-anchor="middle">Público</text>
+      <text class="dg-node-t" x="360" y="318" text-anchor="middle">Momento</text>
+      <!-- nucleo comum em acento -->
+      <circle cx="360" cy="190" r="34" fill="var(--accent)"/>
+      <text class="dg-node-t dg-on-accent" x="360" y="194" text-anchor="middle" font-size="11">Relevância</text>
+    </svg>
+    <p class="doc-when"><b>Quando usar:</b> mostrar onde dois ou três fatores coincidem e por que esse cruzamento importa. A interseção comum em acento é a tese do diagrama.</p>
+  </div>
+
+  <div class="doc-note dont">
+    <span class="doc-note-tag">Não faça</span>
+    <p>Quatro ou mais círculos sobrepostos: a leitura colapsa. Acima de três conjuntos, prefira uma matriz ou uma tabela, que distinguem os cruzamentos sem amontoar formas.</p>
+  </div>
+</div></section>
+
+<!-- ============================ 11 MATRIZ / QUADRANTE 2x2 ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">11</span><p class="doc-kicker">Matriz 2 por 2</p></div>
+  <h2>Dois eixos que dividem o campo em <em>quadrantes</em></h2>
+  <p>A matriz cruza duas variáveis e posiciona cada coisa num dos quatro quadrantes. Os eixos vão em texto, os quadrantes recebem rótulo, e o quadrante de maior interesse pode ganhar o acento. Aqui ela é desenhada em SVG real para que eixos, setas e marcadores fiquem precisos, mas para uso editorial o componente <span class="doc-code">.b-quad</span> também resolve a mesma estrutura em HTML.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Matriz esforço por impacto</span>
+    <svg class="dg" viewBox="0 0 560 400" role="img" aria-label="Matriz dois por dois de esforço no eixo horizontal e impacto no eixo vertical. O quadrante alto impacto e baixo esforço está destacado como prioridade.">
+      <title>Matriz de esforço por impacto</title>
+      <desc>Quatro quadrantes cruzando esforço (horizontal) e impacto (vertical). Alto impacto e baixo esforço está destacado como prioridade; alto esforço e baixo impacto é evitar.</desc>
+      <defs>
+        <marker id="arw-mx" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/></marker>
+      </defs>
+      <!-- quadrante de prioridade destacado (fundo) -->
+      <rect x="60" y="40" width="220" height="150" fill="rgba(245,197,66,.18)"/>
+      <!-- grade -->
+      <rect x="60" y="40" width="440" height="300" fill="none" stroke="var(--hairline)" stroke-width="1"/>
+      <line x1="280" y1="40" x2="280" y2="340" stroke="var(--line)" stroke-width="1"/>
+      <line x1="60" y1="190" x2="500" y2="190" stroke="var(--line)" stroke-width="1"/>
+      <!-- eixos com seta (marker) -->
+      <line x1="60" y1="360" x2="500" y2="360" stroke="var(--ink)" stroke-width="1.5" color="var(--ink)" marker-end="url(#arw-mx)"/>
+      <line x1="36" y1="340" x2="36" y2="40" stroke="var(--ink)" stroke-width="1.5" color="var(--ink)" marker-end="url(#arw-mx)"/>
+      <text class="dg-axis-t" x="280" y="384" text-anchor="middle">Esforço</text>
+      <text class="dg-axis-t" x="20" y="190" text-anchor="middle" transform="rotate(-90 20 190)">Impacto</text>
+      <!-- rotulos dos quadrantes -->
+      <text class="dg-node-t" x="170" y="118" text-anchor="middle" fill="var(--accent-ink)">Prioridade</text>
+      <text class="dg-node-s" x="170" y="138" text-anchor="middle" fill="rgba(10,10,10,.65)">alto impacto, baixo esforço</text>
+      <text class="dg-node-t" x="390" y="118" text-anchor="middle">Projeto</text>
+      <text class="dg-node-t" x="170" y="270" text-anchor="middle">Preencher</text>
+      <text class="dg-node-t" x="390" y="270" text-anchor="middle">Evitar</text>
+    </svg>
+    <p class="doc-when"><b>Quando usar:</b> priorizar opções por duas variáveis ou posicionar concorrentes num campo. O acento marca o quadrante que você quer que a leitura busque primeiro.</p>
+  </div>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">A mesma estrutura em .b-quad (HTML)</span>
+    <div class="b-quad">
+      <div class="b-cell hot"><strong style="color:var(--ink)">Prioridade</strong><p style="color:var(--surface-ink);margin:8px 0 0;font-size:var(--fs-small)">Alto impacto, baixo esforço</p></div>
+      <div class="b-cell"><strong style="color:var(--ink)">Projeto</strong><p style="color:var(--ink-body);margin:8px 0 0;font-size:var(--fs-small)">Alto impacto, alto esforço</p></div>
+      <div class="b-cell"><strong style="color:var(--ink)">Preencher</strong><p style="color:var(--ink-body);margin:8px 0 0;font-size:var(--fs-small)">Baixo impacto, baixo esforço</p></div>
+      <div class="b-cell"><strong style="color:var(--ink)">Evitar</strong><p style="color:var(--ink-body);margin:8px 0 0;font-size:var(--fs-small)">Baixo impacto, alto esforço</p></div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> a versão HTML quando não precisa de eixos com seta nem de posicionar pontos exatos; o componente <span class="doc-code">.b-quad</span> já entrega a grade e a célula quente.</p>
+  </div>
+</div></section>
+
+<!-- ============================ 12 MAPA DE JORNADA ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">12</span><p class="doc-kicker">Mapa de jornada</p></div>
+  <h2>Três fases que acompanham o <em>percurso</em></h2>
+  <p>A jornada do público organiza as etapas em três fases horizontais: Conviver, Avaliar e Aceitar. Cada fase agrupa os momentos que acontecem nela e o fluxo segue da esquerda para a direita, da convivência cotidiana até a decisão. É a forma canônica para mapear como alguém atravessa o contato com uma marca.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Jornada em três fases</span>
+    <svg class="dg" viewBox="0 0 720 240" role="img" aria-label="Mapa de jornada em três fases horizontais: Conviver com momentos de presença e familiaridade; Avaliar com comparação e prova; Aceitar com decisão e adesão.">
+      <title>Mapa de jornada em três fases</title>
+      <desc>Três fases horizontais. Conviver reúne presença e familiaridade. Avaliar reúne comparação e prova. Aceitar reúne decisão e adesão. O fluxo segue da esquerda para a direita.</desc>
+      <defs>
+        <marker id="arw-jr" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/></marker>
+      </defs>
+      <!-- conectores entre fases ANTES -->
+      <g fill="none" stroke="var(--line)" stroke-width="2" color="var(--line)">
+        <path d="M232,120 C250,120 254,120 268,120" marker-end="url(#arw-jr)"/>
+        <path d="M472,120 C490,120 494,120 508,120" marker-end="url(#arw-jr)"/>
+      </g>
+      <!-- fase 1 -->
+      <g>
+        <rect x="20" y="48" width="212" height="144" rx="12" fill="rgba(255,255,255,.06)" stroke="var(--hairline)" stroke-width="1"/>
+        <text class="dg-axis-t" x="36" y="74">Conviver</text>
+        <rect x="40" y="92" width="172" height="38" rx="7" fill="var(--surface)"/><text class="dg-node-t" x="126" y="115" text-anchor="middle">Presença</text>
+        <rect x="40" y="138" width="172" height="38" rx="7" fill="var(--surface)"/><text class="dg-node-t" x="126" y="161" text-anchor="middle">Familiaridade</text>
+      </g>
+      <!-- fase 2 -->
+      <g>
+        <rect x="260" y="48" width="212" height="144" rx="12" fill="rgba(255,255,255,.06)" stroke="var(--hairline)" stroke-width="1"/>
+        <text class="dg-axis-t" x="276" y="74">Avaliar</text>
+        <rect x="280" y="92" width="172" height="38" rx="7" fill="var(--surface)"/><text class="dg-node-t" x="366" y="115" text-anchor="middle">Comparação</text>
+        <rect x="280" y="138" width="172" height="38" rx="7" fill="var(--surface)"/><text class="dg-node-t" x="366" y="161" text-anchor="middle">Prova</text>
+      </g>
+      <!-- fase 3 -->
+      <g>
+        <rect x="500" y="48" width="212" height="144" rx="12" fill="rgba(245,197,66,.14)" stroke="var(--hairline)" stroke-width="1"/>
+        <text class="dg-axis-t" x="516" y="74" fill="var(--ink)">Aceitar</text>
+        <rect x="520" y="92" width="172" height="38" rx="7" fill="var(--accent)"/><text class="dg-node-t dg-on-accent" x="606" y="115" text-anchor="middle">Decisão</text>
+        <rect x="520" y="138" width="172" height="38" rx="7" fill="var(--surface)"/><text class="dg-node-t" x="606" y="161" text-anchor="middle">Adesão</text>
+      </g>
+    </svg>
+    <p class="doc-when"><b>Quando usar:</b> mapear como o público atravessa o contato com a marca, do cotidiano à decisão. As três fases são fixas no léxico da casa: Conviver, Avaliar, Aceitar.</p>
+  </div>
+</div></section>
+
+<!-- ============================ 13 ECOSSISTEMA ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">13</span><p class="doc-kicker">Ecossistema</p></div>
+  <h2>Entidades que se ligam em torno da <em>marca</em></h2>
+  <p>O mapa de ecossistema parece a rede radial, mas a relação aqui é de parceria, não de irradiação: as entidades têm vida própria e se conectam entre si, não só ao centro. A marca fica no meio como articuladora, e algumas conexões cruzam de um parceiro a outro, mostrando que o sistema tem mais de um eixo.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Marca articuladora e parceiros</span>
+    <svg class="dg" viewBox="0 0 720 360" role="img" aria-label="Mapa de ecossistema: a marca 80 20 ao centro liga-se a Cliente, Mídia, Produção e Dados; Cliente e Mídia também se conectam entre si.">
+      <title>Mapa de ecossistema com marca central e parceiros interligados</title>
+      <desc>A marca central conecta a Cliente, Mídia, Produção e Dados. Cliente e Mídia também se ligam diretamente, indicando relação além do centro.</desc>
+      <defs>
+        <marker id="arw-ec" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="currentColor"/></marker>
+      </defs>
+      <!-- conexoes ANTES dos nodes; centro em (360,180) -->
+      <g fill="none" stroke="var(--line)" stroke-width="1.8" color="var(--line)">
+        <path d="M306,148 C240,118 190,108 150,98" marker-end="url(#arw-ec)"/>
+        <path d="M414,148 C480,118 530,108 570,98" marker-end="url(#arw-ec)"/>
+        <path d="M414,212 C480,242 530,252 570,262" marker-end="url(#arw-ec)"/>
+        <path d="M306,212 C240,242 190,252 150,262" marker-end="url(#arw-ec)"/>
+        <!-- conexao lateral entre dois parceiros (alem do centro) -->
+        <path d="M150,80 C300,30 480,30 570,72" marker-end="url(#arw-ec)" stroke="var(--accent)" color="var(--accent)"/>
+      </g>
+      <!-- parceiros -->
+      <g>
+        <rect x="74" y="62" width="104" height="40" rx="9" fill="var(--surface)"/><text class="dg-node-t" x="126" y="87" text-anchor="middle">Cliente</text>
+        <rect x="542" y="62" width="104" height="40" rx="9" fill="var(--surface)"/><text class="dg-node-t" x="594" y="87" text-anchor="middle">Mídia</text>
+        <rect x="542" y="258" width="104" height="40" rx="9" fill="var(--surface)"/><text class="dg-node-t" x="594" y="283" text-anchor="middle">Produção</text>
+        <rect x="74" y="258" width="104" height="40" rx="9" fill="var(--surface)"/><text class="dg-node-t" x="126" y="283" text-anchor="middle">Dados</text>
+      </g>
+      <!-- marca central -->
+      <circle cx="360" cy="180" r="48" fill="var(--accent)"/>
+      <text class="dg-node-t dg-on-accent" x="360" y="178" text-anchor="middle" font-size="12">80 20</text>
+      <text class="dg-node-s" x="360" y="194" text-anchor="middle" fill="rgba(10,10,10,.7)">articula</text>
+    </svg>
+    <p class="doc-when"><b>Quando usar:</b> mostrar uma rede de parceiros em que a marca articula mas não controla tudo. A conexão lateral em acento destaca uma relação que existe fora do eixo central.</p>
+  </div>
+</div></section>
+
+<!-- ============================ 14 MINDMAP ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">14</span><p class="doc-kicker">Mindmap</p></div>
+  <h2>Um núcleo que se ramifica em <em>ideias</em></h2>
+  <p>O mapa mental abre um tema central em ramos, e cada ramo em sub-ramos, com curvas que se afinam à medida que se afastam do núcleo. É a forma mais solta do catálogo, boa para um brainstorm estruturado ou para abrir um conceito em suas dimensões. As curvas são sempre orgânicas, nunca quebradas em ângulos retos.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Núcleo, ramos e sub-ramos</span>
+    <svg class="dg" viewBox="0 0 720 360" role="img" aria-label="Mapa mental: o núcleo Campanha abre em dois ramos, Mensagem e Canal; Mensagem se divide em Tom e Prova, Canal se divide em Próprio e Pago.">
+      <title>Mapa mental de núcleo, ramos e sub-ramos</title>
+      <desc>O núcleo Campanha abre dois ramos. Mensagem leva a Tom e a Prova. Canal leva a Próprio e a Pago.</desc>
+      <!-- ramos ANTES dos nodes, curvas que se afinam -->
+      <g fill="none" stroke="var(--line)">
+        <path d="M280,150 C220,110 180,90 140,78" stroke-width="2.4"/>
+        <path d="M280,210 C220,250 180,270 140,282" stroke-width="2.4"/>
+        <!-- sub-ramos do ramo de cima -->
+        <path d="M120,70 C90,46 70,40 44,38" stroke-width="1.6"/>
+        <path d="M120,90 C90,118 70,128 44,138" stroke-width="1.6"/>
+        <!-- sub-ramos do ramo de baixo -->
+        <path d="M120,274 C90,246 70,236 44,228" stroke-width="1.6"/>
+        <path d="M120,290 C90,316 70,322 44,326" stroke-width="1.6"/>
+      </g>
+      <!-- nucleo -->
+      <ellipse cx="360" cy="180" rx="92" ry="56" fill="var(--accent)"/>
+      <text class="dg-node-t dg-on-accent" x="360" y="185" text-anchor="middle" font-size="15">Campanha</text>
+      <!-- ramos primarios -->
+      <rect x="60" y="58" width="120" height="40" rx="20" fill="var(--surface)"/><text class="dg-node-t" x="120" y="83" text-anchor="middle">Mensagem</text>
+      <rect x="60" y="262" width="120" height="40" rx="20" fill="var(--surface)"/><text class="dg-node-t" x="120" y="287" text-anchor="middle">Canal</text>
+      <!-- sub-ramos (pilulas menores) -->
+      <g>
+        <rect x="0" y="22" width="60" height="30" rx="15" fill="rgba(255,255,255,.12)"/><text class="dg-node-s" x="30" y="42" text-anchor="middle" fill="var(--ink)">Tom</text>
+        <rect x="0" y="124" width="60" height="30" rx="15" fill="rgba(255,255,255,.12)"/><text class="dg-node-s" x="30" y="144" text-anchor="middle" fill="var(--ink)">Prova</text>
+        <rect x="0" y="214" width="60" height="30" rx="15" fill="rgba(255,255,255,.12)"/><text class="dg-node-s" x="30" y="234" text-anchor="middle" fill="var(--ink)">Próprio</text>
+        <rect x="0" y="312" width="60" height="30" rx="15" fill="rgba(255,255,255,.12)"/><text class="dg-node-s" x="30" y="332" text-anchor="middle" fill="var(--ink)">Pago</text>
+      </g>
+    </svg>
+    <p class="doc-when"><b>Quando usar:</b> abrir um tema em dimensões, num brainstorm estruturado ou na decomposição de um conceito. O núcleo em acento; ramos em superfície; sub-ramos em tom esmaecido.</p>
+  </div>
+
+  <div class="doc-grid doc-2">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <p>Curvas orgânicas que se afinam do centro para a borda. Um único núcleo em acento. Hierarquia de tom: ramo mais cheio que sub-ramo.</p>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <p>Linhas quebradas em ângulo reto, dezenas de ramos que viram emaranhado, ou cor de joia espalhada por cada pílula. A escassez de cor vale aqui também.</p>
+    </div>
+  </div>
+</div></section>
+
+<footer class="doc-foot"><div class="doc-wrap">
+  <img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+  <div class="doc-addr"><span>São Paulo · SP</span><span>Campo Grande · MS</span><span>Cuiabá · MT</span></div>
+  <p class="doc-foot-meta">Sistema de Design 80 20 · Montserrat · campo-laranja, palco escuro, papel claro</p>
+</div></footer>
+
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8020-DS · Cards e persona</title>
+<link rel="stylesheet" href="../tokens/8020.css">
+<link rel="stylesheet" href="../assets/book.css">
+<link rel="stylesheet" href="_docs.css">
+<script src="../assets/book.js" defer></script>
+<style>
+  /* CSS local SO desta pagina: scaffolding de specimen, via papeis semanticos */
+  .doc-anatomy { display: grid; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+  .doc-anatomy li { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; font-size: var(--fs-small); color: var(--ink-body); }
+  .doc-anatomy li b { color: var(--ink); font-weight: var(--w-label); }
+  /* placeholder de icone SVG dentro de feature/lista (apenas no specimen) */
+  .doc-ico-stroke { width: 20px; height: 20px; color: var(--ink); }
+  /* estados lado a lado de stat */
+  .doc-state-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  @media (max-width: 600px) { .doc-state-row { grid-template-columns: 1fr; } }
+  /* escada de infocards: rotulo de nivel sob cada card */
+  .doc-ladder-tag { font-size: var(--fs-micro); font-weight: var(--w-label); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--muted); margin: 10px 0 0; display: block; text-align: center; }
+</style>
+</head>
+<body class="doc">
+
+<header class="doc-head">
+  <a class="doc-brand" href="../index.html"><img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing"><span>Sistema de Design</span></a>
+  <nav class="doc-nav" aria-label="Páginas do sistema">
+    <a href="colors.html">Cores</a>
+    <a href="variants.html">Variantes</a>
+    <a href="typography.html">Tipografia</a>
+    <a href="graphic-elements.html">Elementos</a>
+    <a href="images.html">Imagens</a>
+    <a href="cards.html" aria-current="page">Cards e persona</a>
+    <a href="facilitacao-visual.html">Facilitação</a>
+    <a href="diagrams.html">Diagramas</a>
+    <a href="charts.html">Gráficos</a>
+    <a href="layouts.html">Deck</a>
+    <a href="book-layout.html">Book</a>
+  </nav>
+</header>
+
+<header class="doc-hero"><div class="doc-wrap">
+  <p class="doc-eyebrow">Componentes · Cards e persona</p>
+  <h1>Caixas que carregam <em>conteúdo</em></h1>
+  <p class="doc-lead">O cartão é a unidade que agrupa um pensamento por vez. Esta página reúne as caixas do book: as navegáveis, as de número, as informacionais em três densidades, a lista com ícone e a persona. A regra-mãe é a economia: um cartão guarda uma ideia, e a joia entra só onde precisa apontar.</p>
+</div></header>
+
+<!-- ============================================================
+     01 · CARD-GRID NAVEGAVEL
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">01</span><p class="doc-kicker">Cartões navegáveis</p></div>
+  <h2>A grade que leva <em>adiante</em></h2>
+  <p>O cartão navegável é a porta de entrada do book: cada caixa anuncia um destino e convida o clique. Vive sobre <span class="doc-code">.surface</span>, o laranja aprofundado, com a numeração de capítulo em joia e uma seta no rodapé. No estado de repouso a borda é discreta. No <strong>hover</strong> o cartão sobe quatro pixels e a borda assume a cor de acento, sinalizando que é clicável sem precisar de sublinhado.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Specimen · .b-hubgrid com .b-card</span>
+    <div class="b-hubgrid">
+      <a class="b-card" href="#01">
+        <span class="b-card-num">01</span>
+        <h3>Fundações</h3>
+        <p>Cores, variantes e tipografia: o vocabulário antes da gramática. Onde o laranja vira substrato e o branco vira voz.</p>
+        <span class="b-card-link">Abrir capítulo →</span>
+      </a>
+      <a class="b-card" href="#02">
+        <span class="b-card-num">02</span>
+        <h3>Elementos</h3>
+        <p>Os blocos de construção: cartões, listas e a gramática visual que repete em todo material da casa.</p>
+        <span class="b-card-link">Abrir capítulo →</span>
+      </a>
+      <a class="b-card" href="#03">
+        <span class="b-card-num">03</span>
+        <h3>Dados</h3>
+        <p>Diagramas e gráficos em vetor real, com a joia reservada para o número que precisa ser lido primeiro.</p>
+        <span class="b-card-link">Abrir capítulo →</span>
+      </a>
+    </div>
+  </div>
+
+  <p class="doc-when"><b>Quando usar:</b> índices de capítulo, hubs de seção e qualquer lugar onde o leitor escolhe um caminho entre três ou quatro destinos paralelos. A grade se adapta sozinha: <span class="doc-code">auto-fit</span> com mínimo de 280 pixels por coluna mantém a leitura em qualquer tela.</p>
+
+  <h3>Anatomia do cartão</h3>
+  <p>Quatro partes, sempre na mesma ordem, de cima para baixo:</p>
+  <ul class="doc-anatomy">
+    <li><b><span class="doc-code">.b-card-num</span></b> Numeração do destino, em peso máximo e cor de acento. É o único ponto de joia do cartão.</li>
+    <li><b><span class="doc-code">h3</span></b> O título do destino, curto e nominal. Diz para onde o clique leva.</li>
+    <li><b><span class="doc-code">p</span></b> Uma frase que descreve o que espera o leitor lá dentro. Cresce para empurrar a seta ao rodapé.</li>
+    <li><b><span class="doc-code">.b-card-link</span></b> O convite ao clique, com a seta como sinal de direção.</li>
+  </ul>
+
+  <div class="doc-grid doc-2" style="margin-top:24px;">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      Mantenha a frase de cada cartão no mesmo comprimento aproximado, para que as setas alinhem no rodapé. O <span class="doc-code">flex-grow</span> do parágrafo cuida disso quando os textos têm peso parecido.
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Evite</span>
+      Mais de uma joia por cartão. A numeração já é o acento; pintar também a seta ou o título dissolve a escassez que dá força à cor.
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================================================
+     02 · STAT-CARD
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">02</span><p class="doc-kicker">Cartões de número</p></div>
+  <h2>O dado que fala <em>sozinho</em></h2>
+  <p>Quando a prova é quantitativa, o cartão de número entrega o valor em peso máximo e uma legenda curta logo abaixo. A grade encosta as células em uma fina divisória, formando um painel coeso. Um único cartão pode receber a classe <span class="doc-code">.highlight</span>, que troca o fundo para a superfície aprofundada e puxa o olhar para o número que importa primeiro.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Specimen · .b-stat-grid com quatro .b-stat (um em destaque)</span>
+    <div class="b-stat-grid">
+      <div class="b-stat">
+        <div class="b-stat-num" data-count="3">3</div>
+        <div class="b-stat-desc">cidades-sede, de São Paulo a Cuiabá</div>
+      </div>
+      <div class="b-stat">
+        <div class="b-stat-num" data-count="11">11</div>
+        <div class="b-stat-desc">páginas no catálogo do sistema</div>
+      </div>
+      <div class="b-stat highlight">
+        <div class="b-stat-num" data-count="80">80</div>
+        <div class="b-stat-desc">por cento do efeito vem de poucas escolhas certas</div>
+      </div>
+      <div class="b-stat">
+        <div class="b-stat-num" data-count="1">1</div>
+        <div class="b-stat-desc">tipografia para tudo: Montserrat</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="doc-when"><b>Quando usar:</b> blocos de prova, painéis de resumo e qualquer lugar onde três a cinco números contam a mesma história. Acima de cinco, a grade vira tabela: use o cartão de número para o que merece ser lido de longe.</p>
+
+  <h3>Repouso e destaque, lado a lado</h3>
+  <p>O cartão de número tem dois estados. No repouso ele divide o fundo claro com os vizinhos. No destaque ele se ergue sobre a superfície aprofundada, sem mudar de tamanho: a diferença é de cor, não de escala, o que mantém o painel alinhado.</p>
+  <div class="doc-state-row">
+    <div>
+      <div class="doc-specimen tight plain">
+        <div class="b-stat-grid">
+          <div class="b-stat">
+            <div class="b-stat-num">42</div>
+            <div class="b-stat-desc">repouso: fundo claro, número em tinta branca</div>
+          </div>
+        </div>
+      </div>
+      <p class="doc-when">Estado padrão: <span class="doc-code">.b-stat</span> sem modificador.</p>
+    </div>
+    <div>
+      <div class="doc-specimen tight plain">
+        <div class="b-stat-grid">
+          <div class="b-stat highlight">
+            <div class="b-stat-num">42</div>
+            <div class="b-stat-desc">destaque: superfície aprofundada, mesmo tamanho</div>
+          </div>
+        </div>
+      </div>
+      <p class="doc-when">Estado de ênfase: <span class="doc-code">.b-stat.highlight</span>, um por painel.</p>
+    </div>
+  </div>
+
+  <div class="doc-note dont" style="margin-top:18px;">
+    <span class="doc-note-tag">Render sem JavaScript</span>
+    O número final já está escrito no texto do elemento. O atributo <span class="doc-code">data-count</span> só comanda a contagem animada quando há rolagem; em PDF e leitura estática, o valor correto aparece de imediato. Nunca deixe a célula vazia esperando o script preencher.
+  </div>
+</div></section>
+
+<!-- ============================================================
+     03 · INFOCARDS EM TRES NIVEIS
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">Cartões informacionais</p></div>
+  <h2>Do rótulo seco ao cartão <em>rico</em></h2>
+  <p>O cartão informacional existe em três densidades, e a escolha segue a quantidade de informação que cada item carrega. O <strong>simples</strong> é um par rótulo e valor, quase uma etiqueta. O <strong>feature</strong> acrescenta um ícone e uma descrição, para quando o item precisa ser explicado. O <strong>rico</strong> abre espaço para mídia, metadados e marcadores, para quando o item é, ele próprio, um pequeno cartão de apresentação. Suba a escada só até onde o conteúdo justifica.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Specimen · .b-cards com .simple, .feature e .rich</span>
+    <div class="b-cards">
+
+      <div>
+        <div class="b-infocard simple">
+          <span class="b-ic-kicker">Tipografia</span>
+          <span class="b-ic-value">Montserrat</span>
+        </div>
+        <span class="doc-ladder-tag">Nível 1 · simples</span>
+      </div>
+
+      <div>
+        <div class="b-infocard feature">
+          <span class="b-ic-ico" aria-hidden="true">
+            <svg class="doc-ico-stroke" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 7v5l3 3"/>
+            </svg>
+          </span>
+          <h4>Escassez do acento</h4>
+          <p>A joia entra no máximo três vezes em peça cliente, e só onde precisa apontar o que importa.</p>
+        </div>
+        <span class="doc-ladder-tag">Nível 2 · feature</span>
+      </div>
+
+      <div>
+        <div class="b-infocard rich">
+          <div class="b-ic-media" aria-hidden="true">imagem 16:9</div>
+          <div class="b-ic-body">
+            <span class="b-ic-meta">Estudo de caso</span>
+            <h4>A casa fala em laranja</h4>
+            <p>Um exemplo de como o substrato e a voz se organizam em uma peça completa, do título ao rodapé.</p>
+            <div class="b-ic-tags">
+              <span>Marca</span>
+              <span>Cor</span>
+              <span>Voz</span>
+            </div>
+          </div>
+        </div>
+        <span class="doc-ladder-tag">Nível 3 · rico</span>
+      </div>
+
+    </div>
+  </div>
+
+  <p>A escada importa porque a densidade comunica hierarquia. Um item simples ao lado de um rico diz, sem palavras, qual dos dois pede mais atenção. Misturar níveis na mesma grade é legítimo quando a diferença de peso é intencional; quando não é, mantenha todos no mesmo degrau.</p>
+
+  <div class="doc-grid doc-3" style="margin-top:8px;">
+    <p class="doc-when"><b>Simples:</b> tabelas de especificação, etiquetas de propriedade, qualquer par rótulo e valor que se lê numa olhada.</p>
+    <p class="doc-when"><b>Feature:</b> listas de benefícios e princípios, em que o ícone ancora e a frase explica.</p>
+    <p class="doc-when"><b>Rico:</b> vitrines de conteúdo, casos e portfólio, em que a mídia vem antes do texto.</p>
+  </div>
+
+  <div class="doc-note do" style="margin-top:18px;">
+    <span class="doc-note-tag">Faça</span>
+    No cartão rico, o <span class="doc-code">.b-ic-media</span> aceita uma imagem que preenche o quadro por <span class="doc-code">object-fit: cover</span>. Sem imagem, ele mostra um marcador de proporção, o que mantém o layout estável durante a montagem.
+  </div>
+</div></section>
+
+<!-- ============================================================
+     04 · LISTA / ITEM (icone + titulo + descricao)
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">04</span><p class="doc-kicker">Lista rotulada</p></div>
+  <h2>Itens que se leem <em>verticalmente</em></h2>
+  <p>Quando os itens compartilham a mesma estrutura e o leitor precisa percorrer todos, a lista com ícone funciona melhor que a grade. Cada linha alinha um ícone à esquerda, um título e uma descrição à direita, e o conjunto se lê de cima para baixo como uma sequência. O ícone vive em uma moldura quadrada de borda discreta, sem joia, para que o olhar percorra os títulos sem ruído.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Specimen · .b-feature com ícone, título e descrição</span>
+    <ul class="b-feature">
+      <li>
+        <span class="b-ico" aria-hidden="true">
+          <svg class="doc-ico-stroke" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M3 9h18"/>
+          </svg>
+        </span>
+        <div>
+          <h4>Substrato</h4>
+          <p>O laranja é o fundo do mundo, não um enfeite. Ele sustenta a página inteira em vez de aparecer em manchas.</p>
+        </div>
+      </li>
+      <li>
+        <span class="b-ico" aria-hidden="true">
+          <svg class="doc-ico-stroke" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 20V10M12 20V4M20 20v-7"/>
+          </svg>
+        </span>
+        <div>
+          <h4>Voz</h4>
+          <p>O branco é a tinta de título e display. É com ele que a casa diz o que tem a dizer, em caixa-baixa com a inicial maiúscula.</p>
+        </div>
+      </li>
+      <li>
+        <span class="b-ico" aria-hidden="true">
+          <svg class="doc-ico-stroke" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/>
+          </svg>
+        </span>
+        <div>
+          <h4>Acento</h4>
+          <p>As joias, azul, verde, ouro e areia, entram com parcimônia. A escassez é o que transforma a cor em ênfase.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <p class="doc-when"><b>Quando usar:</b> princípios, benefícios e passos que não são numerados mas pedem leitura sequencial. Para passos com ordem explícita, prefira <span class="doc-code">.b-steps</span> ou <span class="doc-code">.b-seq</span>, que já numeram. Para itens autônomos que serão lidos fora de ordem, volte para a grade de cartões.</p>
+
+  <div class="doc-note dont">
+    <span class="doc-note-tag">Evite</span>
+    Pintar o ícone com a cor de acento. Na lista, o acento atrai o olhar para uma linha específica e quebra a leitura vertical; a moldura neutra mantém todos os itens no mesmo nível visual.
+  </div>
+</div></section>
+
+<!-- ============================================================
+     05 · PERSONA
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">05</span><p class="doc-kicker">Persona</p></div>
+  <h2>O retrato de quem vai <em>ouvir</em></h2>
+  <p>A persona é o cartão mais denso do sistema, porque resume uma pessoa em uma caixa. À esquerda fica o retrato, em proporção três por quatro. À direita, o nome em display, o papel logo abaixo e um corpo organizado em atributos rotulados. Cada atributo abre com uma faixa de acento e um rótulo curto, o que deixa o bloco escaneável: o leitor encontra o trabalho a resolver, o estágio de consciência e o que a pessoa busca sem ler o parágrafo inteiro. A persona abaixo é fictícia, montada apenas para demonstrar a estrutura.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Specimen · .b-persona completa</span>
+    <div class="b-persona">
+      <div class="b-portrait" aria-hidden="true">retrato 3:4</div>
+      <div>
+        <h3>Helena Vasconcelos</h3>
+        <p class="b-persona-role">Gerente de marketing · rede de varejo regional (persona fictícia)</p>
+
+        <p style="font-size:var(--fs-small); color:var(--muted); margin:0 0 18px; max-width:52ch;">
+          Helena responde por uma marca conhecida na praça mas sem sistema visual próprio. Cada campanha sai de um fornecedor diferente, e ela perde tempo explicando do zero o que a marca é. Procura uma base que organize a casa antes de produzir a próxima peça.
+        </p>
+
+        <div class="b-attr">
+          <b>Trabalho a resolver</b>
+          Fazer cada peça parecer da mesma marca, sem refazer a direção visual a cada fornecedor.
+        </div>
+        <div class="b-attr">
+          <b>Estágio de consciência</b>
+          Consciente do problema, ainda comparando soluções. Sabe que falta consistência, não sabe ainda que a resposta é um sistema.
+        </div>
+        <div class="b-attr">
+          <b>O que busca</b>
+          Regras claras, exemplos prontos e autonomia para o time aplicar sem depender de aprovação a cada passo.
+        </div>
+
+        <div class="b-quote" style="margin-top:18px;">
+          <p>Eu não quero mais explicar a marca toda vez. Quero abrir um arquivo e já saber como ela fala.</p>
+          <cite>Helena, em entrevista de descoberta (fictícia)</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="doc-when"><b>Quando usar:</b> no book, sempre que a estratégia precisar de um rosto. Uma persona por público primário; públicos secundários entram como variações, não como uma galeria. O retrato pode receber uma foto real (preenche por <span class="doc-code">object-fit: cover</span>) ou ficar como marcador durante a montagem.</p>
+
+  <h3>Os blocos da persona</h3>
+  <ul class="doc-anatomy">
+    <li><b><span class="doc-code">.b-portrait</span></b> Retrato em proporção três por quatro, com borda tracejada quando vazio.</li>
+    <li><b><span class="doc-code">h3</span> + <span class="doc-code">.b-persona-role</span></b> Nome em display e papel em texto secundário, o cabeçalho da pessoa.</li>
+    <li><b>Parágrafo de contexto</b> Uma situação curta que ancora os atributos seguintes na vida real da persona.</li>
+    <li><b><span class="doc-code">.b-attr</span></b> Atributos rotulados, cada um com faixa de acento à esquerda. É onde entram o trabalho a resolver, o estágio de consciência e o que a pessoa busca.</li>
+    <li><b>Citação</b> Uma fala curta entre aspas que dá voz à persona e fecha o cartão.</li>
+  </ul>
+
+  <div class="doc-note do" style="margin-top:18px;">
+    <span class="doc-note-tag">No palco</span>
+    Para apresentação ao vivo, a versão de deck é a <span class="doc-code">.s-persona</span> (em <span class="doc-code">deck.css</span>), com <span class="doc-code">.s-portrait</span>, <span class="doc-code">.s-persona-name</span>, <span class="doc-code">.s-persona-role</span> e a grade de atributos <span class="doc-code">.s-attr-grid</span>. Mesma anatomia, densidade menor: o palco mostra o rosto e três atributos, o book aprofunda.
+  </div>
+
+  <div class="doc-note dont" style="margin-top:14px;">
+    <span class="doc-note-tag">Evite</span>
+    Inventar dado demográfico que a pesquisa não sustenta. A persona é uma síntese de comportamento, não uma ficha cadastral; cada atributo precisa de lastro em entrevista ou dado, sob risco de virar caricatura.
+  </div>
+</div></section>
+
+<footer class="doc-foot"><div class="doc-wrap">
+  <img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+  <div class="doc-addr"><span>São Paulo · SP</span><span>Campo Grande · MS</span><span>Cuiabá · MT</span></div>
+  <p class="doc-foot-meta">Sistema de Design 80 20 · Montserrat · campo-laranja, palco escuro, papel claro</p>
+</div></footer>
+
+</body>
+</html>

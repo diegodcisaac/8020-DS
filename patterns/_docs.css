@@ -1,0 +1,113 @@
+/* ============================================================
+   8020-DS — patterns/_docs.css
+   Cromo de DOCUMENTACAO: o involucro das paginas de catalogo
+   (patterns/*.html) e do index. NAO faz parte do sistema entregue
+   ao cliente; e a moldura de referencia do proprio DS.
+
+   Consome SO papeis semanticos (--paper/--ink/--accent...), entao
+   roda em qualquer variante de token. O cromo e MONOCROMATICO de
+   proposito (branco/preto/esmaecidos), para nao gastar a joia: a
+   joia aparece nos specimens, onde esta sendo documentada.
+   Namespace .doc-* (nao colide com b-* / s-*).
+   ============================================================ */
+
+.doc { background: var(--paper); color: var(--ink-body); }
+.doc-wrap { max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+
+/* ---------- barra de topo ---------- */
+.doc-head {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  padding: 14px var(--gutter);
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--hairline);
+}
+.doc-brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+.doc-brand img { height: 24px; width: auto; display: block; }
+.doc-brand span { font-size: var(--fs-micro); font-weight: var(--w-label); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--muted); }
+.doc-nav { display: flex; flex-wrap: wrap; gap: 4px 14px; justify-content: flex-end; }
+.doc-nav a { color: var(--ink); text-decoration: none; opacity: .72; font-size: var(--fs-small); font-weight: var(--w-medium); transition: opacity var(--dur-fast) var(--ease); }
+.doc-nav a:hover { opacity: 1; }
+.doc-nav a[aria-current="page"] { opacity: 1; font-weight: var(--w-label); border-bottom: 2px solid var(--ink); }
+
+/* ---------- abertura da pagina ---------- */
+.doc-hero { padding-block: clamp(48px, 8vw, 104px) clamp(28px, 4vw, 52px); }
+.doc-eyebrow { font-size: var(--fs-micro); font-weight: var(--w-label); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--muted); margin: 0 0 18px; }
+.doc-hero h1 { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-display); line-height: var(--lh-tight); letter-spacing: -.03em; color: var(--ink); margin: 0; max-width: 17ch; }
+.doc-hero h1 em { font-style: italic; font-weight: var(--w-black); font-size: 1.06em; }
+.doc-lead { font-size: var(--fs-lead); color: var(--muted); max-width: 60ch; margin: 24px 0 0; }
+
+/* ---------- secao ---------- */
+.doc-section { padding-block: clamp(40px, 6vw, 80px); border-top: 1px solid var(--hairline); }
+.doc-section:first-of-type { border-top: 0; }
+.doc-shoulder { display: flex; align-items: baseline; gap: 14px; margin: 0 0 8px; }
+.doc-shoulder .doc-num { font-family: var(--font-display); font-weight: var(--w-black); font-size: var(--fs-small); color: var(--muted); font-variant-numeric: tabular-nums; }
+.doc-kicker { font-size: var(--fs-micro); font-weight: var(--w-label); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--muted); margin: 0; }
+.doc-section h2 { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-title); line-height: var(--lh-tight); letter-spacing: -.02em; color: var(--ink); margin: 0 0 14px; }
+.doc-section h2 em { font-style: italic; font-weight: var(--w-black); font-size: 1.08em; }
+.doc-section h3 { font-family: var(--font-display); font-weight: var(--w-title); font-size: var(--fs-h2); color: var(--ink); margin: 28px 0 12px; }
+.doc-section > p, .doc-prose p { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--ink-body); max-width: 66ch; margin: 0 0 14px; }
+.doc-section > p strong, .doc-prose strong { color: var(--ink); font-weight: var(--w-label); }
+
+/* ---------- grades utilitarias ---------- */
+.doc-grid { display: grid; gap: 18px; }
+.doc-2 { grid-template-columns: repeat(2, 1fr); }
+.doc-3 { grid-template-columns: repeat(3, 1fr); }
+.doc-4 { grid-template-columns: repeat(4, 1fr); }
+.doc-auto { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+/* ---------- specimen (palco do exemplo vivo) ---------- */
+.doc-specimen {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  padding: clamp(22px, 3vw, 40px); margin: 18px 0;
+  position: relative; background: color-mix(in srgb, var(--ink) 5%, transparent);
+}
+.doc-specimen.plain { background: none; }
+.doc-specimen.tight { padding: 18px; }
+.doc-specimen-label { font-size: var(--fs-micro); font-weight: var(--w-label); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--muted); margin: 0 0 16px; display: block; }
+/* legenda de uso sob um specimen */
+.doc-when { font-size: var(--fs-small); color: var(--muted); margin: 10px 0 0; max-width: 64ch; }
+.doc-when b { color: var(--ink); font-weight: var(--w-label); }
+
+/* ---------- nota de uso (faz / nao faz) ---------- */
+.doc-note { display: grid; gap: 6px; padding: 16px 20px; border-radius: var(--radius-sm); border: 1px solid var(--line); font-size: var(--fs-small); color: var(--ink-body); }
+.doc-note .doc-note-tag { font-size: var(--fs-micro); font-weight: var(--w-label); letter-spacing: var(--tracking-label); text-transform: uppercase; }
+.doc-note.do { border-left: 3px solid var(--ink); }
+.doc-note.dont { border-left: 3px solid var(--negative); }
+.doc-note.do .doc-note-tag { color: var(--ink); }
+.doc-note.dont .doc-note-tag { color: var(--negative); }
+
+/* ---------- chips / rotulos ---------- */
+.doc-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: var(--radius-pill); border: 1px solid var(--line); font-size: var(--fs-micro); font-weight: var(--w-label); color: var(--ink); }
+.doc-code { font-family: var(--font-data); font-size: .9em; background: color-mix(in srgb, var(--ink) 12%, transparent); color: var(--ink); padding: 2px 7px; border-radius: var(--radius-sm); }
+
+/* ---------- tabela de referencia ---------- */
+.doc-table { width: 100%; border-collapse: collapse; font-size: var(--fs-small); }
+.doc-table th, .doc-table td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.doc-table th { font-size: var(--fs-micro); text-transform: uppercase; letter-spacing: var(--tracking-label); color: var(--muted); font-weight: var(--w-label); }
+.doc-table td { color: var(--ink-body); }
+.doc-table td code, .doc-table td .doc-code { white-space: nowrap; }
+
+/* ---------- evitar -> usar (vocabulario / antipattern inline) ---------- */
+.doc-swap { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border-radius: var(--radius); overflow: hidden; }
+.doc-swap > div { background: var(--paper); padding: 18px 20px; }
+.doc-swap .doc-swap-h { font-size: var(--fs-micro); font-weight: var(--w-label); letter-spacing: var(--tracking-label); text-transform: uppercase; margin: 0 0 8px; }
+.doc-swap .evitar .doc-swap-h { color: var(--negative); }
+.doc-swap .usar .doc-swap-h { color: var(--ink); }
+
+/* ---------- rodape ---------- */
+.doc-foot { background: var(--floor); color: var(--floor-ink); margin-top: 24px; }
+.doc-foot .doc-wrap { display: flex; flex-wrap: wrap; gap: 32px; align-items: center; justify-content: space-between; padding-block: 48px; }
+.doc-foot img { height: 28px; width: auto; }
+.doc-foot .doc-addr { display: flex; gap: 36px; flex-wrap: wrap; font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-body); }
+.doc-foot .doc-foot-meta { width: 100%; font-size: var(--fs-micro); color: color-mix(in srgb, var(--floor-ink) 60%, transparent); letter-spacing: var(--tracking-label); }
+
+/* ---------- responsivo ---------- */
+@media (max-width: 900px) {
+  .doc-3, .doc-4 { grid-template-columns: repeat(2, 1fr); }
+  .doc-nav { display: none; }
+}
+@media (max-width: 600px) {
+  .doc-2, .doc-3, .doc-4, .doc-swap { grid-template-columns: 1fr; }
+}

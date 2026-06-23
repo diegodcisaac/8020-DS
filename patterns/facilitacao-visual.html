@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8020-DS · Facilitação visual</title>
+<link rel="stylesheet" href="../tokens/8020.css">
+<link rel="stylesheet" href="../assets/book.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  /* ---- scaffolding local de specimen (so esta pagina) ---- */
+  /* tudo via papeis semanticos; sem cor crua */
+
+  /* callout: aviso lateral com icone SVG + texto */
+  .fv-callout {
+    display: grid; grid-template-columns: 28px 1fr; gap: 16px; align-items: start;
+    background: var(--surface); color: var(--surface-ink);
+    border: 1px solid var(--line); border-radius: var(--radius);
+    border-left: 4px solid var(--accent);
+    padding: 20px 24px;
+  }
+  .fv-callout .fv-callout-ico { width: 28px; height: 28px; color: var(--accent); }
+  .fv-callout .fv-callout-ico svg { width: 100%; height: 100%; display: block; }
+  .fv-callout .fv-callout-label { font-size: var(--fs-micro); font-weight: var(--w-label); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+  .fv-callout .fv-callout-text { margin: 0; font-size: var(--fs-small); color: var(--surface-ink); line-height: var(--lh-body); }
+  .fv-callout .fv-callout-text strong { color: var(--ink); font-weight: var(--w-label); }
+  /* variante de alerta: barra e icone em azul (dado negativo / atencao), nunca vermelho */
+  .fv-callout.is-alerta { border-left-color: var(--negative); }
+  .fv-callout.is-alerta .fv-callout-ico { color: var(--negative); }
+
+  /* anotacao apontada: figura simples + nota com seta */
+  .fv-annot svg { width: 100%; height: auto; overflow: visible; }
+
+  /* takeaway: caixa de sintese ao fim de um bloco */
+  .fv-take {
+    display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: baseline;
+    background: var(--surface); color: var(--surface-ink);
+    border-radius: var(--radius-lg); padding: 26px 30px;
+    border-top: 4px solid var(--accent);
+  }
+  .fv-take .fv-take-mark { font-size: var(--fs-micro); font-weight: var(--w-label); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--accent); white-space: nowrap; }
+  .fv-take p { margin: 0; font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-h2); line-height: 1.2; color: var(--ink); }
+
+  /* definicao: termo + definicao estilo glossario */
+  .fv-defs { display: grid; gap: 1px; background: var(--line); border-radius: var(--radius); overflow: hidden; margin: 0; }
+  .fv-def { display: grid; grid-template-columns: minmax(120px, 200px) 1fr; gap: 24px; background: var(--paper); padding: 18px 22px; }
+  .fv-def dt { font-family: var(--font-display); font-weight: var(--w-title); font-size: var(--fs-lead); color: var(--ink); margin: 0; }
+  .fv-def dd { margin: 0; font-size: var(--fs-small); color: var(--ink-body); line-height: var(--lh-body); }
+  .fv-def dd .fv-def-pos { display: block; font-size: var(--fs-micro); font-weight: var(--w-label); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+
+  /* mini-legenda de papeis dentro de um specimen composto */
+  .fv-roles { display: grid; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+  .fv-roles li { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; font-size: var(--fs-small); color: var(--ink-body); }
+  .fv-roles li b { color: var(--ink); font-weight: var(--w-label); }
+
+  @media (max-width: 600px) {
+    .fv-def { grid-template-columns: 1fr; gap: 6px; }
+    .fv-take { grid-template-columns: 1fr; gap: 10px; }
+  }
+</style>
+</head>
+<body class="doc">
+
+<header class="doc-head">
+  <a class="doc-brand" href="../index.html"><img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing"><span>Sistema de Design</span></a>
+  <nav class="doc-nav" aria-label="Páginas do sistema">
+    <a href="colors.html">Cores</a>
+    <a href="variants.html">Variantes</a>
+    <a href="typography.html">Tipografia</a>
+    <a href="graphic-elements.html">Elementos</a>
+    <a href="images.html">Imagens</a>
+    <a href="cards.html">Cards</a>
+    <a href="facilitacao-visual.html" aria-current="page">Facilitação</a>
+    <a href="diagrams.html">Diagramas</a>
+    <a href="charts.html">Gráficos</a>
+    <a href="layouts.html">Deck</a>
+    <a href="book-layout.html">Book</a>
+  </nav>
+</header>
+
+<header class="doc-hero"><div class="doc-wrap">
+  <p class="doc-eyebrow">Metodologia · Facilitação visual</p>
+  <h1>Os dispositivos que mastigam a <em>informação</em></h1>
+  <p class="doc-lead">A casa não solta uma declaração massiva sozinha. Toda afirmação de peso vem acompanhada do texto que a explica e de um gráfico ou dispositivo que a mastiga, e o número grande nunca aparece sem a frase que o nomeia logo ao lado. Esta página reúne os dispositivos que cumprem esse papel, com o specimen de cada um e o momento certo de chamá-lo. A clareza inline é premissa, não acabamento: quem lê qualquer trecho solto da peça precisa se localizar sem voltar parágrafos atrás.</p>
+</div></header>
+
+<!-- ============================ 01 NUMERO + PROVA ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">01</span><p class="doc-kicker">Número + prova</p></div>
+  <h2>O número grande e a frase que o <em>nomeia</em></h2>
+  <p>Este é o par fundador da facilitação na casa: nenhum número monumental anda sozinho. O componente <span class="doc-code">.b-numprova</span> trava o dado-herói à esquerda e a prova rotulada à direita, lado a lado, para que o salto de tamanho seja imediatamente traduzido em sentido. O rótulo em maiúsculas esmaecidas diz a fonte ou a unidade; a frase de prova diz o que aquele número significa para quem lê. Sem a frase, o número é só tipografia.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Specimen · .b-numprova</span>
+    <div class="b-numprova">
+      <div class="b-bignum">78<span>%</span></div>
+      <div>
+        <p class="b-prova-label">Base · leitores do book em tela cheia</p>
+        <p class="b-prova-text">Mais de três em cada quatro leitores chegam ao fim do capítulo quando a declaração de abertura vem com prova ao lado, contra menos da metade quando o número aparece solto.</p>
+      </div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> na abertura de um capítulo ou seção, sempre que houver um dado que sustenta o argumento. O valor final fica escrito no próprio elemento (aqui, <span class="doc-code">78</span>), então o número certo aparece mesmo sem animação. O <span class="doc-code">data-count</span>, quando usado, é só realce de entrada.</p>
+  </div>
+
+  <div class="doc-grid doc-2">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <p>Número e prova no mesmo bloco, na mesma dobra. Rótulo nomeia a base ou a unidade na própria frase, sem depender de memória de parágrafo anterior.</p>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <p>Número monumental solto numa tela, com a explicação só três seções depois. Quem lê o trecho isolado fica sem âncora e o dado vira ornamento.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================ 02 INSIGHT-BOX ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">02</span><p class="doc-kicker">Insight-box</p></div>
+  <h2>A barra de acento que marca o <em>achado</em></h2>
+  <p>O insight-box carrega o achado central de um trecho: aquilo que o leitor precisa levar mesmo que esqueça o resto. A barra vertical em cor de acento à esquerda funciona como um marcador de margem, o rótulo anuncia que ali está a conclusão, e o texto entrega a leitura em uma ou duas frases. É o lugar onde a casa diz, em voz baixa e firme, o que tudo aquilo quer dizer. Use um por bloco argumentativo: se houver dois, nenhum é o achado.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Specimen · .b-insight</span>
+    <div class="b-insight">
+      <div class="b-insight-bar" aria-hidden="true"></div>
+      <div>
+        <p class="b-insight-label">O que isso quer dizer</p>
+        <p class="b-insight-text">A audiência não abandona a peça por excesso de informação, e sim por falta de tradução. <strong>Quando cada número chega com a frase que o nomeia, o tempo de leitura sobe e a desistência cai.</strong></p>
+      </div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> ao fechar um trecho de análise, para destilar o achado antes de virar a página. A barra consome a cor de acento (<span class="doc-code">--accent</span>), então conta como um dos usos de joia na peça cliente.</p>
+  </div>
+
+  <div class="doc-grid doc-2">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <p>Uma frase de achado, autossuficiente, que se entende lida fora de contexto. Rótulo curto que prepara o leitor para a conclusão.</p>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <p>Parágrafo inteiro dentro do insight-box, ou vários insight-boxes seguidos. Se tudo é achado, nada salta.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================ 03 DESTAQUE ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">Destaque</p></div>
+  <h2>O bloco que segura uma frase de <em>peso</em></h2>
+  <p>O destaque é o irmão mais encorpado do insight-box. Onde o insight marca um achado discreto na margem, o destaque ocupa um bloco inteiro sobre a superfície aprofundada, com kicker em cima e uma frase de peso embaixo. Serve para uma definição que organiza o capítulo, uma premissa que sustenta tudo o que vem depois, ou uma chamada que merece pausa. A borda de acento à esquerda dá o sinal de importância sem precisar gritar.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Specimen · .b-highlight</span>
+    <div class="b-highlight">
+      <p class="b-hl-kicker">A premissa do sistema</p>
+      <p>Informação só facilita quando alguém já fez o trabalho de mastigar. O dispositivo certo é o que poupa o leitor desse esforço, não o que transfere a conta para ele.</p>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> para fixar uma premissa ou definição que vale para o capítulo inteiro. Reserve para uma ou duas aparições por peça; o destaque perde força se repetido a cada dobra.</p>
+  </div>
+
+  <div class="doc-grid doc-2">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <p>Frase fechada e memorável, com kicker que a situa. Bloco isolado, com respiro acima e abaixo para registrar a pausa.</p>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <p>Despejar um parágrafo comum dentro do destaque só para mudar de cor. O bloco anuncia importância: se o conteúdo é corriqueiro, a promessa não se cumpre.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================ 04 REALCE INLINE ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">04</span><p class="doc-kicker">Realce inline</p></div>
+  <h2>Uma palavra que muda de cor dentro da <em>declaração</em></h2>
+  <p>O realce inline é o gesto mais econômico do repertório: dentro de uma declaração grande, uma única palavra recebe a cor de acento e vai a itálico, via <span class="doc-code">.hl</span>. É a forma de apontar o termo que carrega a frase sem quebrá-la em duas. Funciona porque é raro: uma palavra realçada por declaração, no máximo duas em uma peça inteira. O itálico do realce conversa com o italismo do display, então o gesto pertence à casa, não parece colado.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Specimen · .b-statement com .hl</span>
+    <p class="b-statement">A audiência não desiste por excesso, desiste por falta de <span class="hl">tradução</span>.</p>
+    <p class="doc-when"><b>Quando usar:</b> sobre uma declaração que já é o ápice de um trecho, para apontar o termo-chave. A cor vem de <span class="doc-code">--accent</span>, então o realce conta no orçamento de joia da peça cliente.</p>
+  </div>
+
+  <div class="doc-grid doc-2">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <p>Uma palavra por declaração, a que de fato carrega o sentido. Itálico em acento, ecoando a assinatura do display.</p>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <p>Três ou quatro palavras realçadas na mesma frase, ou realce em texto corrido pequeno. O acento espalhado deixa de apontar e vira decoração.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================ 05 CALLOUT ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">05</span><p class="doc-kicker">Callout</p></div>
+  <h2>O aviso que fica à <em>margem</em></h2>
+  <p>O callout é a observação lateral: um aviso, uma ressalva, um lembrete que não pertence ao corpo do argumento mas precisa estar à vista. Ícone de sinal à esquerda, rótulo curto e texto enxuto à direita. A versão padrão usa a cor de acento na barra e no ícone, para chamar sem alarmar. Existe ainda a versão de atenção, que troca o acento pelo azul, a cor de alerta da casa, nunca o vermelho. O callout interrompe a leitura por um instante e devolve o leitor ao fluxo.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Specimen · callout padrão (observação)</span>
+    <div class="fv-callout">
+      <span class="fv-callout-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="7.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </span>
+      <div>
+        <p class="fv-callout-label">Observação</p>
+        <p class="fv-callout-text">O dado-herói deste capítulo vem de base própria. Quando a fonte for de terceiros, registre a origem no rótulo da prova, não em nota de rodapé que o leitor não vai buscar.</p>
+      </div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> para uma ressalva metodológica ou um lembrete de uso que ajuda quem lê sem desviar o argumento. Um callout por trecho; mais que isso vira ruído de margem.</p>
+  </div>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Specimen · callout de atenção (azul, nunca vermelho)</span>
+    <div class="fv-callout is-alerta">
+      <span class="fv-callout-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 L22 20 L2 20 Z"/><line x1="12" y1="9" x2="12" y2="14"/><circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/></svg>
+      </span>
+      <div>
+        <p class="fv-callout-label">Atenção</p>
+        <p class="fv-callout-text"><strong>Não apoie uma prova em canal ainda não entregue.</strong> Se o dado é de um meio que não está na peça, ele fica na análise, fora do entregável, até existir o desenho correspondente.</p>
+      </div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> para um alerta de uso que evita um erro recorrente. A cor de atenção é o azul (<span class="doc-code">--negative</span>), coerente com a regra de dado negativo da casa: vermelho nunca entra.</p>
+  </div>
+
+  <div class="doc-grid doc-2">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <p>Ícone com <span class="doc-code">aria-hidden="true"</span>, porque é decorativo, e o sentido vai no rótulo de texto. Azul para atenção, acento para observação comum.</p>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <p>Vermelho para alerta, ou uma pilha de callouts que toma mais espaço que o argumento. A observação é margem, não corpo.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================ 06 ANOTACAO APONTADA ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">06</span><p class="doc-kicker">Anotação apontada</p></div>
+  <h2>A seta que liga a nota ao <em>ponto</em></h2>
+  <p>Quando uma observação precisa indicar exatamente onde olhar, a casa usa a anotação apontada: uma nota curta ligada por uma seta ao ponto da figura. A seta é sempre desenhada por <span class="doc-code">&lt;marker&gt;</span> em <span class="doc-code">&lt;defs&gt;</span>, com <span class="doc-code">orient="auto-start-reverse"</span>, para que a ponta acompanhe a curva do conector em qualquer ângulo. Triângulo desenhado à mão não gira com a linha e desalinha assim que a geometria muda; o marker resolve isso de uma vez. Este specimen prova o padrão de seta que vale para todo diagrama do sistema.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Specimen · figura com nota e seta via marker</span>
+    <div class="fv-annot">
+      <svg viewBox="0 0 640 280" role="img" aria-label="Curva de leitura ao longo do capítulo, com a desistência caindo no ponto em que a prova entra ao lado do número. A nota aponta para esse ponto de virada.">
+        <title>Anotação apontada sobre uma curva de leitura</title>
+        <desc>A linha branca sobe e depois cai; uma nota a liga, por uma seta, ao ponto em que a prova entra ao lado do número, onde a desistência se reduz.</desc>
+        <defs>
+          <marker id="fv-arw-1" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+            <path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/>
+          </marker>
+        </defs>
+        <!-- eixo de base -->
+        <line x1="56" y1="232" x2="600" y2="232" stroke="var(--hairline)" stroke-width="1.5"/>
+        <!-- curva de desistencia (massa, branco esmaecido) -->
+        <polyline points="56,96 150,108 244,132 338,176 432,204 526,220 600,224"
+                  fill="none" stroke="rgba(255,255,255,.45)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- ponto de virada (dado-heroi, joia) -->
+        <circle cx="338" cy="176" r="6.5" fill="var(--accent)"/>
+        <!-- conector da nota, com seta via marker (cor herda de color) -->
+        <g style="color: var(--ink);">
+          <path d="M250,58 C290,86 312,128 332,168" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#fv-arw-1)"/>
+        </g>
+        <!-- nota -->
+        <text x="64" y="44" font-family="var(--font-display)" font-weight="700" font-size="15" fill="var(--ink)">A prova entra aqui</text>
+        <text x="64" y="64" font-family="var(--font-body)" font-size="13" fill="var(--muted)">e a desistência começa a cair</text>
+      </svg>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> sobre um gráfico ou figura em que uma observação precisa apontar um ponto específico, não a figura inteira. Aqui o SVG carrega dado, então leva <span class="doc-code">role="img"</span>, <span class="doc-code">aria-label</span> com os números e <span class="doc-code">&lt;title&gt;</span> e <span class="doc-code">&lt;desc&gt;</span> internos.</p>
+  </div>
+
+  <div class="doc-grid doc-2">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <p>Seta sempre por <span class="doc-code">marker-end="url(#id)"</span>, com identificador único por SVG. Conector com curva suave que sai da nota e chega no ponto exato.</p>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <p>Triângulo manual colado na ponta de uma linha. Ele não gira com o conector e desalinha; o <span class="doc-code">&lt;marker&gt;</span> existe justamente para evitar isso.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================ 07 PARA LEVAR ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">07</span><p class="doc-kicker">Para levar</p></div>
+  <h2>A síntese que o leitor carrega ao <em>sair</em></h2>
+  <p>O para levar fecha um bloco com a frase única que vale a pena guardar. Diferente do insight-box, que vive no meio do argumento, o takeaway é uma despedida: aparece ao fim de uma seção e resume, em uma linha, o que ficou. O rótulo curto à esquerda sinaliza a função; a frase de display à direita entrega a síntese. Quando o leitor sai da seção, é essa frase que ele leva.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Specimen · para levar</span>
+    <div class="fv-take">
+      <span class="fv-take-mark">Para levar</span>
+      <p>Toda declaração de peso anda em par: o texto que explica e o dispositivo que mastiga, sempre na mesma dobra.</p>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> no fechamento de uma seção densa, como ponto final de sentido. Uma síntese por seção; o takeaway perde o caráter de despedida se aparecer no meio do caminho.</p>
+  </div>
+
+  <div class="doc-grid doc-2">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <p>Uma frase, fechada e portátil, que resume o bloco inteiro. Rótulo que anuncia que ali termina o trecho.</p>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <p>Lista de tópicos disfarçada de síntese, ou um takeaway por dobra. A síntese vale porque é o último gesto, não um refrão.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================ 08 LEGENDA EXPLICATIVA ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">08</span><p class="doc-kicker">Legenda explicativa</p></div>
+  <h2>A linha sob a figura que diz o que <em>ler</em></h2>
+  <p>A legenda é a instrução de leitura de um gráfico ou imagem. Não repete o que o título já disse: ela aponta onde olhar e o que aquilo significa. Vive em <span class="doc-code">.b-figcap</span>, em texto esmaecido logo abaixo do specimen, e converte uma figura que poderia passar batida em uma figura que guia. Toda visualização da casa merece uma, porque a clareza inline também vale para o que o olho vê.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Specimen · gráfico com legenda explicativa</span>
+    <div class="b-viz">
+      <svg viewBox="0 0 640 220" role="img" aria-label="Tempo médio de leitura por formato: declaração com prova ao lado retém 4 minutos e 12 segundos; número solto retém 1 minuto e 48 segundos.">
+        <title>Tempo de leitura por formato de declaração</title>
+        <desc>Duas barras horizontais. A barra de declaração com prova, em branco, é mais que o dobro da barra de número solto, em branco esmaecido.</desc>
+        <!-- barra A: com prova (massa, branco) - geometria real -->
+        <rect x="180" y="48" width="420" height="40" rx="6" fill="#ffffff"/>
+        <text x="172" y="73" text-anchor="end" font-family="var(--font-body)" font-size="13" fill="var(--ink-body)">Com prova ao lado</text>
+        <text x="190" y="73" font-family="var(--font-data)" font-size="14" font-weight="700" fill="var(--accent-ink)">4 min 12 s</text>
+        <!-- barra B: numero solto (branco esmaecido) - geometria real, menor -->
+        <rect x="180" y="120" width="180" height="40" rx="6" fill="rgba(255,255,255,.40)"/>
+        <text x="172" y="145" text-anchor="end" font-family="var(--font-body)" font-size="13" fill="var(--ink-body)">Número solto</text>
+        <text x="372" y="145" font-family="var(--font-data)" font-size="14" font-weight="700" fill="var(--ink)">1 min 48 s</text>
+      </svg>
+    </div>
+    <p class="b-figcap">Leia a comparação pelo comprimento das barras: a declaração que chega com a prova ao lado segura o leitor mais que o dobro do tempo da mesma informação apresentada como número solto. A barra cheia é o formato recomendado; a esmaecida é o que se evita.</p>
+    <p class="doc-when"><b>Quando usar:</b> sob qualquer gráfico, diagrama ou imagem do book. As barras têm largura real no atributo <span class="doc-code">width</span>, então o desenho aparece correto sem depender de animação ou de JavaScript.</p>
+  </div>
+
+  <div class="doc-grid doc-2">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <p>Legenda que ensina a ler: por onde começar, o que comparar, qual leitura tirar. Texto esmaecido, subordinado à figura.</p>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <p>Legenda que só repete o título ou cita a ferramenta. A linha sob a figura serve para orientar o olho, não para preencher espaço.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================ 09 DEFINICAO ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">09</span><p class="doc-kicker">Definição</p></div>
+  <h2>O termo e o seu sentido lado a <em>lado</em></h2>
+  <p>A definição resolve o vocabulário antes que ele tropece o leitor. Quando uma peça usa um termo próprio ou técnico, a casa o explica no lugar, em formato de glossário: o termo de um lado, o sentido do outro. É a clareza inline aplicada à linguagem, e evita a nota de rodapé que ninguém lê. Construída sobre a lista de descrição do HTML, com <span class="doc-code">&lt;dt&gt;</span> para o termo e <span class="doc-code">&lt;dd&gt;</span> para o sentido, herda a semântica correta de graça.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Specimen · termo e definição (dl/dt/dd)</span>
+    <dl class="fv-defs">
+      <div class="fv-def">
+        <dt>Dispositivo que mastiga</dt>
+        <dd><span class="fv-def-pos">substantivo</span>Gráfico, diagrama ou caixa que traduz uma declaração massiva em algo já digerido, poupando o leitor do esforço de interpretar o dado cru.</dd>
+      </div>
+      <div class="fv-def">
+        <dt>Clareza inline</dt>
+        <dd><span class="fv-def-pos">premissa</span>Princípio de que qualquer trecho lido fora de ordem se explica sozinho, sem exigir que o leitor volte parágrafos atrás para se localizar.</dd>
+      </div>
+      <div class="fv-def">
+        <dt>Dado-herói</dt>
+        <dd><span class="fv-def-pos">substantivo</span>O número que carrega o argumento de um trecho. Recebe a cor de joia no gráfico, enquanto a massa das séries fica em branco e brancos esmaecidos.</dd>
+      </div>
+    </dl>
+    <p class="doc-when"><b>Quando usar:</b> ao introduzir um termo próprio da peça ou um conceito técnico que o público pode não dominar. Uma definição resolve no lugar o que uma nota de rodapé deixaria pendente.</p>
+  </div>
+
+  <div class="doc-grid doc-2">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <p>Marcação semântica de glossário com <span class="doc-code">dl</span>, <span class="doc-code">dt</span> e <span class="doc-code">dd</span>. Definição curta, em linguagem do leitor, não do método interno.</p>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <p>Empilhar dez termos numa parede de glossário, ou definir com jargão que pede outra definição. Defina só o que de fato pode tropeçar a leitura.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================ 10 APARTE ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">10</span><p class="doc-kicker">Aparte</p></div>
+  <h2>O respiro quase falado nas <em>costuras</em></h2>
+  <p>O aparte é o comentário que a casa solta nas costuras entre movimentos: uma frase curta, em primeira pessoa quase, que muda o ritmo e prepara o que vem. Ele sangra a largura inteira sobre a superfície aprofundada, e por isso pesa: usa o tamanho de display e fica sozinho na dobra. É a assinatura de entrega da casa, o respiro dramático que o público já espera entre um bloco denso e o próximo. Funciona porque é raro e porque não argumenta: ele observa, e devolve o leitor ao fluxo com outro fôlego.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Specimen · aparte (.b-statement-bleed)</span>
+    <div class="b-statement-bleed">
+      <div class="container">
+        <p>Aqui a gente respira. O número já foi dito, a prova já está na mesa. O que vem agora é outra conversa.</p>
+      </div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> na costura entre dois movimentos densos, uma vez por peça, talvez duas em um longform. O aparte sangra a largura cheia, então precisa do espaço inteiro da dobra para cumprir o efeito de pausa.</p>
+  </div>
+
+  <div class="doc-grid doc-2">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <p>Frase curta, quase falada, que comenta sem provar. Sozinha na dobra, sangrando a largura, para registrar a virada de ritmo.</p>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <p>Aparte a cada seção, ou aparte que carrega dado e argumento. Repetido, perde o efeito de respiro; cheio de prova, vira mais um bloco de conteúdo.</p>
+    </div>
+  </div>
+
+  <div class="fv-take" style="margin-top:28px;">
+    <span class="fv-take-mark">Para levar</span>
+    <p>Cada dispositivo desta página existe para o mesmo fim: nenhuma afirmação massiva chega à audiência sem o texto que a explica e o recurso visual que a mastiga, na mesma dobra.</p>
+  </div>
+</div></section>
+
+<footer class="doc-foot"><div class="doc-wrap">
+  <img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+  <div class="doc-addr"><span>São Paulo · SP</span><span>Campo Grande · MS</span><span>Cuiabá · MT</span></div>
+  <p class="doc-foot-meta">Sistema de Design 80 20 · Montserrat · campo-laranja, palco escuro, papel claro</p>
+</div></footer>
+
+</body>
+</html>

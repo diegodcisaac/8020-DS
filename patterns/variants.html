@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8020-DS · Variantes</title>
+<link rel="stylesheet" href="../tokens/8020.css">
+<link rel="stylesheet" href="../assets/book.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  /* ---------------------------------------------------------------
+     CSS local SO desta pagina. Scaffolding do specimen comparativo.
+     Cada coluna .vr-col redeclara o conjunto COMPLETO de papeis
+     semanticos da variante (mesmos valores de tokens/8020*.css), e
+     o markup interno consome SO essas custom properties. Trocar os
+     papeis re-tematiza o bloco inteiro sem mexer no markup.
+  --------------------------------------------------------------- */
+
+  /* a grade comparativa: tres colunas que viram pilha no mobile */
+  .vr-rail { align-items: stretch; }
+
+  /* o palco de cada variante: aplica os papeis e pinta a si mesmo */
+  .vr-col {
+    background: var(--paper);
+    color: var(--ink-body);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    padding: clamp(20px, 2.4vw, 30px);
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    border: 1px solid var(--line);
+  }
+
+  /* CAMPO-LARANJA: espelha tokens/8020.css (a base canonica) */
+  .vr-campo {
+    --paper: #fa4616;
+    --ink: #ffffff;
+    --ink-body: #0a0a0a;
+    --surface: #d63a10;
+    --surface-ink: #ffffff;
+    --accent: #f5c542;
+    --accent-ink: #0a0a0a;
+    --floor: #0a0a0a;
+    --floor-ink: #ffffff;
+    --line: rgba(255, 255, 255, .24);
+    --hairline: rgba(255, 255, 255, .14);
+    --muted: rgba(255, 255, 255, .72);
+    --meta: rgba(255, 255, 255, .56);
+    --negative: #1f4ea8;
+  }
+
+  /* PALCO ESCURO: espelha tokens/8020-noite.css */
+  .vr-noite {
+    --paper: #0a0a0a;
+    --ink: #ffffff;
+    --ink-body: rgba(255, 255, 255, .88);
+    --surface: #161616;
+    --surface-ink: #ffffff;
+    --accent: #fa4616;
+    --accent-ink: #ffffff;
+    --floor: #fa4616;
+    --floor-ink: #ffffff;
+    --line: rgba(255, 255, 255, .18);
+    --hairline: rgba(255, 255, 255, .10);
+    --muted: rgba(255, 255, 255, .66);
+    --meta: rgba(255, 255, 255, .48);
+    --negative: #1f4ea8;
+  }
+
+  /* PAPEL CLARO: espelha tokens/8020-claro.css */
+  .vr-claro {
+    --paper: #faf7f2;
+    --ink: #111111;
+    --ink-body: #1a1a1a;
+    --surface: #ffffff;
+    --surface-ink: #111111;
+    --accent: #fa4616;
+    --accent-ink: #ffffff;
+    --floor: #0a0a0a;
+    --floor-ink: #ffffff;
+    --line: rgba(0, 0, 0, .12);
+    --hairline: rgba(0, 0, 0, .07);
+    --muted: rgba(0, 0, 0, .58);
+    --meta: rgba(0, 0, 0, .45);
+    --negative: #1f4ea8;
+  }
+
+  /* cabecalho de cada coluna */
+  .vr-head { display: flex; flex-direction: column; gap: 6px; padding-bottom: 4px; }
+  .vr-name {
+    font-family: var(--font-display);
+    font-weight: var(--w-display);
+    font-size: var(--fs-h2);
+    line-height: var(--lh-tight);
+    letter-spacing: -.01em;
+    color: var(--ink);
+    margin: 0;
+  }
+  .vr-use {
+    font-size: var(--fs-small);
+    color: var(--muted);
+    margin: 0;
+    max-width: 32ch;
+  }
+  .vr-swatch {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 4px;
+  }
+  .vr-dot {
+    width: 13px; height: 13px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--line);
+  }
+  .vr-dot.is-paper  { background: var(--paper); }
+  .vr-dot.is-ink    { background: var(--ink); }
+  .vr-dot.is-accent { background: var(--accent); }
+
+  /* divisor fino entre os blocos espelhados, no tom da variante */
+  .vr-rule { height: 1px; background: var(--hairline); border: 0; margin: 0; }
+
+  /* reduzir a escala dos componentes book dentro da celula estreita */
+  .vr-col .b-statement { font-size: var(--fs-lead); max-width: none; }
+  .vr-col .b-numprova { gap: 18px; align-items: baseline; }
+  .vr-col .b-bignum { font-size: clamp(46px, 6vw, 64px); }
+  .vr-col .b-prova-text { font-size: var(--fs-small); max-width: none; }
+  .vr-col .b-insight .b-insight-text { font-size: var(--fs-small); }
+  .vr-col .b-card { gap: 8px; }
+  .vr-col .b-card h3 { font-size: var(--fs-lead); }
+  .vr-col .b-quote p { font-size: var(--fs-lead); }
+
+  /* mini grafico de barras: rotula sob cada barra */
+  .vr-chart { display: block; width: 100%; height: auto; }
+  .vr-chart-cap {
+    font-size: var(--fs-micro);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 10px;
+  }
+
+  /* tabela de leitura dos papeis trocados */
+  .vr-roles td .vr-role-dot {
+    display: inline-block;
+    width: 12px; height: 12px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,.18);
+    vertical-align: -1px;
+    margin-right: 7px;
+  }
+
+  @media (max-width: 900px) {
+    /* a propria .doc-3 ja empilha para 2 col em 900; forcamos 1 col
+       para nao espremer tres specimens completos lado a lado */
+    .vr-rail.doc-3 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body class="doc">
+
+<header class="doc-head">
+  <a class="doc-brand" href="../index.html"><img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing"><span>Sistema de Design</span></a>
+  <nav class="doc-nav" aria-label="Páginas do sistema">
+    <a href="colors.html">Cores</a>
+    <a href="variants.html" aria-current="page">Variantes</a>
+    <a href="typography.html">Tipografia</a>
+    <a href="graphic-elements.html">Elementos</a>
+    <a href="images.html">Imagens</a>
+    <a href="cards.html">Cards</a>
+    <a href="facilitacao-visual.html">Facilitação</a>
+    <a href="diagrams.html">Diagramas</a>
+    <a href="charts.html">Gráficos</a>
+    <a href="layouts.html">Deck</a>
+    <a href="book-layout.html">Book</a>
+  </nav>
+</header>
+
+<header class="doc-hero"><div class="doc-wrap">
+  <p class="doc-eyebrow">Variantes de cor</p>
+  <h1>A mesma casa em três <em>luzes</em></h1>
+  <p class="doc-lead">O sistema tem três ambientes de cor: campo-laranja, palco escuro e papel claro. O componente nunca sabe em qual deles está. Ele lê papéis semânticos, e cada variante apenas redefine o que cada papel vale. Esta página coloca o mesmo conjunto de blocos lado a lado para mostrar que o markup é idêntico e só a luz muda.</p>
+</div></header>
+
+<!-- ============================================================
+     01 · A REGRA-MAE: papel, nao cor crua
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">01</span><p class="doc-kicker">O princípio</p></div>
+  <h2>Componente lê <em>papel</em>, não cor</h2>
+  <p>Nenhum bloco do sistema escreve <span class="doc-code">#fa4616</span> ou <span class="doc-code">#0a0a0a</span> direto. Ele pede <span class="doc-code">var(--paper)</span> para o fundo, <span class="doc-code">var(--ink)</span> para o título, <span class="doc-code">var(--ink-body)</span> para o corpo, <span class="doc-code">var(--accent)</span> para a joia. Trocar a variante é redeclarar esse punhado de propriedades. O mesmo <span class="doc-code">.b-statement</span> que aparece branco sobre laranja vira branco sobre preto ou quase-preto sobre off-white sem que uma linha do componente mude.</p>
+  <p>As três colunas abaixo provam isso na prática. Cada uma aplica o conjunto completo de papéis da sua variante, com os valores exatos dos arquivos <span class="doc-code">tokens/8020.css</span>, <span class="doc-code">tokens/8020-noite.css</span> e <span class="doc-code">tokens/8020-claro.css</span>. O que está dentro de cada coluna é, caractere por caractere, o mesmo markup.</p>
+
+  <div class="doc-grid doc-3 vr-rail">
+
+    <!-- ===== COLUNA: CAMPO-LARANJA ===== -->
+    <div class="vr-col vr-campo">
+      <div class="vr-head">
+        <span class="vr-swatch" aria-hidden="true">
+          <span class="vr-dot is-paper"></span>
+          <span class="vr-dot is-ink"></span>
+          <span class="vr-dot is-accent"></span>
+        </span>
+        <h3 class="vr-name">Campo-laranja</h3>
+        <p class="vr-use">A variante canônica. Abertura, capa, energia da marca em campo cheio.</p>
+      </div>
+      <hr class="vr-rule">
+
+      <p class="b-statement">A casa fala em <span class="hl">laranja</span> e ninguém esquece o tom.</p>
+      <hr class="vr-rule">
+
+      <div class="b-numprova">
+        <p class="b-bignum">80<span>%</span></p>
+        <div>
+          <p class="b-prova-label">A proporção que dá nome</p>
+          <p class="b-prova-text">O atalho que organiza esforço e prioridade na rotina da agência.</p>
+        </div>
+      </div>
+      <hr class="vr-rule">
+
+      <div class="b-insight">
+        <div class="b-insight-bar"></div>
+        <div>
+          <p class="b-insight-label">Leitura do sistema</p>
+          <p class="b-insight-text">A joia entra <strong>uma vez</strong> e some. Escassez é o que faz o acento valer.</p>
+        </div>
+      </div>
+      <hr class="vr-rule">
+
+      <div>
+        <p class="vr-chart-cap">Onde a atenção pousa</p>
+        <svg class="vr-chart" viewBox="0 0 280 140" role="img" aria-label="Mini gráfico de quatro barras na variante campo-laranja: 64, 48, 34 em branco com opacidade decrescente, e a barra-heroi 96 na cor de acento.">
+          <title>Distribuição de atenção, campo-laranja</title>
+          <desc>Três barras em branco com opacidades 1, 0.55 e 0.35 medindo 64, 48 e 34; a quarta barra, heroi, medindo 96 na cor de acento.</desc>
+          <line x1="14" y1="116" x2="276" y2="116" stroke="var(--hairline)" stroke-width="1"/>
+          <rect x="24"  y="52"  width="46" height="64" rx="4" fill="var(--ink)" opacity="1"/>
+          <rect x="86"  y="68"  width="46" height="48" rx="4" fill="var(--ink)" opacity=".55"/>
+          <rect x="148" y="82"  width="46" height="34" rx="4" fill="var(--ink)" opacity=".35"/>
+          <rect x="210" y="20"  width="46" height="96" rx="4" fill="var(--accent)"/>
+        </svg>
+      </div>
+      <hr class="vr-rule">
+
+      <div class="b-card">
+        <span class="b-card-num">01</span>
+        <h3>Campo cheio</h3>
+        <p>Laranja de borda a borda. O fundo é a marca, não um detalhe.</p>
+        <span class="b-card-link">Ver abertura <span aria-hidden="true">&rarr;</span></span>
+      </div>
+      <hr class="vr-rule">
+
+      <blockquote class="b-quote">
+        <p>O fundo já diz quem somos antes da primeira palavra.</p>
+        <cite>Sistema de Design 80 20</cite>
+      </blockquote>
+    </div>
+
+    <!-- ===== COLUNA: PALCO ESCURO ===== -->
+    <div class="vr-col vr-noite">
+      <div class="vr-head">
+        <span class="vr-swatch" aria-hidden="true">
+          <span class="vr-dot is-paper"></span>
+          <span class="vr-dot is-ink"></span>
+          <span class="vr-dot is-accent"></span>
+        </span>
+        <h3 class="vr-name">Palco escuro</h3>
+        <p class="vr-use">Apresentação ao vivo, sala escura, projeção. O laranja recua para acento.</p>
+      </div>
+      <hr class="vr-rule">
+
+      <p class="b-statement">A casa fala em <span class="hl">laranja</span> e ninguém esquece o tom.</p>
+      <hr class="vr-rule">
+
+      <div class="b-numprova">
+        <p class="b-bignum">80<span>%</span></p>
+        <div>
+          <p class="b-prova-label">A proporção que dá nome</p>
+          <p class="b-prova-text">O atalho que organiza esforço e prioridade na rotina da agência.</p>
+        </div>
+      </div>
+      <hr class="vr-rule">
+
+      <div class="b-insight">
+        <div class="b-insight-bar"></div>
+        <div>
+          <p class="b-insight-label">Leitura do sistema</p>
+          <p class="b-insight-text">A joia entra <strong>uma vez</strong> e some. Escassez é o que faz o acento valer.</p>
+        </div>
+      </div>
+      <hr class="vr-rule">
+
+      <div>
+        <p class="vr-chart-cap">Onde a atenção pousa</p>
+        <svg class="vr-chart" viewBox="0 0 280 140" role="img" aria-label="Mini gráfico de quatro barras na variante palco escuro: 64, 48, 34 em branco com opacidade decrescente, e a barra-heroi 96 na cor de acento.">
+          <title>Distribuição de atenção, palco escuro</title>
+          <desc>Três barras em branco com opacidades 1, 0.55 e 0.35 medindo 64, 48 e 34; a quarta barra, heroi, medindo 96 na cor de acento.</desc>
+          <line x1="14" y1="116" x2="276" y2="116" stroke="var(--hairline)" stroke-width="1"/>
+          <rect x="24"  y="52"  width="46" height="64" rx="4" fill="var(--ink)" opacity="1"/>
+          <rect x="86"  y="68"  width="46" height="48" rx="4" fill="var(--ink)" opacity=".55"/>
+          <rect x="148" y="82"  width="46" height="34" rx="4" fill="var(--ink)" opacity=".35"/>
+          <rect x="210" y="20"  width="46" height="96" rx="4" fill="var(--accent)"/>
+        </svg>
+      </div>
+      <hr class="vr-rule">
+
+      <div class="b-card">
+        <span class="b-card-num">01</span>
+        <h3>Campo cheio</h3>
+        <p>Laranja de borda a borda. O fundo é a marca, não um detalhe.</p>
+        <span class="b-card-link">Ver abertura <span aria-hidden="true">&rarr;</span></span>
+      </div>
+      <hr class="vr-rule">
+
+      <blockquote class="b-quote">
+        <p>O fundo já diz quem somos antes da primeira palavra.</p>
+        <cite>Sistema de Design 80 20</cite>
+      </blockquote>
+    </div>
+
+    <!-- ===== COLUNA: PAPEL CLARO ===== -->
+    <div class="vr-col vr-claro">
+      <div class="vr-head">
+        <span class="vr-swatch" aria-hidden="true">
+          <span class="vr-dot is-paper"></span>
+          <span class="vr-dot is-ink"></span>
+          <span class="vr-dot is-accent"></span>
+        </span>
+        <h3 class="vr-name">Papel claro</h3>
+        <p class="vr-use">Documento, leitura longa, peça sobria. Off-white com tinta quase-preta.</p>
+      </div>
+      <hr class="vr-rule">
+
+      <p class="b-statement">A casa fala em <span class="hl">laranja</span> e ninguém esquece o tom.</p>
+      <hr class="vr-rule">
+
+      <div class="b-numprova">
+        <p class="b-bignum">80<span>%</span></p>
+        <div>
+          <p class="b-prova-label">A proporção que dá nome</p>
+          <p class="b-prova-text">O atalho que organiza esforço e prioridade na rotina da agência.</p>
+        </div>
+      </div>
+      <hr class="vr-rule">
+
+      <div class="b-insight">
+        <div class="b-insight-bar"></div>
+        <div>
+          <p class="b-insight-label">Leitura do sistema</p>
+          <p class="b-insight-text">A joia entra <strong>uma vez</strong> e some. Escassez é o que faz o acento valer.</p>
+        </div>
+      </div>
+      <hr class="vr-rule">
+
+      <div>
+        <p class="vr-chart-cap">Onde a atenção pousa</p>
+        <svg class="vr-chart" viewBox="0 0 280 140" role="img" aria-label="Mini gráfico de quatro barras na variante papel claro: 64, 48, 34 em tinta com opacidade decrescente, e a barra-heroi 96 na cor de acento.">
+          <title>Distribuição de atenção, papel claro</title>
+          <desc>Três barras em tinta com opacidades 1, 0.55 e 0.35 medindo 64, 48 e 34; a quarta barra, heroi, medindo 96 na cor de acento.</desc>
+          <line x1="14" y1="116" x2="276" y2="116" stroke="var(--hairline)" stroke-width="1"/>
+          <rect x="24"  y="52"  width="46" height="64" rx="4" fill="var(--ink)" opacity="1"/>
+          <rect x="86"  y="68"  width="46" height="48" rx="4" fill="var(--ink)" opacity=".55"/>
+          <rect x="148" y="82"  width="46" height="34" rx="4" fill="var(--ink)" opacity=".35"/>
+          <rect x="210" y="20"  width="46" height="96" rx="4" fill="var(--accent)"/>
+        </svg>
+      </div>
+      <hr class="vr-rule">
+
+      <div class="b-card">
+        <span class="b-card-num">01</span>
+        <h3>Campo cheio</h3>
+        <p>Laranja de borda a borda. O fundo é a marca, não um detalhe.</p>
+        <span class="b-card-link">Ver abertura <span aria-hidden="true">&rarr;</span></span>
+      </div>
+      <hr class="vr-rule">
+
+      <blockquote class="b-quote">
+        <p>O fundo já diz quem somos antes da primeira palavra.</p>
+        <cite>Sistema de Design 80 20</cite>
+      </blockquote>
+    </div>
+
+  </div>
+
+  <p class="doc-when"><b>Repare:</b> os três blocos abrem o mesmo arquivo de componentes. A diferença visual inteira vem das custom properties redeclaradas no topo de cada coluna. Nenhum <span class="doc-code">.b-statement</span>, <span class="doc-code">.b-numprova</span> ou <span class="doc-code">.b-card</span> foi tocado.</p>
+</div></section>
+
+<!-- ============================================================
+     02 · O QUE MUDA ENTRE AS VARIANTES (mapa dos papeis)
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">02</span><p class="doc-kicker">O delta</p></div>
+  <h2>O que cada papel <em>vale</em></h2>
+  <p>A variante canônica é a base. As outras duas fazem <span class="doc-code">@import</span> dela e redeclaram só os deltas. A tabela abaixo lê na horizontal: o mesmo papel, três significados. O laranja é substrato no campo-laranja e vira acento escasso nas outras duas. O preto é chão de rodapé no campo, sobe a fundo no palco escuro e volta a chão no papel claro.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Mapa de papéis por variante</span>
+    <div style="overflow-x:auto;">
+    <table class="doc-table vr-roles">
+      <thead>
+        <tr>
+          <th>Papel</th>
+          <th>Campo-laranja</th>
+          <th>Palco escuro</th>
+          <th>Papel claro</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="doc-code">--paper</span><br>fundo da página</td>
+          <td><span class="vr-role-dot" style="background:#fa4616"></span>Laranja #fa4616</td>
+          <td><span class="vr-role-dot" style="background:#0a0a0a"></span>Preto #0a0a0a</td>
+          <td><span class="vr-role-dot" style="background:#faf7f2"></span>Off-white #faf7f2</td>
+        </tr>
+        <tr>
+          <td><span class="doc-code">--ink</span><br>título e display</td>
+          <td><span class="vr-role-dot" style="background:#ffffff"></span>Branco</td>
+          <td><span class="vr-role-dot" style="background:#ffffff"></span>Branco</td>
+          <td><span class="vr-role-dot" style="background:#111111"></span>Quase-preto #111</td>
+        </tr>
+        <tr>
+          <td><span class="doc-code">--ink-body</span><br>corpo de texto</td>
+          <td><span class="vr-role-dot" style="background:#0a0a0a"></span>Preto sobre laranja</td>
+          <td><span class="vr-role-dot" style="background:rgba(255,255,255,.88)"></span>Branco a 88%</td>
+          <td><span class="vr-role-dot" style="background:#1a1a1a"></span>Tinta #1a1a1a</td>
+        </tr>
+        <tr>
+          <td><span class="doc-code">--accent</span><br>a joia escassa</td>
+          <td><span class="vr-role-dot" style="background:#f5c542"></span>Ouro #f5c542</td>
+          <td><span class="vr-role-dot" style="background:#fa4616"></span>Laranja vira acento</td>
+          <td><span class="vr-role-dot" style="background:#fa4616"></span>Laranja vira acento</td>
+        </tr>
+        <tr>
+          <td><span class="doc-code">--surface</span><br>card elevado</td>
+          <td><span class="vr-role-dot" style="background:#d63a10"></span>Laranja aprofundado</td>
+          <td><span class="vr-role-dot" style="background:#161616"></span>Cinza-noite #161616</td>
+          <td><span class="vr-role-dot" style="background:#ffffff"></span>Branco</td>
+        </tr>
+        <tr>
+          <td><span class="doc-code">--floor</span><br>rodapé e contracapa</td>
+          <td><span class="vr-role-dot" style="background:#0a0a0a"></span>Preto</td>
+          <td><span class="vr-role-dot" style="background:#fa4616"></span>Faixa laranja</td>
+          <td><span class="vr-role-dot" style="background:#0a0a0a"></span>Preto</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="doc-grid doc-2" style="margin-top:18px;">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <span>Para criar um cliente novo ou um ambiente novo, copie a base e redeclare só os papéis. O componente segue intacto. É assim que o sistema cuida de toda variação de cor sem duplicar markup.</span>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <span>Nunca escreva a cor crua dentro de um componente. Um <span class="doc-code">color:#fff</span> fixo trava o bloco numa variante e quebra na próxima. A cor mora no token, não na peça.</span>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================================================
+     03 · QUANDO USAR CADA VARIANTE
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">A escolha</p></div>
+  <h2>Cada luz tem seu <em>momento</em></h2>
+  <p>As três variantes não competem. Cada uma resolve um contexto de leitura diferente. A regra prática é começar pela pergunta de onde a peça vai ser vista, e não pela vontade de variar.</p>
+
+  <div class="doc-grid doc-3">
+    <div class="doc-specimen tight">
+      <span class="doc-specimen-label">Campo-laranja</span>
+      <p style="margin:0 0 10px;color:var(--ink-body);font-size:var(--fs-small);"><strong style="color:var(--ink);font-weight:var(--w-label);">Abertura e capa.</strong> Quando o objetivo é fincar a marca com energia: capa de deck, abertura de book, página de impacto, peça curta que precisa gritar o laranja.</p>
+      <p class="doc-when">Use quando a <b>presença da marca</b> importa mais do que o volume de leitura.</p>
+    </div>
+    <div class="doc-specimen tight">
+      <span class="doc-specimen-label">Palco escuro</span>
+      <p style="margin:0 0 10px;color:var(--ink-body);font-size:var(--fs-small);"><strong style="color:var(--ink);font-weight:var(--w-label);">Apresentação ao vivo.</strong> Projeção em sala escura, telão, deck conduzido por uma pessoa. O preto descansa o olho e o laranja vira o ponto de luz que guia a atenção.</p>
+      <p class="doc-when">Use quando alguém <b>apresenta na frente de uma plateia</b>, com a luz baixa.</p>
+    </div>
+    <div class="doc-specimen tight">
+      <span class="doc-specimen-label">Papel claro</span>
+      <p style="margin:0 0 10px;color:var(--ink-body);font-size:var(--fs-small);"><strong style="color:var(--ink);font-weight:var(--w-label);">Documento e leitura longa.</strong> Book extenso, parecer, relatório, qualquer peça que vai ser lida em silêncio por minutos. O off-white sustenta páginas e páginas sem cansar.</p>
+      <p class="doc-when">Use quando a peça é para <b>ler com calma</b>, no papel ou na tela, sem ninguém narrando.</p>
+    </div>
+  </div>
+
+  <div class="doc-note do" style="margin-top:18px;">
+    <span class="doc-note-tag">Critério único</span>
+    <span>Comece pelo contexto de leitura: campo-laranja para abrir e marcar, palco escuro para apresentar ao vivo, papel claro para ler longo. Decidida a variante, o resto do sistema acompanha sozinho.</span>
+  </div>
+</div></section>
+
+<footer class="doc-foot"><div class="doc-wrap">
+  <img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+  <div class="doc-addr"><span>São Paulo · SP</span><span>Campo Grande · MS</span><span>Cuiabá · MT</span></div>
+  <p class="doc-foot-meta">Sistema de Design 80 20 · Montserrat · campo-laranja, palco escuro, papel claro</p>
+</div></footer>
+
+</body>
+</html>

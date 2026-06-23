@@ -1,0 +1,997 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8020-DS · Catalogo de book</title>
+<link rel="stylesheet" href="../tokens/8020.css">
+<link rel="stylesheet" href="../assets/book.css">
+<link rel="stylesheet" href="_docs.css">
+<script src="../assets/book.js" defer></script>
+<style>
+  /* ============================================================
+     CSS local SO desta pagina: scaffolding de specimen de book.
+     Os componentes reais vivem em book.css; aqui so cuidamos de
+     tres coisas: (1) emoldurar cada secao de book dentro de um
+     .doc-specimen sem que ela escape do cromo; (2) dar um
+     placeholder de imagem fiel onde a producao usaria <img>;
+     (3) impedir que a barra do supermenu vire fixa na pagina de
+     catalogo. Tudo via papeis semanticos.
+     ============================================================ */
+
+  /* dentro do specimen, neutralizamos o padding-block enorme que
+     book.css aplica a <section>, pra caber no palco de exemplo */
+  .doc-specimen.plain section { padding-block: 0; }
+  .doc-specimen.plain .b-hero { min-height: 0; }
+  .doc-specimen.plain .b-chapter { min-height: 0; }
+  .doc-specimen.plain .b-overlay { min-height: 320px; }
+
+  /* placeholder de foto: superficie escura rotulada, mesmo
+     tratamento de borda do componente real onde for o caso */
+  .ph {
+    position: relative; display: grid; place-items: center;
+    color: color-mix(in srgb, var(--ink) 78%, transparent);
+    background: linear-gradient(135deg,
+      color-mix(in srgb, var(--floor) 92%, transparent) 0%,
+      color-mix(in srgb, var(--surface) 70%, var(--floor)) 100%);
+    overflow: hidden;
+  }
+  .ph::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(135deg,
+      rgba(255,255,255,.05) 0 2px, transparent 2px 18px);
+    pointer-events: none;
+  }
+  .ph-tag {
+    position: relative; z-index: 1; font-family: var(--font-data);
+    font-size: var(--fs-micro); letter-spacing: var(--tracking-label);
+    text-transform: uppercase; color: color-mix(in srgb, var(--floor-ink) 70%, transparent);
+    padding: 5px 12px; border: 1px solid var(--line); border-radius: var(--radius-pill);
+  }
+  .ph-rect { aspect-ratio: 16 / 10; border-radius: var(--radius); border: 1px solid var(--line); }
+  .ph-organica { aspect-ratio: 6 / 5; clip-path: path("M 0 80 C 120 0 460 0 600 70 C 740 140 760 360 640 460 C 520 560 160 580 60 500 C -40 420 -20 160 0 80 Z"); }
+  .ph-fill { position: absolute; inset: 0; }
+
+  /* SUPERMENU: na pagina de catalogo a barra .book-nav nao deve
+     fixar no topo (ja temos a .doc-head). Travamos em fluxo. */
+  .doc-specimen .book-nav { position: static; backdrop-filter: none; background: var(--surface); border-radius: var(--radius); border: 1px solid var(--line); }
+  /* o overlay full-screen do supermenu e legitimo (fixed); o
+     book.js cabea o toggle. Damos um respiro de leitura. */
+
+  /* SVG inline desta pagina herda a tinta correta via currentColor */
+  .b-diagram svg, .b-viz svg { color: var(--ink); }
+
+  /* legenda de classe sob cada specimen, padronizada */
+  .doc-classnote { margin-top: 18px; font-size: var(--fs-small); color: var(--muted); }
+
+  /* a pagina de catalogo tem UM unico h1 (no .doc-hero). No specimen
+     do hero de book, o titulo herda a forma de .b-hero h1 mas sem ser
+     um segundo h1 do documento, pra nao quebrar a hierarquia. */
+  .demo-hero-title {
+    font-family: var(--font-display); font-weight: var(--w-display);
+    font-size: var(--fs-display); line-height: var(--lh-tight);
+    letter-spacing: -.03em; color: var(--ink); margin: 0; max-width: 16ch;
+  }
+  .demo-hero-title em { font-style: italic; font-weight: var(--w-black); }
+</style>
+</head>
+<body class="doc">
+
+<header class="doc-head">
+  <a class="doc-brand" href="../index.html"><img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing"><span>Sistema de Design</span></a>
+  <nav class="doc-nav" aria-label="Páginas do sistema">
+    <a href="colors.html">Cores</a>
+    <a href="variants.html">Variantes</a>
+    <a href="typography.html">Tipografia</a>
+    <a href="graphic-elements.html">Elementos</a>
+    <a href="images.html">Imagens</a>
+    <a href="cards.html">Cards</a>
+    <a href="facilitacao-visual.html">Facilitação</a>
+    <a href="diagrams.html">Diagramas</a>
+    <a href="charts.html">Gráficos</a>
+    <a href="layouts.html">Deck</a>
+    <a href="book-layout.html" aria-current="page">Book</a>
+  </nav>
+</header>
+
+<header class="doc-hero"><div class="doc-wrap">
+  <p class="doc-eyebrow">Layout de book</p>
+  <h1>O documento longo se lê em <em>seções</em></h1>
+  <p class="doc-lead">O book é o formato longform da casa: leitura assíncrona, densidade de livro digital, não de slides. Esta página reúne o catálogo de seções compostáveis, da capa à contracapa. A regra-mãe é constante: toda declaração forte vem acompanhada de texto que explica e de uma prova que mastiga.</p>
+</div></header>
+
+<!-- ============================================================
+     00 - A regra-mae do book
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">00</span><p class="doc-kicker">Como o book se compõe</p></div>
+  <h2>Seções compostáveis sobre o campo <em>laranja</em></h2>
+  <p>O book roda na variante canônica, o campo-laranja: fundo laranja, títulos brancos, corpo em preto, joia escassa. Cada seção do documento é uma peça de um catálogo, e o autor escolhe quais usar e em que ordem para construir o arco de leitura. As seções se encaixam dentro de <code class="doc-code">.container</code> para respeitar a coluna de leitura, ou rompem a coluna de propósito, sangrando de borda a borda quando o momento pede imersão.</p>
+  <p>A densidade é a do livro digital. Um número grande nunca aparece sozinho: ele traz o rótulo do que mede e a frase que diz por que importa. Uma citação carrega a atribuição. Um diagrama vem com legenda que se lê sem voltar ao parágrafo anterior. O leitor pode abrir o documento em qualquer ponto e se localizar, porque o contexto vive na própria frase.</p>
+
+  <div class="doc-grid doc-2" style="margin-top:28px;">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <span>Compor a partir do catálogo, escolhendo a seção pela função narrativa. Manter o ritmo alternando blocos densos com respiros full-bleed. Dar a cada número o seu rótulo e a sua prova.</span>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <span>Empilhar declaração sobre declaração sem texto que explique. Tratar o book como deck, com pouca palavra por tela. Gastar joia em cada seção: no book ela continua acento, não enchimento.</span>
+    </div>
+  </div>
+  <p class="doc-classnote">Nesta página de referência os exemplos vivos aparecem dentro de <code class="doc-code">.doc-specimen.plain</code>. As seções que sangram (faixas, statement e citação full-bleed, separatriz, overlay) ficam soltas, fora da <code class="doc-code">.doc-wrap</code>, para o efeito de borda a borda se mostrar de verdade. Onde a produção usaria <code class="doc-code">&lt;img&gt;</code>, há um placeholder rotulado com o mesmo tratamento.</p>
+</div></section>
+
+<!-- ============================================================
+     01 - HERO
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">01</span><p class="doc-kicker">Abertura do documento</p></div>
+  <h2>A capa que diz do que se <em>trata</em></h2>
+  <p>O <code class="doc-code">.b-hero</code> abre o book. Eyebrow curto em cima, título em display com a assinatura da casa (caixa-baixa, inicial maiúscula, o último termo saltando de tamanho e indo a itálico via <code class="doc-code">&lt;em&gt;</code>), e um lead de uma a duas frases. A capa de longform é descritiva e burocrática: ela situa o leitor, não entrega a mensagem central do documento. Essa fica para os movimentos seguintes.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Hero de book</span>
+    <div class="book">
+      <section class="b-hero"><div class="container">
+        <p class="b-eyebrow">Relatório de território · 2026</p>
+        <p class="demo-hero-title">O cerrado pede uma nova <em>conversa</em></p>
+        <p class="b-lead">Um documento sobre presença de marca em Mato Grosso do Sul: como o público vive, avalia e aceita uma comunicação que chega de fora e quer ficar.</p>
+      </div></section>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> abertura de qualquer book. É a primeira tela, a única com altura de viewport cheia. Reserve a frase forte para depois: aqui o trabalho é situar.</p>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-hero</code> &gt; <code class="doc-code">.b-eyebrow</code>, <code class="doc-code">h1</code> (com <code class="doc-code">&lt;em&gt;</code>), <code class="doc-code">.b-lead</code>.</p>
+</div></section>
+
+<!-- ============================================================
+     02 - SEPARATRIZ DE CAPITULO (full-bleed)
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">02</span><p class="doc-kicker">Virada entre movimentos</p></div>
+  <h2>O número grande que abre um <em>capítulo</em></h2>
+  <p>A separatriz <code class="doc-code">.b-chapter</code> marca a fronteira entre dois movimentos do documento. Sangra de borda a borda, ocupa quase a altura da tela e traz um numeral gigante em joia mais o título do capítulo em display. É um dos poucos lugares onde a joia aparece em escala, justamente porque a virada precisa de peso. Funciona como respiro: o leitor fecha um assunto e entra no próximo.</p>
+</div></section>
+
+<section class="doc-section" style="border-top:0;padding-block:0;">
+  <div class="book">
+    <section class="b-chapter" style="background:var(--surface);color:var(--surface-ink);margin-block:clamp(24px,5vw,48px);">
+      <div class="container">
+        <span class="b-chap-num">02</span>
+        <h2>Como o território decide quem fica e quem só <em>passa</em></h2>
+      </div>
+    </section>
+  </div>
+</section>
+
+<section class="doc-section" style="border-top:0;"><div class="doc-wrap">
+  <p class="doc-when"><b>Quando usar:</b> abertura de capítulo em book dividido em partes. É a respiração estrutural do documento. Use o numeral coerente com o índice, para o leitor saber sempre onde está.</p>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-chapter</code> &gt; <code class="doc-code">.container</code> &gt; <code class="doc-code">.b-chap-num</code> + <code class="doc-code">h2</code>. Sangra via <code class="doc-code">width:100vw</code>. Sem marcador de fim de capítulo: a numeração e o índice já bastam.</p>
+</div></section>
+
+<!-- ============================================================
+     03 - INDICE EM CARDS
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">Mapa do documento</p></div>
+  <h2>O índice que se navega em <em>cartões</em></h2>
+  <p>Logo após a capa, o índice em cards dá a planta do documento. Cada cartão <code class="doc-code">.b-card</code> traz um numeral em joia, o título da parte e uma frase do que ela cobre, mais um link de entrada. A grade se reorganiza sozinha conforme a tela. É o sumário navegável: o leitor decide por onde começar e volta a ele quando quiser.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Índice em hub-grid de cards</span>
+    <div class="book">
+      <div class="b-hubgrid">
+        <a class="b-card" href="#">
+          <span class="b-card-num">01</span>
+          <h3>O território hoje</h3>
+          <p>Quem vive aqui, o que consome e como decide. O retrato de partida, sem suposição.</p>
+          <span class="b-card-link">Ler a parte →</span>
+        </a>
+        <a class="b-card" href="#">
+          <span class="b-card-num">02</span>
+          <h3>A conversa que falta</h3>
+          <p>O que a marca diz, o que o público ouve e a distância entre as duas coisas.</p>
+          <span class="b-card-link">Ler a parte →</span>
+        </a>
+        <a class="b-card" href="#">
+          <span class="b-card-num">03</span>
+          <h3>O caminho proposto</h3>
+          <p>Como entrar, em que ordem e com que prova de que vale a pena ficar.</p>
+          <span class="b-card-link">Ler a parte →</span>
+        </a>
+      </div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> sumário navegável logo após a capa, ou um hub que reúne sub-documentos. O índice em cards substitui a lista seca de tópicos por entradas que já adiantam o conteúdo.</p>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-hubgrid</code> &gt; <code class="doc-code">.b-card</code> (com <code class="doc-code">.b-card-num</code>, <code class="doc-code">h3</code>, <code class="doc-code">p</code>, <code class="doc-code">.b-card-link</code>). Para cartões de conteúdo, e não de navegação, há <code class="doc-code">.b-cards</code> mais adiante.</p>
+</div></section>
+
+<!-- ============================================================
+     04 - STATEMENT inline + STATEMENT full-bleed
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">04</span><p class="doc-kicker">Declaração de peso</p></div>
+  <h2>A frase que carrega o <em>argumento</em></h2>
+  <p>O statement é a voz do documento subindo o tom. Em linha, dentro da coluna, o <code class="doc-code">.b-statement</code> traz uma declaração em display com um termo realçado em itálico na cor de acento via <code class="doc-code">.hl</code>. É o momento em que o texto cravado num parágrafo vira afirmação destacada.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Statement inline com realce</span>
+    <div class="book">
+      <p class="b-statement">Marca que chega de fora não compra presença. Ela <span class="hl">conquista</span> o direito de ficar.</p>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> a tese de um movimento, dentro do fluxo de leitura, com o termo-chave em acento. Use uma vez por movimento; repetida, perde a força.</p>
+  </div>
+
+  <h3>Statement full-bleed, quando a frase precisa parar o documento</h3>
+  <p>Quando a declaração é o eixo de toda uma parte, ela sai da coluna e toma a tela. O <code class="doc-code">.b-statement-bleed</code> sangra de borda a borda, centraliza o texto sobre a superfície aprofundada e força uma pausa total. Por ser dominante, aparece poucas vezes no documento inteiro.</p>
+</div></section>
+
+<section class="doc-section" style="border-top:0;padding-block:0;">
+  <div class="book">
+    <section class="b-statement-bleed" style="margin-block:clamp(24px,5vw,48px);"><div class="container">
+      <p>Ninguém defende um lugar que não sente como seu.</p>
+    </div></section>
+  </div>
+</section>
+
+<section class="doc-section" style="border-top:0;"><div class="doc-wrap">
+  <p class="doc-when"><b>Quando usar:</b> o statement full-bleed é a frase-âncora de um capítulo, o instante em que o documento para para você reler. Reserve para os dois ou três momentos mais altos do book inteiro.</p>
+  <p class="doc-classnote">Classes: inline, <code class="doc-code">.b-statement</code> + <code class="doc-code">.hl</code> (ou <code class="doc-code">.hl-grow</code> para o termo que também salta de tamanho). Full-bleed, <code class="doc-code">.b-statement-bleed</code> &gt; <code class="doc-code">.container</code> &gt; <code class="doc-code">p</code>.</p>
+</div></section>
+
+<!-- ============================================================
+     05 - NUMERO + PROVA
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">05</span><p class="doc-kicker">Dado com leitura</p></div>
+  <h2>O número que vem com a sua <em>prova</em></h2>
+  <p>O <code class="doc-code">.b-numprova</code> resolve a regra-mãe do book em um só bloco: numeral grande de um lado, rótulo e frase de prova do outro. O número nunca fica sozinho. Ao lado dele, o rótulo diz o que se mede e o texto diz por que importa, levando o dado para a conclusão estratégica em vez de deixá-lo cru.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Número grande com prova rotulada</span>
+    <div class="book">
+      <div class="b-numprova">
+        <div class="b-bignum">68<span>%</span></div>
+        <div>
+          <p class="b-prova-label">Reconhecimento espontâneo</p>
+          <p class="b-prova-text">Mais de dois terços do público lembra da categoria, mas não da marca: há atenção disponível, e ela ainda está em aberto.</p>
+        </div>
+      </div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> o dado-chave de uma seção, quando um único número sustenta o argumento. O valor final fica escrito no elemento, sem depender de animação para aparecer.</p>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-numprova</code> &gt; <code class="doc-code">.b-bignum</code> (com <code class="doc-code">&lt;span&gt;</code> para o sufixo) + bloco com <code class="doc-code">.b-prova-label</code> e <code class="doc-code">.b-prova-text</code>.</p>
+</div></section>
+
+<!-- ============================================================
+     06 - GRADE DE STATS
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">06</span><p class="doc-kicker">Painel de indicadores</p></div>
+  <h2>Vários números no mesmo <em>fôlego</em></h2>
+  <p>Quando há um conjunto de indicadores que se lê em bloco, a grade de stats os alinha numa malha de proporção constante. Um único item recebe <code class="doc-code">.highlight</code> e ganha a superfície aprofundada, sinalizando o número que importa mais. Cada valor traz a descrição logo abaixo, então o painel se lê sem legenda externa.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Grade de stats com um destaque</span>
+    <div class="book">
+      <div class="b-stat-grid">
+        <div class="b-stat">
+          <div class="b-stat-num">3,2 mi</div>
+          <div class="b-stat-desc">Habitantes no estado, segundo a contagem mais recente.</div>
+        </div>
+        <div class="b-stat highlight">
+          <div class="b-stat-num">41%</div>
+          <div class="b-stat-desc">Vivem em cidades fora da capital: o interior pesa.</div>
+        </div>
+        <div class="b-stat">
+          <div class="b-stat-num">7</div>
+          <div class="b-stat-desc">Estados e países que fazem fronteira com o território.</div>
+        </div>
+      </div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> três a seis indicadores que respiram juntos. O destaque marca o número-âncora, o que conduz a leitura do painel.</p>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-stat-grid</code> &gt; <code class="doc-code">.b-stat</code> (com <code class="doc-code">.b-stat-num</code> e <code class="doc-code">.b-stat-desc</code>); um item com <code class="doc-code">.highlight</code>. O valor final é texto do elemento, não estado de animação.</p>
+</div></section>
+
+<!-- ============================================================
+     07 - FAIXA full-bleed
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">07</span><p class="doc-kicker">Bloco de cor cheia</p></div>
+  <h2>A faixa que muda o <em>fundo</em></h2>
+  <p>A <code class="doc-code">.b-band</code> é uma faixa que sangra de borda a borda e troca o fundo para a superfície aprofundada, dando contraste de bloco. Serve para destacar um trecho do documento, agrupar um conjunto de itens sob um mesmo teto visual ou marcar uma seção de síntese. O conteúdo dentro dela continua na coluna de leitura, via <code class="doc-code">.container</code>.</p>
+</div></section>
+
+<section class="doc-section" style="border-top:0;padding-block:0;">
+  <div class="book">
+    <section class="b-band" style="margin-block:clamp(24px,5vw,48px);"><div class="container">
+      <h2 style="font-family:var(--font-display);font-weight:var(--w-display);font-size:var(--fs-title);margin:0 0 14px;color:var(--ink);">A leitura de partida</h2>
+      <p style="max-width:60ch;color:var(--muted);margin:0;">A faixa agrupa, sob um fundo distinto, o resumo do que vem antes ou a síntese do que vem depois. Aqui o texto respira contra a superfície aprofundada, sem competir com o restante da página.</p>
+    </div></section>
+  </div>
+</section>
+
+<section class="doc-section" style="border-top:0;"><div class="doc-wrap">
+  <p class="doc-when"><b>Quando usar:</b> agrupar um trecho sob fundo distinto, marcar uma síntese, separar um bloco de contexto do fluxo principal. A faixa dá pausa de cor sem mudar de seção.</p>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-band</code> &gt; <code class="doc-code">.container</code>. Sangra via <code class="doc-code">width:100vw</code>; o miolo permanece na coluna.</p>
+</div></section>
+
+<!-- ============================================================
+     08 - FEATURE (lista icone + texto)
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">08</span><p class="doc-kicker">Lista qualificada</p></div>
+  <h2>Itens com ícone, título e <em>explicação</em></h2>
+  <p>A lista <code class="doc-code">.b-feature</code> apresenta um conjunto de pontos onde cada um merece mais que uma linha. Ícone à esquerda, título e parágrafo à direita. É o formato para princípios, diferenciais ou camadas de um conceito, quando cada item precisa de uma frase que o sustente em vez de virar só um marcador.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Feature: ícone, título e texto</span>
+    <div class="book">
+      <ul class="b-feature">
+        <li>
+          <span class="b-ico" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/></svg>
+          </span>
+          <div>
+            <h4>Chega no tempo certo</h4>
+            <p>A comunicação respeita o momento do público, não o calendário interno de quem fala.</p>
+          </div>
+        </li>
+        <li>
+          <span class="b-ico" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10h14M10 3l7 7-7 7"/></svg>
+          </span>
+          <div>
+            <h4>Aponta uma direção</h4>
+            <p>Cada peça move o público um passo: de conviver para avaliar, de avaliar para aceitar.</p>
+          </div>
+        </li>
+        <li>
+          <span class="b-ico" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10l4 4 8-9"/></svg>
+          </span>
+          <div>
+            <h4>Entrega o que prometeu</h4>
+            <p>Promessa só vira presença quando a experiência confirma a frase na primeira vez.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> princípios, diferenciais, camadas de um conceito, quando cada ponto precisa de explicação curta. Os ícones são SVG decorativos, com <code class="doc-code">aria-hidden</code>.</p>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-feature</code> &gt; <code class="doc-code">li</code> (com <code class="doc-code">.b-ico</code>, <code class="doc-code">h4</code>, <code class="doc-code">p</code>).</p>
+</div></section>
+
+<!-- ============================================================
+     09 - SPLIT
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">09</span><p class="doc-kicker">Duas colunas pareadas</p></div>
+  <h2>Texto de um lado, prova do <em>outro</em></h2>
+  <p>O <code class="doc-code">.b-split</code> divide a largura em duas colunas alinhadas pelo centro vertical. O uso clássico é texto de um lado e imagem, gráfico ou bloco de prova do outro. Em telas menores, as colunas empilham. É a estrutura para emparelhar um argumento com a sua evidência sem que um atropele o outro.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Split: texto e figura pareados</span>
+    <div class="book">
+      <div class="b-split">
+        <div>
+          <h3 style="font-family:var(--font-display);font-weight:var(--w-title);font-size:var(--fs-h2);color:var(--ink);margin:0 0 12px;">O interior decide</h3>
+          <p style="color:var(--ink-body);margin:0;">A capital concentra a mídia, mas o volume de público está espalhado pelas cidades médias. Quem só fala para a capital conversa com a minoria. A figura ao lado mostra a distribuição que sustenta esse ponto.</p>
+        </div>
+        <div class="ph ph-rect" aria-hidden="true"><span class="ph-tag">figura · distribuição</span></div>
+      </div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> emparelhar argumento e prova, texto e imagem, conceito e diagrama. A ordem é espelhável conforme a leitura. Empilha sozinho no mobile.</p>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-split</code> com dois filhos diretos. Colapsa para uma coluna abaixo de 900 pixels.</p>
+</div></section>
+
+<!-- ============================================================
+     10 - IMAGENS (figure: organica, rect, bleed) + OVERLAY
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">10</span><p class="doc-kicker">Figuras no fluxo</p></div>
+  <h2>A foto que entra com <em>tratamento</em></h2>
+  <p>No book, toda imagem vive dentro de um invólucro com respiro vertical generoso. O <code class="doc-code">.b-figure</code> tem três modos: orgânico, recortado por <code class="doc-code">clip-path</code> para o momento emocional; retangular, com raio e borda finos para evidência, acompanhado de legenda em <code class="doc-code">.b-figcap</code>; e full-bleed, que rompe a coluna e toma a viewport. A página de Imagens detalha cada modo; aqui mostramos os três no contexto do book.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Figura orgânica e figura retangular com legenda</span>
+    <div class="book">
+      <div class="b-split">
+        <div class="b-figure organica" style="margin-block:0;">
+          <div class="ph ph-organica" aria-hidden="true"><span class="ph-tag">imagem · retrato</span></div>
+        </div>
+        <div class="b-figure rect" style="margin-block:0;">
+          <div class="ph ph-rect" aria-hidden="true"><span class="ph-tag">imagem · evidência</span></div>
+          <p class="b-figcap">Legenda em <code class="doc-code">.b-figcap</code>: nomeia o que a imagem comprova, com data e fonte quando houver.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Full-bleed, a imagem que toma a tela</h3>
+  <p>O modo full-bleed sangra de borda a borda e funciona como separatriz visual, um respiro sem texto entre dois movimentos densos.</p>
+</div></section>
+
+<section class="doc-section" style="border-top:0;padding-block:0;">
+  <div class="book">
+    <div class="b-figure bleed" style="margin-block:clamp(24px,5vw,48px);">
+      <div class="ph" aria-hidden="true" style="aspect-ratio:21/9;"><span class="ph-tag">imagem · full-bleed · separatriz</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="doc-section" style="border-top:0;"><div class="doc-wrap">
+  <h3>Overlay, o título que pousa na imagem</h3>
+  <p>O <code class="doc-code">.b-overlay</code> coloca um título branco sobre a foto, com um scrim escuro subindo da base para garantir contraste. É a capa de seção com imagem, o único lugar onde o display branco encosta direto na fotografia.</p>
+</div></section>
+
+<section class="doc-section" style="border-top:0;padding-block:0;">
+  <div class="book">
+    <div class="b-overlay" style="margin-block:clamp(24px,5vw,48px);border-radius:var(--radius);width:auto;margin-left:0;">
+      <div class="ph ph-fill" aria-hidden="true"></div>
+      <div class="container">
+        <h2>O cerrado em <em>movimento</em></h2>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="doc-section" style="border-top:0;"><div class="doc-wrap">
+  <div class="doc-grid doc-2">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <span>Escolher o modo pela função: orgânico para afeto, retangular para prova, full-bleed para imersão, overlay para capa. Manter o respiro vertical de <code class="doc-code">.b-figure</code>.</span>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <span>Colar foto crua sobre o laranja sem invólucro. Recortar tabela ou gráfico no modo orgânico. Empilhar corpo de texto sobre a imagem no overlay: ali só entra display.</span>
+    </div>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-figure.organica</code> / <code class="doc-code">.b-figure.rect</code> + <code class="doc-code">.b-figcap</code> / <code class="doc-code">.b-figure.bleed</code>; <code class="doc-code">.b-overlay</code> &gt; <code class="doc-code">&lt;img&gt;</code> + <code class="doc-code">.container</code> &gt; <code class="doc-code">h2</code>. Detalhe completo na página de Imagens.</p>
+</div></section>
+
+<!-- ============================================================
+     11 - CITACAO inline + faixa de citacao
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">11</span><p class="doc-kicker">Voz de terceiro</p></div>
+  <h2>A citação que traz uma voz de <em>fora</em></h2>
+  <p>A citação dá ao documento uma voz que não é a do autor: a do público, de um especialista, de uma fonte. Em linha, o <code class="doc-code">.b-quote</code> usa uma barra à esquerda, texto em itálico de display e atribuição embaixo. A atribuição é parte da regra: citação sem fonte não convence.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Citação inline com atribuição</span>
+    <div class="book">
+      <blockquote class="b-quote">
+        <p>A gente não desconfia de marca grande. A gente desconfia de marca que some quando o problema aparece.</p>
+        <cite>Participante de grupo de pesquisa, Campo Grande</cite>
+      </blockquote>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> trazer a voz do público ou de uma fonte para dentro do argumento, dentro do fluxo de leitura. Sempre com atribuição.</p>
+  </div>
+
+  <h3>Faixa de citação, quando a fala precisa de palco</h3>
+  <p>Quando a citação é o eixo de um trecho, ela sai da coluna e ocupa a tela. O <code class="doc-code">.b-quote-bleed</code> sangra de borda a borda, centraliza e dá à fala o peso de uma página inteira.</p>
+</div></section>
+
+<section class="doc-section" style="border-top:0;padding-block:0;">
+  <div class="book">
+    <section class="b-quote-bleed" style="margin-block:clamp(24px,5vw,48px);"><div class="container">
+      <blockquote>
+        <p>Quem chega prometendo é mais um. Quem chega e fica é parte do lugar.</p>
+        <cite>Síntese das escutas de campo, 2026</cite>
+      </blockquote>
+    </div></section>
+  </div>
+</section>
+
+<section class="doc-section" style="border-top:0;"><div class="doc-wrap">
+  <p class="doc-when"><b>Quando usar:</b> a faixa de citação é a fala que ancora um capítulo. Reserve para a citação mais forte do trecho; repetida em escala, perde o peso.</p>
+  <p class="doc-classnote">Classes: inline, <code class="doc-code">.b-quote</code> &gt; <code class="doc-code">p</code> + <code class="doc-code">cite</code>. Full-bleed, <code class="doc-code">.b-quote-bleed</code> &gt; <code class="doc-code">.container</code> &gt; <code class="doc-code">blockquote</code> (com <code class="doc-code">p</code> e <code class="doc-code">cite</code>).</p>
+</div></section>
+
+<!-- ============================================================
+     12 - SEQUENCIA NUMERADA + PASSOS
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">12</span><p class="doc-kicker">Ordem que importa</p></div>
+  <h2>A sequência que se lê em <em>ordem</em></h2>
+  <p>Quando a ordem dos itens carrega significado, a numeração precisa aparecer. A <code class="doc-code">.b-seq</code> alinha numerais em joia à esquerda, com título e descrição à direita. É o formato para etapas de um método, camadas de um raciocínio ou fases que se sucedem, onde o item dois só faz sentido depois do item um.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Sequência numerada</span>
+    <div class="book">
+      <ol class="b-seq">
+        <li>
+          <div>
+            <h4>Conviver</h4>
+            <p>O público vive no território e cruza com a marca no cotidiano, sem ainda avaliá-la.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>Avaliar</h4>
+            <p>Surge uma necessidade e a marca entra no conjunto considerado, lado a lado com as outras.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>Aceitar</h4>
+            <p>A experiência confirma a promessa, e a marca passa a ser a escolha sem reabertura do debate.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> etapas de método, jornada em fases, raciocínio em camadas, qualquer lista onde a ordem é o conteúdo.</p>
+  </div>
+
+  <h3>Passos, quando a numeração é só ritmo</h3>
+  <p>Para uma sequência mais enxuta, os <code class="doc-code">.b-steps</code> trazem o mesmo numeral gerado por contador, com uma linha de texto por passo. Servem a um roteiro curto, sem o peso de título e descrição em cada item.</p>
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Passos enxutos</span>
+    <div class="book">
+      <div class="b-steps">
+        <div class="b-step"><p style="margin:0;color:var(--ink-body);">Escutar o território antes de falar com ele.</p></div>
+        <div class="b-step"><p style="margin:0;color:var(--ink-body);">Entrar pelo problema do público, não pelo produto.</p></div>
+        <div class="b-step"><p style="margin:0;color:var(--ink-body);">Confirmar a promessa na primeira experiência.</p></div>
+      </div>
+    </div>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-seq</code> &gt; <code class="doc-code">li</code> (com <code class="doc-code">h4</code> e <code class="doc-code">p</code>); <code class="doc-code">.b-steps</code> &gt; <code class="doc-code">.b-step</code>. O numeral é contador CSS, então aparece sem JavaScript.</p>
+</div></section>
+
+<!-- ============================================================
+     13 - TIMELINE vertical
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">13</span><p class="doc-kicker">Linha do tempo</p></div>
+  <h2>O cronograma que desce na <em>vertical</em></h2>
+  <p>Cronograma na casa é sempre linha do tempo linear, nunca radial ou circular. A <code class="doc-code">.b-timeline</code> desce na vertical, com um marcador por momento sobre uma linha contínua. O momento atual recebe <code class="doc-code">.now</code> e ganha um halo no marcador, situando o leitor no presente da história. Cada item nomeia a data e o que acontece, então se lê sem depender do anterior.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Timeline vertical com marcador do agora</span>
+    <div class="book">
+      <div class="b-timeline">
+        <div class="b-tl-item">
+          <p class="b-tl-date">Primeiro trimestre de 2026</p>
+          <p style="margin:4px 0 0;color:var(--muted);">Escuta de campo e leitura do território, antes de qualquer peça.</p>
+        </div>
+        <div class="b-tl-item now">
+          <p class="b-tl-date">Segundo trimestre de 2026 · agora</p>
+          <p style="margin:4px 0 0;color:var(--muted);">Definição da plataforma de comunicação e dos primeiros movimentos.</p>
+        </div>
+        <div class="b-tl-item">
+          <p class="b-tl-date">Segundo semestre de 2026</p>
+          <p style="margin:4px 0 0;color:var(--muted);">Entrada nos canais e medição da presença reconhecida no território.</p>
+        </div>
+      </div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> cronograma, evolução histórica, fases que acontecem no tempo. Marque o presente com <code class="doc-code">.now</code> para ancorar o leitor.</p>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-timeline</code> &gt; <code class="doc-code">.b-tl-item</code> (um com <code class="doc-code">.now</code>), cada um com <code class="doc-code">.b-tl-date</code>. Cronograma é sempre linear, nunca circular.</p>
+</div></section>
+
+<!-- ============================================================
+     14 - GANTT (SVG) + VENN (SVG)
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">14</span><p class="doc-kicker">Diagramas de dado</p></div>
+  <h2>Cronograma de barras e conjuntos que se <em>cruzam</em></h2>
+  <p>Para o cronograma com duração de cada frente, o Gantt em SVG real desenha as barras com largura proporcional ao tempo. As barras são <code class="doc-code">&lt;rect&gt;</code> de geometria verdadeira, não divs com largura em porcentagem, então o desenho aparece igual com ou sem JavaScript. A massa fica em branco e esmaecido; uma única frente recebe joia para sinalizar o foco.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Gantt em SVG, barras com duração real</span>
+    <div class="b-diagram">
+      <svg viewBox="0 0 720 220" width="100%" role="img" aria-label="Cronograma em barras: Escuta de janeiro a marco, Plataforma de marco a maio em destaque, Canais de maio a setembro, Medicao de julho a dezembro.">
+        <title>Cronograma de frentes em 2026</title>
+        <desc>Quatro frentes de trabalho posicionadas ao longo do ano, com a frente de plataforma destacada em ouro.</desc>
+        <!-- grade de meses -->
+        <g stroke="var(--hairline)" stroke-width="1">
+          <line x1="120" y1="20" x2="120" y2="190"/>
+          <line x1="220" y1="20" x2="220" y2="190"/>
+          <line x1="320" y1="20" x2="320" y2="190"/>
+          <line x1="420" y1="20" x2="420" y2="190"/>
+          <line x1="520" y1="20" x2="520" y2="190"/>
+          <line x1="620" y1="20" x2="620" y2="190"/>
+        </g>
+        <g font-family="var(--font-data)" font-size="11" fill="var(--meta)">
+          <text x="120" y="14">Jan</text>
+          <text x="220" y="14">Mar</text>
+          <text x="320" y="14">Mai</text>
+          <text x="420" y="14">Jul</text>
+          <text x="520" y="14">Set</text>
+          <text x="620" y="14">Nov</text>
+        </g>
+        <!-- frentes (rect de largura verdadeira) -->
+        <g font-family="var(--font-body)" font-size="13" fill="var(--ink)">
+          <text x="0" y="48">Escuta</text>
+          <rect x="120" y="36" width="120" height="18" rx="4" fill="rgba(255,255,255,.62)"/>
+          <text x="0" y="84">Plataforma</text>
+          <rect x="200" y="72" width="120" height="18" rx="4" fill="var(--accent)"/>
+          <text x="0" y="120">Canais</text>
+          <rect x="320" y="108" width="200" height="18" rx="4" fill="rgba(255,255,255,.40)"/>
+          <text x="0" y="156">Medição</text>
+          <rect x="420" y="144" width="200" height="18" rx="4" fill="rgba(255,255,255,.24)"/>
+        </g>
+      </svg>
+      <p class="b-figcap">Cada barra tem largura proporcional à duração. A frente de plataforma, em ouro, é o foco do semestre.</p>
+    </div>
+  </div>
+
+  <h3>Venn, quando o argumento é a interseção</h3>
+  <p>Quando o ponto é o que dois ou três conjuntos têm em comum, o Venn em SVG desenha círculos com mistura por transparência. A interseção é onde mora a tese: o lugar em que público, território e marca se sobrepõem.</p>
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Venn em SVG, três conjuntos</span>
+    <div class="b-diagram">
+      <svg viewBox="0 0 420 300" width="100%" style="max-width:460px;" role="img" aria-label="Diagrama de Venn de tres conjuntos: Publico, Territorio e Marca, com a intersecao central representando o ponto de encontro.">
+        <title>Interseção de público, território e marca</title>
+        <desc>Três círculos sobrepostos cuja região comum representa onde a comunicação encontra eco.</desc>
+        <circle cx="160" cy="120" r="92" fill="rgba(255,255,255,.30)" stroke="var(--line)"/>
+        <circle cx="260" cy="120" r="92" fill="rgba(255,255,255,.30)" stroke="var(--line)"/>
+        <circle cx="210" cy="200" r="92" fill="var(--accent)" fill-opacity="0.30" stroke="var(--line)"/>
+        <g font-family="var(--font-body)" font-size="14" fill="var(--ink)" font-weight="600">
+          <text x="110" y="96" text-anchor="middle">Público</text>
+          <text x="310" y="96" text-anchor="middle">Território</text>
+          <text x="210" y="252" text-anchor="middle">Marca</text>
+        </g>
+        <text x="210" y="158" text-anchor="middle" font-family="var(--font-body)" font-size="12" fill="var(--ink)">encontro</text>
+      </svg>
+      <p class="b-figcap">A região comum aos três conjuntos é onde a comunicação encontra eco. Só o conjunto da marca recebe joia.</p>
+    </div>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-diagram</code> &gt; <code class="doc-code">svg</code>. Gantt e Venn são SVG real, com <code class="doc-code">role="img"</code>, <code class="doc-code">aria-label</code> numérico e <code class="doc-code">&lt;title&gt;</code> mais <code class="doc-code">&lt;desc&gt;</code> internos. A geometria é verdadeira, sem depender de JavaScript.</p>
+</div></section>
+
+<!-- ============================================================
+     15 - DIAGRAMA / FLUXO integrado (SVG com marker)
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">15</span><p class="doc-kicker">Fluxo com setas</p></div>
+  <h2>O fluxo que liga os <em>nós</em></h2>
+  <p>Quando o argumento é uma sequência de causa e efeito, o diagrama de fluxo conecta nós com setas. As setas vêm sempre de um <code class="doc-code">&lt;marker&gt;</code> em <code class="doc-code">&lt;defs&gt;</code>, com <code class="doc-code">orient="auto-start-reverse"</code>, de modo que a ponta acompanha a direção do conector. Os conectores são desenhados antes dos nós, para a ordem de empilhamento deixar as caixas por cima das linhas.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Fluxo de três nós com setas via marker</span>
+    <div class="b-diagram">
+      <svg viewBox="0 0 720 160" width="100%" role="img" aria-label="Fluxo: Conviver leva a Avaliar, que leva a Aceitar.">
+        <title>Fluxo das três fases de relação</title>
+        <desc>Três caixas ligadas por setas da esquerda para a direita: Conviver, Avaliar e Aceitar.</desc>
+        <defs>
+          <marker id="arw-fluxo" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+            <path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/>
+          </marker>
+        </defs>
+        <!-- conectores primeiro (z-order) -->
+        <g fill="none" stroke="currentColor" stroke-width="2" color="var(--ink)">
+          <path d="M214 80 C 234 80, 246 80, 266 80" marker-end="url(#arw-fluxo)"/>
+          <path d="M454 80 C 474 80, 486 80, 506 80" marker-end="url(#arw-fluxo)"/>
+        </g>
+        <!-- nos por cima -->
+        <g>
+          <rect x="40" y="52" width="174" height="56" rx="8" fill="var(--surface)" stroke="var(--line)"/>
+          <text x="127" y="86" text-anchor="middle" font-family="var(--font-body)" font-size="15" fill="var(--ink)" font-weight="600">Conviver</text>
+          <rect x="280" y="52" width="174" height="56" rx="8" fill="var(--surface)" stroke="var(--line)"/>
+          <text x="367" y="86" text-anchor="middle" font-family="var(--font-body)" font-size="15" fill="var(--ink)" font-weight="600">Avaliar</text>
+          <rect x="520" y="52" width="174" height="56" rx="8" fill="var(--accent)" stroke="var(--line)"/>
+          <text x="607" y="86" text-anchor="middle" font-family="var(--font-body)" font-size="15" fill="var(--accent-ink)" font-weight="600">Aceitar</text>
+        </g>
+      </svg>
+      <p class="b-figcap">As setas saem de um <code class="doc-code">&lt;marker&gt;</code> em <code class="doc-code">&lt;defs&gt;</code>. O nó final, em ouro, é o destino do fluxo.</p>
+    </div>
+  </div>
+  <div class="doc-note do" style="margin-top:24px;">
+    <span class="doc-note-tag">Faça</span>
+    <span>Desenhar os conectores antes dos nós. Usar <code class="doc-code">id</code> único de marker por SVG. Pintar a seta com <code class="doc-code">currentColor</code>, herdando a tinta do nó pai.</span>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-diagram</code> &gt; <code class="doc-code">svg</code>. Setas via <code class="doc-code">&lt;marker&gt;</code> com <code class="doc-code">orient="auto-start-reverse"</code>. Detalhe completo na página de Diagramas.</p>
+</div></section>
+
+<!-- ============================================================
+     16 - PERSONA
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">16</span><p class="doc-kicker">Retrato de público</p></div>
+  <h2>A pessoa por trás do <em>segmento</em></h2>
+  <p>A <code class="doc-code">.b-persona</code> dá rosto a um público. Retrato à esquerda, nome, papel e um conjunto de atributos à direita, cada um com um rótulo curto e uma frase. Serve para transformar uma segmentação abstrata em alguém que o leitor consegue imaginar, sem cair na ficha técnica seca.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Persona com retrato e atributos</span>
+    <div class="book">
+      <div class="b-persona">
+        <div class="b-portrait" aria-hidden="true">retrato</div>
+        <div>
+          <h3>Marina, 38 anos</h3>
+          <p class="b-persona-role">Mora em cidade média do interior, decide as compras da casa</p>
+          <div class="b-attr"><b>O que busca</b>Marca que resolva sem fazer ela perder a tarde no atendimento.</div>
+          <div class="b-attr"><b>O que evita</b>Promessa grande de quem some na hora do problema.</div>
+          <div class="b-attr"><b>Onde decide</b>Conversa com vizinha vale mais que anúncio na capital.</div>
+        </div>
+      </div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> apresentar um público primário ou secundário com profundidade, depois de a segmentação já ter definido a hierarquia. Uma persona por público, não uma galeria.</p>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-persona</code> &gt; <code class="doc-code">.b-portrait</code> + bloco com <code class="doc-code">h3</code>, <code class="doc-code">.b-persona-role</code> e vários <code class="doc-code">.b-attr</code> (com <code class="doc-code">&lt;b&gt;</code> de rótulo). Empilha sozinha abaixo de 900 pixels.</p>
+</div></section>
+
+<!-- ============================================================
+     17 - TABELA COMPARATIVA
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">17</span><p class="doc-kicker">Comparação lado a lado</p></div>
+  <h2>A tabela que compara sem <em>ruído</em></h2>
+  <p>A <code class="doc-code">.b-table</code> compara opções em colunas, com cabeçalho esmaecido e divisórias finas. Uma coluna recebe <code class="doc-code">.col-hot</code> e ganha tinta cheia, sinalizando a opção em foco sem usar cor de série. É o formato para confrontar abordagens, planos ou cenários quando a leitura precisa de precisão.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Tabela comparativa com coluna em foco</span>
+    <div class="book" style="overflow-x:auto;">
+      <table class="b-table">
+        <thead>
+          <tr><th>Critério</th><th>Falar só na capital</th><th class="col-hot">Falar com o território</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Alcance do público</td><td>Concentrado na minoria urbana</td><td class="col-hot">Cobre o interior, onde está o volume</td></tr>
+          <tr><td>Custo de mídia</td><td>Alto por contato</td><td class="col-hot">Diluído entre praças</td></tr>
+          <tr><td>Construção de presença</td><td>Lenta fora da capital</td><td class="col-hot">Constante em todo o estado</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> confrontar duas ou mais abordagens ponto a ponto. A coluna em foco aponta a recomendação sem precisar de seta nem de cor de alerta.</p>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-table</code> com a coluna recomendada em <code class="doc-code">.col-hot</code>. Em telas estreitas, role na horizontal em vez de quebrar a tabela.</p>
+</div></section>
+
+<!-- ============================================================
+     18 - QUADRANTE + ROADMAP DE FASES
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">18</span><p class="doc-kicker">Mapas de posição e de fase</p></div>
+  <h2>O quadrante que posiciona e o roteiro que <em>avança</em></h2>
+  <p>O <code class="doc-code">.b-quad</code> distribui quatro células numa malha de duas por duas, para mapear posições em dois eixos: urgência contra impacto, esforço contra retorno. Uma célula recebe <code class="doc-code">.hot</code> e ganha a superfície aprofundada, marcando o quadrante prioritário.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Quadrante dois por dois</span>
+    <div class="book">
+      <div class="b-quad">
+        <div class="b-cell hot">
+          <strong style="color:var(--ink);">Agir agora</strong>
+          <p style="margin:8px 0 0;color:var(--muted);font-size:var(--fs-small);">Alto impacto, baixo esforço. O ponto de partida.</p>
+        </div>
+        <div class="b-cell">
+          <strong style="color:var(--ink);">Planejar</strong>
+          <p style="margin:8px 0 0;color:var(--muted);font-size:var(--fs-small);">Alto impacto, alto esforço. Vale, com fôlego.</p>
+        </div>
+        <div class="b-cell">
+          <strong style="color:var(--ink);">Encaixar</strong>
+          <p style="margin:8px 0 0;color:var(--muted);font-size:var(--fs-small);">Baixo impacto, baixo esforço. Quando sobrar margem.</p>
+        </div>
+        <div class="b-cell">
+          <strong style="color:var(--ink);">Adiar</strong>
+          <p style="margin:8px 0 0;color:var(--muted);font-size:var(--fs-small);">Baixo impacto, alto esforço. Fora do escopo agora.</p>
+        </div>
+      </div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> priorização em dois eixos, posicionamento competitivo, matriz de decisão. A célula em foco é a recomendação.</p>
+  </div>
+
+  <h3>Roadmap de fases, o caminho que se lê na horizontal</h3>
+  <p>O <code class="doc-code">.b-roadmap</code> alinha fases lado a lado, cada uma com numeral em joia e descrição. É o roteiro do que vem em cada etapa, lido da esquerda para a direita. Em telas menores, empilha na vertical mantendo a ordem.</p>
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Roadmap de fases</span>
+    <div class="book">
+      <div class="b-roadmap">
+        <div class="b-phase">
+          <div class="b-phase-num">01</div>
+          <h4 style="margin:8px 0 6px;font-size:var(--fs-lead);color:var(--ink);">Escutar</h4>
+          <p style="margin:0;color:var(--muted);font-size:var(--fs-small);">Ler o território antes de falar.</p>
+        </div>
+        <div class="b-phase">
+          <div class="b-phase-num">02</div>
+          <h4 style="margin:8px 0 6px;font-size:var(--fs-lead);color:var(--ink);">Entrar</h4>
+          <p style="margin:0;color:var(--muted);font-size:var(--fs-small);">Primeiros movimentos pelo problema do público.</p>
+        </div>
+        <div class="b-phase">
+          <div class="b-phase-num">03</div>
+          <h4 style="margin:8px 0 6px;font-size:var(--fs-lead);color:var(--ink);">Firmar</h4>
+          <p style="margin:0;color:var(--muted);font-size:var(--fs-small);">Confirmar a promessa e medir a presença.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-quad</code> &gt; <code class="doc-code">.b-cell</code> (uma com <code class="doc-code">.hot</code>); <code class="doc-code">.b-roadmap</code> &gt; <code class="doc-code">.b-phase</code> (com <code class="doc-code">.b-phase-num</code>). O roadmap empilha na vertical abaixo de 900 pixels.</p>
+</div></section>
+
+<!-- ============================================================
+     19 - PILARES (grid de 3)
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">19</span><p class="doc-kicker">Sustentação em três</p></div>
+  <h2>Os pilares que sustentam a <em>tese</em></h2>
+  <p>Quando uma plataforma se apoia em alguns pilares de igual peso, a grade de cartões os apresenta lado a lado, sem hierarquia entre eles. Os <code class="doc-code">.b-infocard.feature</code> trazem ícone, título e uma frase por pilar. A leitura é horizontal: três sustentações que, juntas, seguram o argumento. Nenhum domina, porque a força está no conjunto.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Pilares em grade de cartões</span>
+    <div class="book">
+      <div class="b-cards">
+        <div class="b-infocard feature">
+          <span class="b-ic-ico" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M11 3l7 4v8l-7 4-7-4V7z"/></svg>
+          </span>
+          <h4>Presença</h4>
+          <p>Estar onde o público vive, com constância, não em surtos de campanha.</p>
+        </div>
+        <div class="b-infocard feature">
+          <span class="b-ic-ico" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 11h14M11 4v14"/></svg>
+          </span>
+          <h4>Pertinência</h4>
+          <p>Falar do que importa para quem ouve, não do que a marca quer dizer.</p>
+        </div>
+        <div class="b-infocard feature">
+          <span class="b-ic-ico" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M11 7v4l3 2"/></svg>
+          </span>
+          <h4>Prova</h4>
+          <p>Confirmar a promessa na experiência, para a frase virar reputação.</p>
+        </div>
+      </div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> pilares de uma plataforma, atributos de igual peso, sustentações de uma tese. Três é o número de equilíbrio; passe disso e a leitura horizontal cansa.</p>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-cards</code> &gt; <code class="doc-code">.b-infocard.feature</code> (com <code class="doc-code">.b-ic-ico</code>, <code class="doc-code">h4</code>, <code class="doc-code">p</code>). Ícones decorativos, com <code class="doc-code">aria-hidden</code>. O cartão simples e o rico vivem na página de Cards.</p>
+</div></section>
+
+<!-- ============================================================
+     20 - INSIGHT-BOX + DESTAQUE + CALLOUT
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">20</span><p class="doc-kicker">Caixas de ênfase</p></div>
+  <h2>O que precisa ser <em>sublinhado</em></h2>
+  <p>Três caixas dão ênfase a um trecho sem tirá-lo do fluxo. A <code class="doc-code">.b-insight</code> usa uma barra de acento à esquerda e um rótulo curto, para a leitura estratégica de um dado: o que ele quer dizer, não só o que ele é. O destaque <code class="doc-code">.b-highlight</code> emoldura um trecho na superfície aprofundada com borda de acento. E o callout, montado direto com papéis semânticos, dá uma nota lateral mais leve.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Insight-box com barra de acento</span>
+    <div class="book">
+      <div class="b-insight">
+        <div class="b-insight-bar" aria-hidden="true"></div>
+        <div>
+          <p class="b-insight-label">Leitura estratégica</p>
+          <p class="b-insight-text">A atenção do público existe e está <strong>em aberto</strong>: ninguém ocupou ainda o lugar de marca confiável da categoria no território.</p>
+        </div>
+      </div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> a interpretação de um dado, o salto do número para a consequência. Rotule como leitura estratégica quando for hipótese, e cite a fonte quando houver lastro.</p>
+  </div>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Destaque emoldurado</span>
+    <div class="book">
+      <div class="b-highlight">
+        <p class="b-hl-kicker">O que sustenta a recomendação</p>
+        <p>Entrar pelo problema do público, e não pelo produto, é o que separa uma marca que chega de uma marca que fica.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Callout leve, montado com papéis semânticos</span>
+    <div class="book">
+      <aside style="border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;background:color-mix(in srgb, var(--ink) 5%, transparent);">
+        <p style="margin:0 0 4px;font-size:var(--fs-micro);letter-spacing:var(--tracking-label);text-transform:uppercase;color:var(--muted);">Nota</p>
+        <p style="margin:0;color:var(--ink-body);font-size:var(--fs-small);">O callout serve a observações laterais: uma ressalva, um lembrete, uma definição. É a caixa mais leve das três, sem barra nem moldura cheia.</p>
+      </aside>
+    </div>
+    <p class="doc-when"><b>Quando usar a hierarquia:</b> <code class="doc-code">.b-insight</code> para leitura de dado, <code class="doc-code">.b-highlight</code> para a recomendação-âncora, callout para a nota de rodapé no corpo do texto.</p>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-insight</code> (com <code class="doc-code">.b-insight-bar</code>, <code class="doc-code">.b-insight-label</code>, <code class="doc-code">.b-insight-text</code> e <code class="doc-code">&lt;strong&gt;</code>); <code class="doc-code">.b-highlight</code> (com <code class="doc-code">.b-hl-kicker</code>); o callout é um <code class="doc-code">&lt;aside&gt;</code> com tokens.</p>
+</div></section>
+
+<!-- ============================================================
+     21 - DISCLOSURE PROGRESSIVO
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">21</span><p class="doc-kicker">Detalhe sob demanda</p></div>
+  <h2>O detalhe que abre quando se <em>pede</em></h2>
+  <p>Para a informação que nem todo leitor precisa, o disclosure progressivo guarda o detalhe atrás de um resumo. Usa o par nativo <code class="doc-code">&lt;details&gt;</code> e <code class="doc-code">&lt;summary&gt;</code>, que funciona sem JavaScript: o resumo fica visível e o conteúdo abre ao clique. Serve para metodologia, notas técnicas, fontes ou aprofundamentos que pesariam o fluxo principal se ficassem abertos.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Disclosure com details e summary</span>
+    <div class="book">
+      <details style="border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;background:color-mix(in srgb, var(--ink) 5%, transparent);">
+        <summary style="cursor:pointer;font-weight:var(--w-label);color:var(--ink);">Como o número de reconhecimento foi medido</summary>
+        <p style="margin:14px 0 0;color:var(--ink-body);font-size:var(--fs-small);">Pergunta espontânea de lembrança de categoria e de marca, aplicada a uma amostra do público do território. O detalhe metodológico vive aqui, à disposição de quem quiser conferir, sem ocupar o corpo do argumento.</p>
+      </details>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> metodologia, fontes detalhadas, aprofundamento opcional. O par nativo abre sem JavaScript, então o conteúdo continua acessível na conferência por PDF.</p>
+  </div>
+  <p class="doc-classnote">Elementos nativos <code class="doc-code">&lt;details&gt;</code> e <code class="doc-code">&lt;summary&gt;</code>, estilizados com papéis semânticos. Funcionam sem script.</p>
+</div></section>
+
+<!-- ============================================================
+     22 - FAIXA DE CHAMADA (CTA)
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">22</span><p class="doc-kicker">Convite ao próximo passo</p></div>
+  <h2>O fechamento que aponta um <em>passo</em></h2>
+  <p>Perto do fim, a <code class="doc-code">.b-cta</code> reúne o leitor em torno de uma ação. Título em display, uma frase e um botão de acento. No book, ela costura o documento ao que vem depois: uma conversa, um próximo material, uma decisão. O botão é o único lugar da seção onde a joia aparece como superfície cheia.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Faixa de chamada com botão</span>
+    <div class="book">
+      <div class="b-cta">
+        <h2>Pronto para entrar no território com a conversa certa?</h2>
+        <p style="color:var(--muted);max-width:48ch;margin:0 auto;">O próximo passo é desenhar os primeiros movimentos, pelo problema do público e no tempo dele.</p>
+        <a class="b-btn" href="#">Continuar a conversa</a>
+      </div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> fechamento de book, ponte para o próximo material ou para a decisão. Uma por documento; mais de uma dilui o convite.</p>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-cta</code> &gt; <code class="doc-code">h2</code> + <code class="doc-code">p</code> + <code class="doc-code">.b-btn</code>.</p>
+</div></section>
+
+<!-- ============================================================
+     23 - SUPERMENU (barra + overlay de indice)
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">23</span><p class="doc-kicker">Navegação do book</p></div>
+  <h2>A barra fina e o índice em <em>tela cheia</em></h2>
+  <p>O book carrega uma barra de navegação fina e fixa no topo, com a logo e um botão de índice. Ao acionar o botão, abre o supermenu: um overlay em tela cheia, sobre o chão preto, com o sumário do documento em display. O <code class="doc-code">book.js</code> cabeia o botão, abre e fecha o overlay e fecha com a tecla de escape. No catálogo, a barra fica travada em fluxo para não competir com o cromo da página; em produção, ela é fixa.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Barra de book com botão de índice (clique para abrir o overlay)</span>
+    <div class="book">
+      <nav class="book-nav" aria-label="Navegação do book">
+        <img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <button class="book-menu-toggle" type="button" aria-haspopup="dialog">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12"/></svg>
+          Índice
+        </button>
+      </nav>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> presente em todo book longform. A barra dá orientação constante; o overlay dá a planta completa quando o leitor quer saltar de parte.</p>
+  </div>
+
+  <div class="book-menu" role="dialog" aria-modal="true" aria-label="Índice do documento">
+    <button class="book-menu-close" type="button" aria-label="Fechar índice">&times;</button>
+    <ol>
+      <li><a href="#">O território hoje</a></li>
+      <li><a href="#">A conversa que falta</a></li>
+      <li><a href="#">O caminho proposto</a></li>
+      <li><a href="#">Cronograma e próximos passos</a></li>
+    </ol>
+  </div>
+
+  <p class="doc-classnote">Classes: barra <code class="doc-code">.book-nav</code> com <code class="doc-code">.book-menu-toggle</code>; overlay <code class="doc-code">.book-menu</code> com <code class="doc-code">.book-menu-close</code> e uma <code class="doc-code">&lt;ol&gt;</code> de capítulos. O <code class="doc-code">book.js</code> cabeia toggle, fechar e a tecla de escape. A barra de progresso <code class="doc-code">.book-progress</code> e o scroll-spy também vivem nessa camada.</p>
+</div></section>
+
+<!-- ============================================================
+     24 - RODAPE / CONTRACAPA
+     ============================================================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">24</span><p class="doc-kicker">Fechamento do documento</p></div>
+  <h2>O chão preto que <em>encerra</em></h2>
+  <p>A contracapa do book é o <code class="doc-code">.b-footer</code>: fundo preto, o chão da casa, com a logo branca, os endereços e uma linha de assinatura. É o único bloco que abandona o campo-laranja, porque o preto é o piso onde o documento pousa ao terminar. Fecha o arco visual aberto pela capa.</p>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Rodapé sobre o chão preto</span>
+    <div class="book">
+      <footer class="b-footer">
+        <div class="container">
+          <img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+          <div class="b-addr"><span>São Paulo · SP</span><span>Campo Grande · MS</span><span>Cuiabá · MT</span></div>
+        </div>
+      </footer>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> fechamento de todo book. É a contracapa: logo, presença geográfica e assinatura, sobre o piso preto.</p>
+  </div>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-footer</code> &gt; <code class="doc-code">.container</code> &gt; <code class="doc-code">&lt;img&gt;</code> + <code class="doc-code">.b-addr</code>. Roda sobre <code class="doc-code">--floor</code> (preto) com tinta <code class="doc-code">--floor-ink</code> (branca).</p>
+</div></section>
+
+<footer class="doc-foot"><div class="doc-wrap">
+  <img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+  <div class="doc-addr"><span>São Paulo · SP</span><span>Campo Grande · MS</span><span>Cuiabá · MT</span></div>
+  <p class="doc-foot-meta">Sistema de Design 80 20 · Montserrat · campo-laranja, palco escuro, papel claro</p>
+</div></footer>
+
+</body>
+</html>

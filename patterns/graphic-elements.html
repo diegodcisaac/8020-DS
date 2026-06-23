@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8020-DS · Elementos gráficos</title>
+<link rel="stylesheet" href="../tokens/8020.css">
+<link rel="stylesheet" href="../assets/book.css">
+<link rel="stylesheet" href="_docs.css">
+<style>
+  /* ---- scaffolding local de specimen (so esta pagina) ---- */
+
+  /* tira de dash-glyphs: espelha .s-glyphs, em escala de catalogo */
+  .ge-glyphs { display: flex; flex-wrap: wrap; gap: 22px; align-items: center; }
+  .ge-glyph { display: inline-flex; flex-direction: column; align-items: center; gap: 10px; }
+  .ge-glyph svg { height: 28px; width: auto; display: block; }
+  .ge-glyph-name { font-size: var(--fs-micro); font-weight: var(--w-label); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--muted); }
+
+  /* trilha de glyphs como apareceria numa costura/abertura */
+  .ge-seam { display: flex; gap: 12px; align-items: center; padding: 18px 0; }
+  .ge-seam svg { height: 24px; width: auto; display: block; }
+  .ge-seam .ge-seam-word { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-h2); color: var(--ink); letter-spacing: -.01em; margin-left: 6px; }
+
+  /* placeholders de forma recortada: SEM foto real, so cor/gradiente */
+  .ge-shape { aspect-ratio: 4/5; display: grid; place-items: end start; padding: 18px; color: var(--ink); }
+  .ge-shape .ge-shape-tag { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-small); letter-spacing: .02em; }
+  .ge-fill-laranja { background: var(--surface); }
+  .ge-fill-jewel-q { background: var(--jewel-quente); }
+  .ge-fill-jewel-f { background: var(--jewel-frio); }
+  .ge-fill-azul    { background: var(--accent-azul); color: #fff; }
+  .ge-fill-cross   { background: repeating-linear-gradient(135deg, rgba(255,255,255,.10) 0 12px, transparent 12px 24px), var(--surface); }
+
+  /* mascara organica grande (espelha .b-figure.organica) */
+  .ge-organica { clip-path: path("M 0 80 C 120 0 460 0 600 70 C 740 140 760 360 640 460 C 520 560 160 580 60 500 C -40 420 -20 160 0 80 Z"); }
+  /* blob (espelha .s-photo--blob) */
+  .ge-blob { border-radius: 48% 52% 56% 44% / 52% 44% 56% 48%; }
+  /* recorte poligonal: pedra / lasca */
+  .ge-poly-stone { clip-path: polygon(8% 0, 100% 6%, 92% 100%, 0 88%); }
+  .ge-poly-arrow { clip-path: polygon(0 0, 78% 0, 100% 50%, 78% 100%, 0 100%, 20% 50%); }
+
+  /* paralelogramos: recorte inclinado */
+  .ge-para { display: grid; gap: 14px; }
+  .ge-para-block {
+    background: var(--surface); color: var(--surface-ink);
+    padding: 22px 30px; border-radius: var(--radius-sm);
+    clip-path: polygon(4% 0, 100% 0, 96% 100%, 0 100%);
+    font-family: var(--font-display); font-weight: var(--w-display);
+    font-size: var(--fs-h2); line-height: 1.1;
+  }
+  .ge-para-mark {
+    display: inline-block; background: var(--accent); color: var(--accent-ink);
+    padding: 2px 14px; transform: skewX(-9deg);
+    font-family: var(--font-display); font-weight: var(--w-display);
+  }
+  .ge-para-mark > span { display: inline-block; transform: skewX(9deg); }
+  .ge-para-band {
+    background: var(--accent-azul); color: #fff;
+    padding: 16px 28px; border-radius: var(--radius-sm);
+    clip-path: polygon(0 0, 96% 0, 100% 100%, 4% 100%);
+    font-family: var(--font-display); font-weight: var(--w-label);
+    letter-spacing: var(--tracking-label); text-transform: uppercase; font-size: var(--fs-small);
+  }
+
+  /* swatches de joia-gradiente */
+  .ge-jewel { display: grid; gap: 8px; }
+  .ge-jewel-chip {
+    height: 96px; border-radius: var(--radius);
+    display: grid; place-items: end start; padding: 14px;
+    font-family: var(--font-display); font-weight: var(--w-display);
+    font-size: var(--fs-small); color: var(--accent-ink);
+  }
+  .ge-jewel-chip.is-azul { color: #fff; }
+  .ge-jewel-meta { font-size: var(--fs-micro); color: var(--muted); }
+  .ge-jewel-meta .doc-code { display: inline-block; margin-top: 2px; }
+
+  /* demo do erro: gradiente sob texto corrido (so dentro da nota dont) */
+  .ge-bad-grad {
+    background: var(--jewel-quente); color: #0a0a0a;
+    padding: 16px 18px; border-radius: var(--radius-sm);
+    font-size: var(--fs-small); line-height: 1.5;
+  }
+
+  @media (max-width: 600px) {
+    .ge-glyphs { gap: 16px; }
+  }
+</style>
+</head>
+<body class="doc">
+
+<header class="doc-head">
+  <a class="doc-brand" href="../index.html"><img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing"><span>Sistema de Design</span></a>
+  <nav class="doc-nav" aria-label="Páginas do sistema">
+    <a href="colors.html">Cores</a>
+    <a href="variants.html">Variantes</a>
+    <a href="typography.html">Tipografia</a>
+    <a href="graphic-elements.html" aria-current="page">Elementos</a>
+    <a href="images.html">Imagens</a>
+    <a href="cards.html">Cards</a>
+    <a href="facilitacao-visual.html">Facilitação</a>
+    <a href="diagrams.html">Diagramas</a>
+    <a href="charts.html">Gráficos</a>
+    <a href="layouts.html">Deck</a>
+    <a href="book-layout.html">Book</a>
+  </nav>
+</header>
+
+<header class="doc-hero"><div class="doc-wrap">
+  <p class="doc-eyebrow">Vocabulário gráfico</p>
+  <h1>O alfabeto que a casa fala sem <em>palavras</em></h1>
+  <p class="doc-lead">Quatro famílias de forma sustentam o sistema: os fragmentos do display que pontuam as costuras, a máscara recortada que dá protagonismo à imagem, o corte inclinado que tensiona o bloco e a joia em gradiente, sempre escassa. Cada uma tem um lugar certo e um lugar proibido.</p>
+</div></header>
+
+<!-- ============================ 01 DASH-GLYPHS ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">01</span><p class="doc-kicker">Dash-glyphs</p></div>
+  <h2>Os fragmentos do display, soltos como <em>pontuação</em></h2>
+  <p>Os glyphs são pedaços do desenho da letra recortados e isolados: a barra arredondada, o arco, o ponto, o anel. Eles aparecem nas costuras entre movimentos e nas aberturas de seção, onde marcam ritmo sem competir com o título. São sempre brancos, em escala discreta (cerca de 28 pixels de altura) e puramente decorativos, então levam <span class="doc-code">aria-hidden="true"</span>.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Alfabeto de fragmentos</span>
+    <div class="ge-glyphs">
+      <!-- barra arredondada -->
+      <span class="ge-glyph">
+        <svg viewBox="0 0 40 28" aria-hidden="true"><rect x="4" y="10" width="32" height="8" rx="4" fill="var(--ink)"/></svg>
+        <span class="ge-glyph-name">Barra</span>
+      </span>
+      <!-- arco -->
+      <span class="ge-glyph">
+        <svg viewBox="0 0 32 28" aria-hidden="true"><path d="M4 24 A 12 12 0 0 1 28 24" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/></svg>
+        <span class="ge-glyph-name">Arco</span>
+      </span>
+      <!-- quarto de arco -->
+      <span class="ge-glyph">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 26 A 18 18 0 0 1 26 5" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/></svg>
+        <span class="ge-glyph-name">Quarto</span>
+      </span>
+      <!-- ponto -->
+      <span class="ge-glyph">
+        <svg viewBox="0 0 24 28" aria-hidden="true"><circle cx="12" cy="14" r="7" fill="var(--ink)"/></svg>
+        <span class="ge-glyph-name">Ponto</span>
+      </span>
+      <!-- barra inclinada -->
+      <span class="ge-glyph">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="2" y="10" width="30" height="8" rx="4" fill="var(--ink)" transform="rotate(-24 14 14)"/></svg>
+        <span class="ge-glyph-name">Inclinada</span>
+      </span>
+      <!-- anel -->
+      <span class="ge-glyph">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="9" fill="none" stroke="var(--ink)" stroke-width="6"/></svg>
+        <span class="ge-glyph-name">Anel</span>
+      </span>
+      <!-- meio anel -->
+      <span class="ge-glyph">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 14 A 9 9 0 0 1 23 14" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round"/></svg>
+        <span class="ge-glyph-name">Meio-anel</span>
+      </span>
+      <!-- chevron -->
+      <span class="ge-glyph">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M8 5 L 20 14 L 8 23" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="ge-glyph-name">Chevron</span>
+      </span>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> nas costuras entre movimentos de um deck ou book, ao lado de um eyebrow de abertura, ou para fechar uma seção com um respiro. Use de um a três fragmentos por momento, nunca uma fileira longa que vire ornamento.</p>
+  </div>
+
+  <div class="doc-specimen plain">
+    <span class="doc-specimen-label">Na costura, como aparece de verdade</span>
+    <div class="ge-seam">
+      <svg viewBox="0 0 40 28" aria-hidden="true"><rect x="4" y="10" width="32" height="8" rx="4" fill="var(--ink)"/></svg>
+      <svg viewBox="0 0 24 28" aria-hidden="true"><circle cx="12" cy="14" r="7" fill="var(--ink)"/></svg>
+      <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M8 5 L 20 14 L 8 23" fill="none" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="ge-seam-word">próximo movimento</span>
+    </div>
+  </div>
+
+  <div class="doc-grid doc-2">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <p>Brancos, em <span class="doc-code">fill: var(--ink)</span>, com <span class="doc-code">aria-hidden="true"</span>. De um a três por costura. Escala discreta que não disputa com o título.</p>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <p>Fileira longa de glyphs como moldura, fragmento colorido de joia, ou glyph do tamanho de um título. O fragmento pontua, não enche a tela.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================ 02 MASCARAS ORGANICAS ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">02</span><p class="doc-kicker">Máscaras orgânicas</p></div>
+  <h2>A imagem entra recortada e sempre <em>sangra</em></h2>
+  <p>A forma recortada é a assinatura da casa para fotografia. A imagem nunca aparece num retângulo fechado quando é protagonista emocional: ela recebe uma máscara orgânica e encosta na borda do quadro, criando a sensação de que continua para fora. A máscara canônica é a mesma de <span class="doc-code">.b-figure.organica</span> e <span class="doc-code">.s-photo--organica</span>. O blob por <span class="doc-code">border-radius</span> e os recortes em polígono são variações para usos mais geométricos. Os specimens abaixo usam cor e gradiente como espaço reservado, sem foto real.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">A. Máscara orgânica que sangra (path)</span>
+    <div class="doc-grid doc-2">
+      <div>
+        <div class="ge-shape ge-organica ge-fill-laranja"><span class="ge-shape-tag">protagonista</span></div>
+        <p class="doc-when"><b>Quando usar:</b> retrato ou cena que carrega a emoção da peça. O mesmo recorte de <span class="doc-code">.b-figure.organica</span>, encostado na margem para sangrar.</p>
+      </div>
+      <div>
+        <div class="ge-shape ge-organica ge-fill-jewel-f"><span class="ge-shape-tag">cena de apoio</span></div>
+        <p class="doc-when"><b>Quando usar:</b> imagem secundária dentro de um split. A máscara é a mesma; o que muda é a escala e o papel na composição.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">B. Blob por border-radius</span>
+    <div class="doc-grid doc-3">
+      <div>
+        <div class="ge-shape ge-blob ge-fill-laranja"><span class="ge-shape-tag">retrato</span></div>
+        <p class="doc-when"><b>Quando usar:</b> a forma de <span class="doc-code">.s-photo--blob</span>, mais arredondada e amigável, boa para persona e rosto isolado.</p>
+      </div>
+      <div>
+        <div class="ge-shape ge-blob ge-fill-azul"><span class="ge-shape-tag">detalhe</span></div>
+        <p class="doc-when"><b>Quando usar:</b> bolha de apoio sobre o campo. Sobre o azul, mantenha o texto branco.</p>
+      </div>
+      <div>
+        <div class="ge-shape ge-blob ge-fill-cross"><span class="ge-shape-tag">textura</span></div>
+        <p class="doc-when"><b>Quando usar:</b> espaço reservado de imagem ainda não definida, com hachura discreta no lugar da foto.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">C. Recorte poligonal (clip-path polygon)</span>
+    <div class="doc-grid doc-2">
+      <div>
+        <div class="ge-shape ge-poly-stone ge-fill-jewel-q"><span class="ge-shape-tag">pedra</span></div>
+        <p class="doc-when"><b>Quando usar:</b> corte de quatro lados levemente torto, mais firme que o orgânico. Bom para bloco de imagem que precisa de aresta sem virar retângulo.</p>
+      </div>
+      <div>
+        <div class="ge-shape ge-poly-arrow ge-fill-azul"><span class="ge-shape-tag">avanço</span></div>
+        <p class="doc-when"><b>Quando usar:</b> recorte com ponta, que sugere direção dentro de uma sequência. Use com parcimônia, um por composição.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc-grid doc-2">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <p>Imagem protagonista sempre recortada e sangrando a borda. Reaproveite o <span class="doc-code">path()</span> canônico de <span class="doc-code">.b-figure.organica</span> em vez de inventar uma curva nova a cada peça.</p>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <p>Foto protagonista num retângulo fechado e contido no meio do campo. Recorte que não encosta em nenhuma borda perde a assinatura e parece miniatura solta.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================ 03 PARALELOGRAMOS ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">Paralelogramos</p></div>
+  <h2>O corte inclinado que tensiona o <em>bloco</em></h2>
+  <p>A inclinação herda o ângulo do italismo do display e leva esse movimento para os blocos. Um bloco de conteúdo com lateral cortada, um realce de palavra em <span class="doc-code">skewX</span>, uma faixa de rótulo levemente torta: tudo isso cria tensão controlada sem recorrer a cor. O corte por <span class="doc-code">clip-path: polygon</span> mantém o texto reto dentro de uma caixa inclinada; o <span class="doc-code">skewX</span> inclina o conjunto e pede contra-inclinação no filho para o texto voltar à vertical.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Bloco com lateral cortada</span>
+    <div class="ge-para">
+      <div class="ge-para-block">A casa entrega ritmo, não só páginas</div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> destaque de bloco numa abertura de seção, quando o retângulo padrão ficaria estático. O corte é sutil (poucos por cento), só o suficiente para registrar movimento.</p>
+  </div>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Realce de palavra em skewX</span>
+    <p style="font-family:var(--font-display);font-weight:var(--w-display);font-size:var(--fs-title);line-height:1.15;color:var(--ink);margin:0;max-width:18ch;">Cada peça tem um <span class="ge-para-mark"><span>movimento</span></span> próprio.</p>
+    <p class="doc-when"><b>Quando usar:</b> uma única palavra que merece salto, quando o italismo do display já está em uso e você quer um segundo registro de ênfase. A contra-inclinação no <span class="doc-code">span</span> interno mantém o texto legível.</p>
+  </div>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Faixa de rótulo inclinada</span>
+    <div class="ge-para-band">campo · movimento · costura</div>
+    <p class="doc-when"><b>Quando usar:</b> eyebrow ou rótulo de categoria que precisa de mais presença que o texto esmaecido. Aqui a faixa usa o azul como acento de rótulo, não como cor de dado.</p>
+  </div>
+
+  <div class="doc-grid doc-2">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      <p>Inclinação leve e consistente, ecoando o ângulo do italismo. Um corte inclinado por composição já basta para dar tensão.</p>
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      <p>Vários ângulos diferentes na mesma tela, ou inclinação tão forte que o texto fica torto e difícil de ler. Tensão controlada, não desordem.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================ 04 JOIAS-GRADIENTE ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">04</span><p class="doc-kicker">Joias-gradiente</p></div>
+  <h2>O gradiente é joia: aparece pouco e <em>brilha</em></h2>
+  <p>As duas joias em gradiente são o ponto mais alto de cor do sistema. A quente vai do verde ao ouro; a fria, do azul à areia. Elas existem como superfície-herói: um cartão de destaque, um plano de fundo de um único número, uma forma recortada que carrega o olho. Ao lado delas vivem as joias sólidas, usadas como acento pontual. A regra que organiza tudo: o gradiente é joia, então é raro. Em peça cliente, vale o teto de três joias por página. Nesta referência interna, mostramos todas para documentar, mas a disciplina de escassez permanece a lei do uso real.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Gradientes-joia</span>
+    <div class="doc-grid doc-2">
+      <div class="ge-jewel">
+        <div class="ge-jewel-chip ge-fill-jewel-q">quente</div>
+        <p class="ge-jewel-meta">Verde para ouro. <span class="doc-code">--jewel-quente</span></p>
+      </div>
+      <div class="ge-jewel">
+        <div class="ge-jewel-chip ge-fill-jewel-f is-azul">fria</div>
+        <p class="ge-jewel-meta">Azul para areia. <span class="doc-code">--jewel-frio</span></p>
+      </div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> uma superfície-herói por página, no máximo. Fundo de um número que precisa saltar, cartão de chamada, ou forma recortada protagonista. Nunca sob texto corrido.</p>
+  </div>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Joias sólidas (acento pontual)</span>
+    <div class="doc-grid doc-4">
+      <div class="ge-jewel">
+        <div class="ge-jewel-chip" style="background:var(--accent-azul);color:#fff;">azul</div>
+        <p class="ge-jewel-meta"><span class="doc-code">--accent-azul</span></p>
+      </div>
+      <div class="ge-jewel">
+        <div class="ge-jewel-chip" style="background:var(--accent-verde);">verde</div>
+        <p class="ge-jewel-meta"><span class="doc-code">--accent-verde</span></p>
+      </div>
+      <div class="ge-jewel">
+        <div class="ge-jewel-chip" style="background:var(--accent);">ouro</div>
+        <p class="ge-jewel-meta"><span class="doc-code">--accent</span></p>
+      </div>
+      <div class="ge-jewel">
+        <div class="ge-jewel-chip" style="background:var(--accent-areia);">areia</div>
+        <p class="ge-jewel-meta"><span class="doc-code">--accent-areia</span></p>
+      </div>
+    </div>
+    <p class="doc-when"><b>Quando usar:</b> realce de uma palavra, barra de um dado-herói, marcador de um item numa lista. O azul também é a cor de dado negativo, nunca o vermelho.</p>
+  </div>
+
+  <div class="doc-note dont" style="margin-top:18px;">
+    <span class="doc-note-tag">Erro crítico</span>
+    <p>Gradiente serve só como joia, em superfície-herói. <strong>Nunca sob texto corrido.</strong> Um parágrafo sobre gradiente fica ilegível no meio e nas pontas, porque o contraste varia ao longo da extensão, e ainda some o caráter de escassez que dá valor à joia. Veja o que evitar:</p>
+    <p class="ge-bad-grad" aria-hidden="true">Texto longo assentado diretamente sobre o gradiente quente. Repare como a leitura fica desconfortável onde o fundo clareia, e como o bloco inteiro perde a hierarquia. O gradiente deixa de ser joia e vira ruído.</p>
+  </div>
+</div></section>
+
+<footer class="doc-foot"><div class="doc-wrap">
+  <img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+  <div class="doc-addr"><span>São Paulo · SP</span><span>Campo Grande · MS</span><span>Cuiabá · MT</span></div>
+  <p class="doc-foot-meta">Sistema de Design 80 20 · Montserrat · campo-laranja, palco escuro, papel claro</p>
+</div></footer>
+
+</body>
+</html>

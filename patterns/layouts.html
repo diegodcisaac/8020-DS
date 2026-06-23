@@ -1,0 +1,891 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8020-DS · Catálogo de deck</title>
+<link rel="stylesheet" href="../tokens/8020.css">
+<link rel="stylesheet" href="../assets/book.css">
+<link rel="stylesheet" href="_docs.css">
+<link rel="stylesheet" href="../assets/deck.css">
+<style>
+  /* ---- contact sheet: cada layout e uma miniatura 16:9 escalada ---- */
+  .cat { display: grid; grid-template-columns: repeat(auto-fill, 384px); justify-content: center; gap: 30px 24px; }
+  .cat figure { margin: 0; }
+  .cat figcaption {
+    font-size: var(--fs-micro); font-weight: var(--w-label);
+    letter-spacing: var(--tracking-label); text-transform: uppercase;
+    color: var(--muted); margin-top: 10px;
+  }
+  .frame {
+    width: 384px; height: 216px;            /* 16:9; 720*0.3 = 216 */
+    border: 1px solid var(--line); border-radius: var(--radius);
+    overflow: hidden; position: relative; background: var(--paper);
+  }
+  /* zoom pinta a escala certa no PDF (transform:scale nao pinta); position:absolute
+     tira o palco do fluxo para nao reservar a altura cheia de 720px */
+  .frame .stage {
+    position: absolute; top: 0; left: 0;
+    zoom: 0.3;                              /* 384/1280 */
+    width: 1280px; height: 720px; box-shadow: none;
+  }
+  @media (max-width: 430px) {
+    .cat { grid-template-columns: repeat(auto-fill, 288px); }
+    .frame { width: 288px; height: 162px; }
+    .frame .stage { zoom: 0.225; } /* 288/1280 */
+  }
+  /* a moldura ja recorta; o slide herda os papeis semanticos do token */
+  .frame .slide { box-shadow: none; }
+
+  /* placeholders de imagem: SEM foto real, so cor/recorte (cromo do specimen) */
+  .ph { background: var(--surface); display: grid; place-items: center;
+        color: var(--muted); font-size: var(--fs-small); width: 100%; height: 100%; }
+  .ph-rect { border-radius: var(--radius); overflow: hidden; }
+  .ph-jewel { background: var(--jewel-frio); color: #fff; }
+  .ph-organica { clip-path: path("M 0 60 C 80 -10 320 0 420 70 C 520 140 540 360 460 470 C 380 580 120 600 40 520 C -40 440 -10 130 0 60 Z"); }
+  .ph-tag { font-family: var(--font-display); font-weight: var(--w-display); letter-spacing: .02em; }
+
+  /* grade de fotos dentro de um slide */
+  .s-photogrid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr 1fr;
+                 gap: 10px; height: 74%; margin-top: 8px; }
+  .s-photogrid .ph { border-radius: var(--radius-sm); }
+
+  /* linha de stats */
+  .s-stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; align-items: end;
+                height: 70%; align-content: center; }
+  .s-stat-row .n { font-family: var(--font-display); font-weight: var(--w-black);
+                   font-size: clamp(44px, 6vw, 72px); line-height: .9; letter-spacing: -.03em; color: var(--ink); }
+  .s-stat-row .u { font-size: .5em; font-weight: var(--w-display); }
+  .s-stat-row .d { font-size: var(--fs-small); color: var(--muted); margin-top: 6px; }
+  .s-stat-row .hero .n { color: var(--accent); }
+
+  /* de/para com seta */
+  .s-frompara { display: grid; grid-template-columns: 1fr auto 1fr; gap: 30px; align-items: center;
+                height: 66%; align-content: center; }
+  .s-frompara .cell { background: var(--surface); color: var(--surface-ink);
+                      border-radius: var(--radius); padding: 26px 30px; }
+  .s-frompara .cell b { display: block; font-size: var(--fs-micro); letter-spacing: var(--tracking-label);
+                        text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .s-frompara .cell p { font-family: var(--font-display); font-weight: var(--w-display);
+                        font-size: var(--fs-h2); line-height: 1.12; margin: 0; }
+  .s-frompara .cell.to { background: var(--accent); color: var(--accent-ink); }
+  .s-frompara .cell.to b { color: rgba(10,10,10,.62); }
+  .s-frompara .arrow { color: var(--ink); }
+
+  /* mural de citacoes / pilares / KPIs / logos / icones / servicos */
+  .s-wall { display: grid; gap: 16px; height: 70%; align-content: center; }
+  .s-wall-3 { grid-template-columns: repeat(3, 1fr); }
+  .s-wall-4 { grid-template-columns: repeat(4, 1fr); }
+  .s-wall .card { background: var(--surface); color: var(--surface-ink);
+                  border-radius: var(--radius); padding: 22px 24px; }
+  .s-wall .card.q { font-family: var(--font-display); font-style: italic; font-weight: var(--w-medium); }
+  .s-wall .card.q cite { display: block; font-style: normal; font-weight: var(--w-label);
+                         font-size: var(--fs-small); color: var(--muted); margin-top: 12px; }
+  .s-pillar h4 { font-family: var(--font-display); font-weight: var(--w-display);
+                 font-size: var(--fs-h2); margin: 0 0 8px; color: var(--ink); }
+  .s-pillar p { font-size: var(--fs-small); color: var(--ink-body); margin: 0; line-height: 1.45; }
+  .s-pillar .ico { display: inline-grid; place-items: center; width: 40px; height: 40px;
+                   border-radius: var(--radius-sm); background: var(--accent); color: var(--accent-ink);
+                   margin-bottom: 14px; }
+  .s-pillar .ico svg { width: 22px; height: 22px; display: block; }
+
+  /* KPIs */
+  .s-kpi { display: grid; place-items: start; }
+  .s-kpi .k { font-family: var(--font-display); font-weight: var(--w-black);
+              font-size: clamp(38px, 5vw, 56px); line-height: .9; letter-spacing: -.03em; color: var(--ink); }
+  .s-kpi .kl { font-size: var(--fs-micro); letter-spacing: var(--tracking-label);
+               text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+
+  /* mural de logos (caixas vazias rotuladas) */
+  .s-logobox { display: grid; place-items: center; height: 72px;
+               border: 1px solid var(--line); border-radius: var(--radius-sm);
+               background: color-mix(in srgb, var(--ink) 6%, transparent);
+               font-family: var(--font-display); font-weight: var(--w-display);
+               font-size: var(--fs-small); color: var(--muted); }
+
+  /* mapa / territorio */
+  .s-map { position: relative; height: 74%; border-radius: var(--radius);
+           background: var(--surface); overflow: hidden; border: 1px solid var(--line); }
+  .s-map .pin { position: absolute; width: 14px; height: 14px; border-radius: 50% 50% 50% 0;
+                transform: rotate(-45deg); background: var(--ink); }
+  .s-map .pin.hot { background: var(--accent); }
+
+  /* definicao */
+  .s-def { display: grid; align-content: center; height: 100%; gap: 14px; padding-bottom: 56px; }
+  .s-def .term { font-family: var(--font-display); font-weight: var(--w-black);
+                 font-size: var(--fs-statement); letter-spacing: -.02em; color: var(--ink); }
+  .s-def .term em { font-style: italic; font-size: 1.12em; font-weight: var(--w-black); }
+  .s-def .pos { font-size: var(--fs-micro); letter-spacing: var(--tracking-label);
+                text-transform: uppercase; color: var(--accent); }
+  .s-def .gloss { font-size: var(--fs-lead); color: var(--ink-body); max-width: 44ch; line-height: 1.4; }
+
+  /* recap / proximos passos: lista de fechamento */
+  .s-recap { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 14px; }
+  .s-recap li { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;
+                font-size: var(--fs-body); color: var(--ink-body); }
+  .s-recap li svg { width: 20px; height: 20px; color: var(--accent); margin-top: 2px; }
+
+  /* timeline horizontal de marcos */
+  .s-tline { width: 100%; height: auto; }
+
+  /* o slide dentro da moldura precisa caber sem barra de footer cortar conteudo:
+     reduzimos respiro vertical so no contexto da miniatura */
+  .frame .slide { padding: 56px 72px 0; }
+  .frame .slide.cover, .frame .slide.statement-bleed,
+  .frame .slide.close, .frame .slide.aparte { padding: 56px 72px; }
+
+  @media (max-width: 600px) {
+    .cat { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body class="doc">
+
+<header class="doc-head">
+  <a class="doc-brand" href="../index.html"><img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing"><span>Sistema de Design</span></a>
+  <nav class="doc-nav" aria-label="Páginas do sistema">
+    <a href="colors.html">Cores</a>
+    <a href="variants.html">Variantes</a>
+    <a href="typography.html">Tipografia</a>
+    <a href="graphic-elements.html">Elementos</a>
+    <a href="images.html">Imagens</a>
+    <a href="cards.html">Cards</a>
+    <a href="facilitacao-visual.html">Facilitação</a>
+    <a href="diagrams.html">Diagramas</a>
+    <a href="charts.html">Gráficos</a>
+    <a href="layouts.html" aria-current="page">Deck</a>
+    <a href="book-layout.html">Book</a>
+  </nav>
+</header>
+
+<header class="doc-hero"><div class="doc-wrap">
+  <p class="doc-eyebrow">Apresentação ao vivo · 16:9</p>
+  <h1>O palco fala em <em>laranja</em></h1>
+  <p class="doc-lead">Este catálogo reúne as formas de slide do deck 80 20 em miniatura, do abre ao fecha. Cada layout consome só papéis semânticos, mantém o campo laranja como substrato, a tinta branca para o display e a joia reservada para o dado-herói. A regra-mãe: um slide carrega uma ideia.</p>
+</div></header>
+
+<!-- ============================ ABERTURA E COSTURAS ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">01</span><p class="doc-kicker">Abertura e costuras</p></div>
+  <h2>As bordas da <em>narrativa</em></h2>
+  <p>Os layouts que abrem, dividem e fecham o deck. A capa é descritiva, nunca traz a mensagem-mãe. As separatrizes de capítulo usam número gigante na joia para marcar a virada. A contracapa volta ao chão preto com a logo e os três endereços.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Aberturas, viradas e fecho</span>
+    <div class="cat">
+
+      <figure><div class="frame"><div class="stage"><div class="slide active cover">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <span class="s-cobrand">Cliente</span>
+        <div style="display:grid;height:100%;align-content:center;padding-bottom:48px">
+          <p class="s-eyebrow">Plataforma de comunicação · 2026</p>
+          <h2 class="s-title">A casa que organiza antes de <em>construir</em></h2>
+          <p class="s-lead" style="color:var(--muted);max-width:34ch">Plano tático para a temporada. Documento de trabalho.</p>
+        </div>
+        <div class="s-foot"><span>80 20 Marketing</span></div>
+      </div></div></div><figcaption>Capa</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active close">
+        <div style="padding-top:8px">
+          <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing" style="position:static;height:34px">
+        </div>
+        <div class="s-addr"><span>São Paulo</span><span>Campo Grande</span><span>Cuiabá</span></div>
+        <div class="s-foot"><span>Obrigado</span></div>
+      </div></div></div><figcaption>Contracapa</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active chapter">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <span class="s-chap-num">02</span>
+        <h2 class="s-chap-title">Quem estamos tentando alcançar</h2>
+        <div class="s-foot"><span>Capítulo dois</span></div>
+      </div></div></div><figcaption>Separatriz de capítulo</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active statement-bleed">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-statement">A marca chega antes do produto chegar</p>
+        <div class="s-foot"><span>Posicionamento</span></div>
+      </div></div></div><figcaption>Statement full-bleed</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active aparte">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <div class="s-card">Aqui a gente respira. O que vem agora muda o tom da conversa.</div>
+        <div class="s-foot"><span>Aparte</span></div>
+      </div></div></div><figcaption>Aparte dramático</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active close">
+        <div style="padding-top:8px">
+          <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing" style="position:static;height:30px">
+          <p class="s-lead" style="margin-top:22px;max-width:30ch">Vamos conversar sobre a próxima temporada.</p>
+        </div>
+        <div class="s-addr" style="font-size:var(--fs-small)"><span>contato@8020mkt.com.br</span><span>8020mkt.com.br</span></div>
+        <div class="s-foot"><span>Contato</span></div>
+      </div></div></div><figcaption>Contato / obrigado</figcaption></figure>
+
+    </div>
+  </div>
+  <p class="doc-when"><b>Quando usar a separatriz:</b> sempre que o deck muda de assunto. O número gigante na joia faz o ouvinte saber que virou a página sem você precisar dizer. A capa nunca antecipa a mensagem central: ela situa.</p>
+
+  <div class="doc-grid doc-2" style="margin-top:18px">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      Capa descritiva e burocrática. A frase apoteótica fica para o statement full-bleed, no meio do arco.
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      Espremer título, subtítulo e três bullets na capa. Abertura é respiro, não sumário.
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================ INDICE E LISTAS ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">02</span><p class="doc-kicker">Índice e listas</p></div>
+  <h2>A ordem do <em>raciocínio</em></h2>
+  <p>Quando o slide precisa enumerar, a forma muda conforme a natureza da lista. Agenda e índice usam marcador simples com rótulo. Itens com ordem cronológica ou de prioridade ganham numeração sequencial. Listas rotuladas separam o termo da explicação.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Enumerar com clareza</span>
+    <div class="cat">
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">Roteiro</p>
+        <h2 class="s-title">O caminho de <em>hoje</em></h2>
+        <ul class="s-list">
+          <li>Onde a marca está agora</li>
+          <li>Quem queremos alcançar</li>
+          <li>O que vamos dizer</li>
+          <li>Por onde vamos dizer</li>
+        </ul>
+        <div class="s-foot"><span>Agenda</span></div>
+      </div></div></div><figcaption>Agenda / índice</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">Como avançamos</p>
+        <h2 class="s-title">Três passos até o <em>ar</em></h2>
+        <ol class="s-seq">
+          <li><div><span class="s-seq-title">Ouvir o território</span><p class="s-seq-desc">Mapear o que já se fala da marca.</p></div></li>
+          <li><div><span class="s-seq-title">Definir a voz</span><p class="s-seq-desc">Escolher o que só a marca pode dizer.</p></div></li>
+          <li><div><span class="s-seq-title">Colocar no ar</span><p class="s-seq-desc">Levar a mensagem aos canais certos.</p></div></li>
+        </ol>
+        <div class="s-foot"><span>Itens numerados</span></div>
+      </div></div></div><figcaption>Itens numerados</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">O que entregamos</p>
+        <h2 class="s-title">Três frentes de <em>trabalho</em></h2>
+        <ul class="s-list">
+          <li><span class="s-label">Diagnóstico</span>Leitura do cenário e da concorrência.</li>
+          <li><span class="s-label">Plataforma</span>O posicionamento e a arquitetura de mensagem.</li>
+          <li><span class="s-label">Ativação</span>O plano de canal pronto para a operação.</li>
+        </ul>
+        <div class="s-foot"><span>Lista rotulada</span></div>
+      </div></div></div><figcaption>Lista rotulada</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">Antes de fechar</p>
+        <h2 class="s-title">O que fica do <em>capítulo</em></h2>
+        <ul class="s-recap" aria-hidden="false">
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10.5 L8.5 15 L16 5"/></svg><span>A marca tem um lugar claro para ocupar.</span></li>
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10.5 L8.5 15 L16 5"/></svg><span>O público primário já está nomeado.</span></li>
+          <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10.5 L8.5 15 L16 5"/></svg><span>A mensagem central cabe em uma frase.</span></li>
+        </ul>
+        <div class="s-foot"><span>Recap de seção</span></div>
+      </div></div></div><figcaption>Recap de seção</figcaption></figure>
+
+    </div>
+  </div>
+  <p class="doc-when"><b>Quando usar cada um:</b> agenda para situar; <span class="doc-code">.s-seq</span> quando a ordem importa (passo um vem antes do passo dois); <span class="doc-code">.s-list</span> com <span class="doc-code">.s-label</span> quando cada item é um conceito que pede definição curta.</p>
+</div></section>
+
+<!-- ============================ AFIRMACAO E CITACAO ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">Afirmação e citação</p></div>
+  <h2>Quando a frase tem que <em>parar</em></h2>
+  <p>Momentos em que o slide some e fica só a palavra. O statement full-bleed é o pico de tensão do arco. A citação empresta voz de fora. O mural de citações junta vozes do público para mostrar consenso ou contraste.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Palavra como evento</span>
+    <div class="cat">
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <div style="display:grid;height:100%;align-content:center;padding-bottom:48px">
+          <p class="s-quote">A gente confia em quem chega antes de precisar vender.</p>
+          <p class="s-attrib">Participante do grupo de escuta, Campo Grande</p>
+        </div>
+        <div class="s-foot"><span>Citação</span></div>
+      </div></div></div><figcaption>Citação</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">O que ouvimos</p>
+        <h2 class="s-title">A voz do <em>público</em></h2>
+        <div class="s-wall s-wall-3">
+          <blockquote class="card q">Marca séria, sem ser dura.<cite>Comerciante</cite></blockquote>
+          <blockquote class="card q">Eu queria entender antes de ser cobrado.<cite>Cliente novo</cite></blockquote>
+          <blockquote class="card q">Falta alguém que explique com calma.<cite>Produtor rural</cite></blockquote>
+        </div>
+        <div class="s-foot"><span>Mural de citações</span></div>
+      </div></div></div><figcaption>Mural de citações</figcaption></figure>
+
+    </div>
+  </div>
+  <p class="doc-when"><b>Quando usar:</b> o statement full-bleed é escasso por natureza. Um, talvez dois no deck inteiro. Gastá-lo cedo demais tira o impacto do clima do arco.</p>
+</div></section>
+
+<!-- ============================ NUMERO E DADO ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">04</span><p class="doc-kicker">Número e dado</p></div>
+  <h2>O peso de um <em>número</em></h2>
+  <p>Quando o dado é a prova, ele ocupa o slide inteiro. A linha de stats compara grandezas lado a lado: a massa fica em branco e só o número-herói recebe joia. O painel de KPIs reúne indicadores de operação numa grade densa.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Quando o dado e a prova</span>
+    <div class="cat">
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <div style="display:grid;height:100%;align-content:center;padding-bottom:48px">
+          <p class="s-eyebrow">Reconhecimento espontâneo</p>
+          <div class="s-stat-num">62<span class="s-stat-unit">%</span></div>
+          <p class="s-stat-desc">do público lembra da marca sem ajuda, contra 38% há um ano.</p>
+        </div>
+        <div class="s-foot"><span>Número grande</span></div>
+      </div></div></div><figcaption>Número grande</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">O ano em quatro medidas</p>
+        <div class="s-stat-row">
+          <div><div class="n">3,2<span class="u">M</span></div><p class="d">pessoas alcançadas</p></div>
+          <div><div class="n">18</div><p class="d">ações no calendário</p></div>
+          <div class="hero"><div class="n">62<span class="u">%</span></div><p class="d">lembrança espontânea</p></div>
+          <div><div class="n">4</div><p class="d">praças ativas</p></div>
+        </div>
+        <div class="s-foot"><span>Linha de stats</span></div>
+      </div></div></div><figcaption>Linha de stats</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">Painel de operação</p>
+        <div class="s-wall s-wall-4" style="height:64%">
+          <div class="s-kpi"><span class="k">128</span><span class="kl">posts no período</span></div>
+          <div class="s-kpi"><span class="k">5,4%</span><span class="kl">engajamento médio</span></div>
+          <div class="s-kpi"><span class="k">21</span><span class="kl">vídeos publicados</span></div>
+          <div class="s-kpi"><span class="k">3</span><span class="kl">campanhas no ar</span></div>
+        </div>
+        <div class="s-foot"><span>Painel de KPIs</span></div>
+      </div></div></div><figcaption>Painel de KPIs</figcaption></figure>
+
+    </div>
+  </div>
+  <p class="doc-when"><b>Quando usar:</b> o número grande é para um dado só, o que muda a conversa. A linha de stats é para três ou quatro grandezas comparáveis. O painel de KPIs é para o slide de operação, denso por propósito.</p>
+
+  <div class="doc-note dont" style="margin-top:18px">
+    <span class="doc-note-tag">Não faça</span>
+    Colorir todos os números de joia. A joia marca o dado-herói: se tudo brilha, nada salta. A massa fica em branco e branco esmaecido.
+  </div>
+</div></section>
+
+<!-- ============================ COMPARACAO E TRANSICAO ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">05</span><p class="doc-kicker">Comparação e transição</p></div>
+  <h2>De um lado ao <em>outro</em></h2>
+  <p>Para confrontar dois estados, dois caminhos ou dois momentos. A comparação de duas colunas põe os termos frente a frente. O de/para mostra a passagem de um estado antigo para o novo, com a seta dando direção. O quadrante cruza dois eixos.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Confrontar e transitar</span>
+    <div class="cat">
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <div class="s-split">
+          <div class="s-col">
+            <p class="s-eyebrow" style="color:var(--accent-azul)">Hoje</p>
+            <h2 class="s-title" style="font-size:var(--fs-h2)">Marca reativa</h2>
+            <p class="s-body">Fala só quando precisa vender. Aparece tarde na decisão.</p>
+          </div>
+          <div class="s-col">
+            <p class="s-eyebrow" style="color:var(--accent)">Amanhã</p>
+            <h2 class="s-title" style="font-size:var(--fs-h2)">Marca presente</h2>
+            <p class="s-body">Está na conversa antes da necessidade. Constrói confiança.</p>
+          </div>
+        </div>
+        <div class="s-foot"><span>Comparação</span></div>
+      </div></div></div><figcaption>Comparação em duas colunas</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">A virada</p>
+        <h2 class="s-title">O que muda de <em>fato</em></h2>
+        <div class="s-frompara">
+          <div class="cell from"><b>De</b><p>Comunicar produto</p></div>
+          <svg class="arrow" width="48" height="24" viewBox="0 0 48 24" aria-hidden="true"><defs><marker id="arw-dp" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/></marker></defs><line x1="2" y1="12" x2="40" y2="12" stroke="currentColor" stroke-width="2" marker-end="url(#arw-dp)"/></svg>
+          <div class="cell to"><b>Para</b><p>Comunicar relação</p></div>
+        </div>
+        <div class="s-foot"><span>De/Para</span></div>
+      </div></div></div><figcaption>De / Para</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">Onde cada canal cai</p>
+        <h2 class="s-title" style="margin-bottom:14px">Esforço contra <em>alcance</em></h2>
+        <div class="s-quad" style="height:60%">
+          <div class="s-cell"><b style="font-size:var(--fs-micro);color:var(--muted)">Baixo alcance</b><p style="margin:6px 0 0">Eventos locais</p></div>
+          <div class="s-cell hot"><b style="font-size:var(--fs-micro);color:var(--muted)">Aposta</b><p style="margin:6px 0 0;color:var(--ink)">Conteúdo próprio</p></div>
+          <div class="s-cell"><p style="margin:0">Brindes</p></div>
+          <div class="s-cell"><p style="margin:0">Mídia paga</p></div>
+        </div>
+        <div class="s-foot"><span>Quadrante 2x2</span></div>
+      </div></div></div><figcaption>Quadrante 2x2</figcaption></figure>
+
+    </div>
+  </div>
+  <p class="doc-when"><b>Quando usar o de/para:</b> a seta carrega a leitura. Estado antigo à esquerda em superfície neutra, estado novo à direita na joia. A direção é o argumento.</p>
+</div></section>
+
+<!-- ============================ IMAGEM ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">06</span><p class="doc-kicker">Imagem em cena</p></div>
+  <h2>Quando a foto <em>conduz</em></h2>
+  <p>A foto entra recortada, nunca em retângulo frio quando pode respirar. O split põe imagem de um lado e argumento do outro. A imagem com texto sobreposto usa o degradê escuro para garantir leitura. A grade de fotos resume um universo visual.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">A imagem como argumento</span>
+    <div class="cat">
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <div class="s-split img-left">
+          <div class="ph ph-rect" style="height:78%"><span class="ph-tag">Foto recortada</span></div>
+          <div class="s-col">
+            <p class="s-eyebrow">O lugar da marca</p>
+            <h2 class="s-title" style="font-size:var(--fs-h2)">Perto de quem <em>decide</em></h2>
+            <p class="s-body">A imagem ancora o argumento sem competir com ele.</p>
+          </div>
+        </div>
+        <div class="s-foot"><span>Split texto/imagem</span></div>
+      </div></div></div><figcaption>Split texto / imagem</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <div class="s-overlay">
+          <div class="ph ph-jewel" style="position:absolute;inset:0"><span class="ph-tag" style="opacity:.5">Imagem de fundo</span></div>
+          <div class="s-overlay-text">
+            <p class="s-eyebrow" style="color:rgba(255,255,255,.7)">No território</p>
+            <h2 class="s-statement" style="font-size:var(--fs-title);color:#fff">A marca onde o público já está</h2>
+          </div>
+        </div>
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <div class="s-foot"><span>Texto sobre imagem</span></div>
+      </div></div></div><figcaption>Imagem com texto sobreposto</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <div class="ph ph-organica" style="position:absolute;inset:0"><span class="ph-tag" style="color:#fff;opacity:.55">Full-bleed</span></div>
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <div class="s-foot"><span>Imagem full-bleed</span></div>
+      </div></div></div><figcaption>Imagem full-bleed</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">Universo visual</p>
+        <h2 class="s-title" style="margin-bottom:8px">A cara da <em>marca</em></h2>
+        <div class="s-photogrid">
+          <div class="ph"></div><div class="ph ph-jewel"></div><div class="ph"></div>
+          <div class="ph"></div><div class="ph"></div><div class="ph ph-jewel"></div>
+        </div>
+        <div class="s-foot"><span>Grade de fotos</span></div>
+      </div></div></div><figcaption>Grade de fotos</figcaption></figure>
+
+    </div>
+  </div>
+  <p class="doc-when"><b>Quando usar a sobreposição:</b> o degradê escuro à esquerda não é enfeite, é o que garante a leitura do texto branco sobre foto. Sem ele, o contraste vira loteria.</p>
+</div></section>
+
+<!-- ============================ DIAGRAMA E FLUXO ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">07</span><p class="doc-kicker">Diagrama e fluxo</p></div>
+  <h2>Como as partes se <em>ligam</em></h2>
+  <p>Tudo em SVG real, com setas via <span class="doc-code">marker</span> para que apontem na direção certa mesmo quando a linha gira. Conectores desenhados antes dos nodes, para ficarem por baixo. Fluxo, interseção de conjuntos e relação de inclusão, cada um com sua forma.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Relação desenhada</span>
+    <div class="cat">
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">O fluxo da mensagem</p>
+        <h2 class="s-title" style="margin-bottom:12px">Da marca ao <em>público</em></h2>
+        <div class="s-viz">
+          <svg viewBox="0 0 1000 220" role="img" aria-label="Fluxo em quatro etapas: marca, mensagem, canal e público, ligadas por setas da esquerda para a direita." style="width:100%;height:auto">
+            <title>Fluxo da mensagem</title>
+            <desc>Quatro nodes ligados em sequência: Marca, Mensagem, Canal, Público.</desc>
+            <defs><marker id="arw-flow" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="#ffffff"/></marker></defs>
+            <line x1="210" y1="110" x2="258" y2="110" stroke="#ffffff" stroke-width="2.5" marker-end="url(#arw-flow)"/>
+            <line x1="470" y1="110" x2="518" y2="110" stroke="#ffffff" stroke-width="2.5" marker-end="url(#arw-flow)"/>
+            <line x1="730" y1="110" x2="778" y2="110" stroke="#ffffff" stroke-width="2.5" marker-end="url(#arw-flow)"/>
+            <g font-family="Montserrat" font-weight="700" font-size="26" fill="#ffffff" text-anchor="middle">
+              <rect x="40" y="74" width="170" height="72" rx="10" fill="#d63a10"/><text x="125" y="118">Marca</text>
+              <rect x="300" y="74" width="170" height="72" rx="10" fill="#d63a10"/><text x="385" y="118">Mensagem</text>
+              <rect x="560" y="74" width="170" height="72" rx="10" fill="#d63a10"/><text x="645" y="118">Canal</text>
+              <rect x="820" y="74" width="160" height="72" rx="10" fill="#f5c542"/><text x="900" y="118" fill="#0a0a0a">Público</text>
+            </g>
+          </svg>
+        </div>
+        <div class="s-foot"><span>Diagrama / fluxo</span></div>
+      </div></div></div><figcaption>Diagrama / fluxo</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">Onde a marca se encaixa</p>
+        <h2 class="s-title" style="margin-bottom:10px">No <em>encontro</em></h2>
+        <div class="s-viz">
+          <svg viewBox="0 0 600 320" role="img" aria-label="Diagrama de Venn: o que a marca sabe fazer e o que o público quer se cruzam na zona de relevância." style="width:100%;height:auto">
+            <title>Interseção de relevância</title>
+            <desc>Dois círculos sobrepostos: capacidade da marca e desejo do público; o encontro é a relevância.</desc>
+            <circle cx="235" cy="160" r="135" fill="rgba(255,255,255,.22)" stroke="#ffffff" stroke-width="2"/>
+            <circle cx="365" cy="160" r="135" fill="rgba(31,78,168,.5)" stroke="#1f4ea8" stroke-width="2"/>
+            <g font-family="Montserrat" font-weight="700" fill="#ffffff" text-anchor="middle">
+              <text x="150" y="160" font-size="20">A marca</text>
+              <text x="150" y="186" font-size="20">sabe</text>
+              <text x="450" y="160" font-size="20">O público</text>
+              <text x="450" y="186" font-size="20">quer</text>
+              <text x="300" y="168" font-size="18" fill="#0a0a0a" font-weight="800">Relevância</text>
+            </g>
+          </svg>
+        </div>
+        <div class="s-foot"><span>Venn</span></div>
+      </div></div></div><figcaption>Venn</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">Quem responde a quem</p>
+        <h2 class="s-title" style="margin-bottom:10px">A <em>estrutura</em></h2>
+        <div class="s-viz">
+          <svg viewBox="0 0 760 260" role="img" aria-label="Organograma: uma liderança conecta três frentes, conteúdo, mídia e relacionamento." style="width:100%;height:auto">
+            <title>Hierarquia da operação</title>
+            <desc>Um node de topo liga-se a três nodes de base por conectores.</desc>
+            <defs><marker id="arw-org" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="rgba(255,255,255,.7)"/></marker></defs>
+            <path d="M380 70 C 380 110, 160 110, 160 150" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" marker-end="url(#arw-org)"/>
+            <path d="M380 70 L 380 150" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" marker-end="url(#arw-org)"/>
+            <path d="M380 70 C 380 110, 600 110, 600 150" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" marker-end="url(#arw-org)"/>
+            <g font-family="Montserrat" font-weight="700" font-size="19" fill="#ffffff" text-anchor="middle">
+              <rect x="290" y="26" width="180" height="46" rx="9" fill="#f5c542"/><text x="380" y="55" fill="#0a0a0a">Liderança</text>
+              <rect x="78" y="156" width="164" height="46" rx="9" fill="#d63a10"/><text x="160" y="185">Conteúdo</text>
+              <rect x="298" y="156" width="164" height="46" rx="9" fill="#d63a10"/><text x="380" y="185">Mídia</text>
+              <rect x="518" y="156" width="164" height="46" rx="9" fill="#d63a10"/><text x="600" y="185">Relação</text>
+            </g>
+          </svg>
+        </div>
+        <div class="s-foot"><span>Hierarquia / org</span></div>
+      </div></div></div><figcaption>Hierarquia / org</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">Do alcance à conversão</p>
+        <h2 class="s-title" style="margin-bottom:10px">O <em>funil</em></h2>
+        <div class="s-viz">
+          <svg viewBox="0 0 560 300" role="img" aria-label="Funil de três estágios: 100 mil alcançados, 24 mil interessados, 3 mil convertidos." style="width:100%;height:auto">
+            <title>Funil de conversão</title>
+            <desc>Três faixas trapezoidais decrescentes do topo para a base.</desc>
+            <polygon points="60,30 500,30 430,120 130,120" fill="rgba(255,255,255,.85)"/>
+            <polygon points="135,128 425,128 370,210 190,210" fill="rgba(255,255,255,.45)"/>
+            <polygon points="195,218 365,218 320,290 240,290" fill="#f5c542"/>
+            <g font-family="Montserrat" font-weight="800" text-anchor="middle">
+              <text x="280" y="85" font-size="22" fill="#0a0a0a">100 mil alcançados</text>
+              <text x="280" y="178" font-size="20" fill="#0a0a0a">24 mil interessados</text>
+              <text x="280" y="262" font-size="19" fill="#0a0a0a">3 mil convertidos</text>
+            </g>
+          </svg>
+        </div>
+        <div class="s-foot"><span>Funil</span></div>
+      </div></div></div><figcaption>Funil</figcaption></figure>
+
+    </div>
+  </div>
+  <div class="doc-grid doc-2" style="margin-top:18px">
+    <div class="doc-note do">
+      <span class="doc-note-tag">Faça</span>
+      Toda seta via <span class="doc-code">marker</span> em <span class="doc-code">defs</span> com <span class="doc-code">orient="auto-start-reverse"</span>. Conectores desenhados antes dos nodes, para ficarem por baixo.
+    </div>
+    <div class="doc-note dont">
+      <span class="doc-note-tag">Não faça</span>
+      Triângulo desenhado à mão na ponta da linha: não gira junto quando o conector vira, e a seta aponta para o lugar errado.
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================ GRAFICO E TEMPO ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">08</span><p class="doc-kicker">Gráfico e tempo</p></div>
+  <h2>O dado no <em>tempo</em></h2>
+  <p>Gráfico de barras com geometria real, sem div de largura percentual. O cronograma é sempre linear, horizontal ou vertical, nunca radial. O gantt mostra a sobreposição das frentes. O roadmap organiza as fases sem amarrar a entregas físicas.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Medir e ordenar no tempo</span>
+    <div class="cat">
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">Alcance por praça</p>
+        <h2 class="s-title" style="margin-bottom:12px">Onde a marca <em>pega</em></h2>
+        <div class="s-viz">
+          <svg viewBox="0 0 900 300" role="img" aria-label="Gráfico de barras de alcance por praça: Campo Grande 86, Cuiabá 64, Dourados 41, São Paulo 28." style="width:100%;height:auto">
+            <title>Alcance por praça</title>
+            <desc>Quatro barras horizontais; Campo Grande lidera com 86 e recebe destaque.</desc>
+            <g font-family="Montserrat" font-weight="600" font-size="20" fill="#ffffff">
+              <text x="0" y="46">Campo Grande</text>
+              <rect x="220" y="26" width="630" height="34" rx="5" fill="#f5c542"/><text x="858" y="51" text-anchor="end" fill="#0a0a0a" font-weight="800">86</text>
+              <text x="0" y="116">Cuiabá</text>
+              <rect x="220" y="96" width="469" height="34" rx="5" fill="#ffffff"/><text x="700" y="121" fill="#ffffff" font-weight="800">64</text>
+              <text x="0" y="186">Dourados</text>
+              <rect x="220" y="166" width="300" height="34" rx="5" fill="rgba(255,255,255,.55)"/><text x="532" y="191" fill="#ffffff" font-weight="800">41</text>
+              <text x="0" y="256">São Paulo</text>
+              <rect x="220" y="236" width="205" height="34" rx="5" fill="rgba(255,255,255,.35)"/><text x="437" y="261" fill="#ffffff" font-weight="800">28</text>
+            </g>
+          </svg>
+        </div>
+        <div class="s-foot"><span>Gráfico de barras</span></div>
+      </div></div></div><figcaption>Gráfico de barras</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">O ano em marcos</p>
+        <h2 class="s-title" style="margin-bottom:14px">A linha do <em>tempo</em></h2>
+        <div class="s-viz">
+          <svg viewBox="0 0 940 200" role="img" aria-label="Cronograma horizontal com quatro marcos: lançamento no primeiro trimestre, escuta no segundo, campanha no terceiro e balanço no quarto." style="width:100%;height:auto">
+            <title>Cronograma do ano</title>
+            <desc>Linha horizontal com quatro pontos rotulados ao longo dos trimestres.</desc>
+            <line x1="40" y1="90" x2="900" y2="90" stroke="rgba(255,255,255,.4)" stroke-width="2"/>
+            <g font-family="Montserrat" text-anchor="middle">
+              <circle cx="120" cy="90" r="9" fill="#ffffff"/><text x="120" y="56" font-size="17" font-weight="700" fill="#ffffff">1o tri</text><text x="120" y="124" font-size="15" fill="rgba(255,255,255,.72)">Lançamento</text>
+              <circle cx="360" cy="90" r="9" fill="#ffffff"/><text x="360" y="56" font-size="17" font-weight="700" fill="#ffffff">2o tri</text><text x="360" y="124" font-size="15" fill="rgba(255,255,255,.72)">Escuta</text>
+              <circle cx="600" cy="90" r="12" fill="#f5c542"/><text x="600" y="52" font-size="17" font-weight="800" fill="#f5c542">3o tri</text><text x="600" y="124" font-size="15" fill="#ffffff" font-weight="700">Campanha</text>
+              <circle cx="840" cy="90" r="9" fill="#ffffff"/><text x="840" y="56" font-size="17" font-weight="700" fill="#ffffff">4o tri</text><text x="840" y="124" font-size="15" fill="rgba(255,255,255,.72)">Balanço</text>
+            </g>
+          </svg>
+        </div>
+        <div class="s-foot"><span>Cronograma / timeline</span></div>
+      </div></div></div><figcaption>Cronograma / timeline</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">As frentes no calendário</p>
+        <h2 class="s-title" style="margin-bottom:12px">Quando cada coisa <em>roda</em></h2>
+        <div class="s-viz">
+          <svg viewBox="0 0 920 250" role="img" aria-label="Gantt de três frentes ao longo de quatro trimestres: conteúdo do primeiro ao quarto, mídia do segundo ao terceiro, eventos no quarto." style="width:100%;height:auto">
+            <title>Gantt das frentes</title>
+            <desc>Três faixas horizontais com barras posicionadas por trimestre.</desc>
+            <g font-family="Montserrat" font-size="16" fill="rgba(255,255,255,.56)" font-weight="600">
+              <text x="40" y="36">1o tri</text><text x="250" y="36">2o tri</text><text x="460" y="36">3o tri</text><text x="670" y="36">4o tri</text>
+            </g>
+            <line x1="220" y1="20" x2="220" y2="230" stroke="rgba(255,255,255,.14)"/>
+            <line x1="430" y1="20" x2="430" y2="230" stroke="rgba(255,255,255,.14)"/>
+            <line x1="640" y1="20" x2="640" y2="230" stroke="rgba(255,255,255,.14)"/>
+            <g font-family="Montserrat" font-weight="700" font-size="17" fill="#ffffff">
+              <text x="40" y="86">Conteúdo</text><rect x="220" y="68" width="640" height="26" rx="6" fill="#ffffff"/>
+              <text x="40" y="146">Mídia</text><rect x="430" y="128" width="210" height="26" rx="6" fill="rgba(255,255,255,.55)"/>
+              <text x="40" y="206">Eventos</text><rect x="640" y="188" width="220" height="26" rx="6" fill="#f5c542"/>
+            </g>
+          </svg>
+        </div>
+        <div class="s-foot"><span>Gantt</span></div>
+      </div></div></div><figcaption>Gantt</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">A jornada da plataforma</p>
+        <h2 class="s-title" style="margin-bottom:12px">Três fases até a <em>maturidade</em></h2>
+        <div class="s-viz">
+          <svg viewBox="0 0 920 210" role="img" aria-label="Roadmap de três fases: presença, relação e preferência, com a fase de relação em foco." style="width:100%;height:auto">
+            <title>Roadmap de fases</title>
+            <desc>Três blocos sequenciais ligados por setas; o do meio recebe a joia.</desc>
+            <defs><marker id="arw-rm" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="rgba(255,255,255,.7)"/></marker></defs>
+            <line x1="288" y1="105" x2="320" y2="105" stroke="rgba(255,255,255,.7)" stroke-width="2.5" marker-end="url(#arw-rm)"/>
+            <line x1="600" y1="105" x2="632" y2="105" stroke="rgba(255,255,255,.7)" stroke-width="2.5" marker-end="url(#arw-rm)"/>
+            <g font-family="Montserrat" text-anchor="middle">
+              <rect x="40" y="50" width="248" height="110" rx="12" fill="#d63a10"/><text x="164" y="100" font-size="22" font-weight="800" fill="#ffffff">Fase 1</text><text x="164" y="130" font-size="17" fill="rgba(255,255,255,.85)">Presença</text>
+              <rect x="336" y="50" width="264" height="110" rx="12" fill="#f5c542"/><text x="468" y="100" font-size="22" font-weight="800" fill="#0a0a0a">Fase 2</text><text x="468" y="130" font-size="17" fill="#0a0a0a">Relação</text>
+              <rect x="648" y="50" width="232" height="110" rx="12" fill="#d63a10"/><text x="764" y="100" font-size="22" font-weight="800" fill="#ffffff">Fase 3</text><text x="764" y="130" font-size="17" fill="rgba(255,255,255,.85)">Preferência</text>
+            </g>
+          </svg>
+        </div>
+        <div class="s-foot"><span>Roadmap de fases</span></div>
+      </div></div></div><figcaption>Roadmap de fases</figcaption></figure>
+
+    </div>
+  </div>
+  <div class="doc-note do" style="margin-top:18px">
+    <span class="doc-note-tag">Faça</span>
+    Barras com largura real no atributo do <span class="doc-code">rect</span>. Cronograma sempre linear, horizontal ou vertical: nunca radial nem circular.
+  </div>
+</div></section>
+
+<!-- ============================ ESTRUTURA E PESSOAS ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">09</span><p class="doc-kicker">Estrutura e pessoas</p></div>
+  <h2>Quem e o que <em>sustenta</em></h2>
+  <p>Layouts que organizam fundamentos, gente e tabela. Os pilares apresentam os fundamentos da plataforma com igual peso. A persona dá rosto ao público. A tabela comparativa cruza opções contra critérios, com a coluna de destaque na tinta.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Fundamento, rosto e comparação</span>
+    <div class="cat">
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">O que sustenta a marca</p>
+        <h2 class="s-title" style="margin-bottom:14px">Os <em>fundamentos</em></h2>
+        <div class="s-wall s-wall-3" style="height:62%">
+          <div class="card s-pillar"><span class="ico"><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><circle cx="11" cy="11" r="2.5" fill="currentColor"/></svg></span><h4>Foco</h4><p>Uma promessa só, defendida sem desvio.</p></div>
+          <div class="card s-pillar"><span class="ico"><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 18 L9 9 L13 13 L19 5"/></svg></span><h4>Presença</h4><p>Estar na conversa antes da necessidade.</p></div>
+          <div class="card s-pillar"><span class="ico"><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 3 L13.5 8.5 L19 9 L15 13 L16 19 L11 16 L6 19 L7 13 L3 9 L8.5 8.5 Z"/></svg></span><h4>Constância</h4><p>Repetir o suficiente para virar memória.</p></div>
+        </div>
+        <div class="s-foot"><span>Pilares</span></div>
+      </div></div></div><figcaption>Pilares</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <div class="s-persona">
+          <div class="s-portrait"><div class="ph ph-jewel"><span class="ph-tag" style="color:#fff;opacity:.6">Retrato</span></div></div>
+          <div class="s-col">
+            <p class="s-persona-name">Marina, 38</p>
+            <p class="s-persona-role">Comerciante, decide a compra da família</p>
+            <div class="s-attr-grid">
+              <div class="s-attr"><b>Quer</b>Confiar antes de comprar</div>
+              <div class="s-attr"><b>Evita</b>Discurso de venda agressivo</div>
+              <div class="s-attr"><b>Ouve</b>Indicação de quem conhece</div>
+              <div class="s-attr"><b>Está em</b>Grupos locais e WhatsApp</div>
+            </div>
+          </div>
+        </div>
+        <div class="s-foot"><span>Persona</span></div>
+      </div></div></div><figcaption>Persona</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">Onde investir o esforço</p>
+        <h2 class="s-title" style="margin-bottom:10px">O que cada canal <em>entrega</em></h2>
+        <table class="s-table">
+          <thead><tr><th>Canal</th><th>Alcance</th><th>Custo</th><th class="col-hot">Confiança</th></tr></thead>
+          <tbody>
+            <tr><td>Conteúdo próprio</td><td>Médio</td><td>Baixo</td><td class="col-hot">Alta</td></tr>
+            <tr><td>Mídia paga</td><td>Alto</td><td>Alto</td><td class="col-hot">Média</td></tr>
+            <tr><td>Indicação</td><td>Baixo</td><td>Baixo</td><td class="col-hot">Muito alta</td></tr>
+          </tbody>
+        </table>
+        <div class="s-foot"><span>Tabela comparativa</span></div>
+      </div></div></div><figcaption>Tabela comparativa</figcaption></figure>
+
+    </div>
+  </div>
+  <p class="doc-when"><b>Quando usar a tabela:</b> quando há mais de duas opções e três ou mais critérios. A coluna que decide o argumento vai na tinta branca (<span class="doc-code">.col-hot</span>); o resto fica em corpo neutro.</p>
+</div></section>
+
+<!-- ============================ TERRITORIO E ECOSSISTEMA ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">10</span><p class="doc-kicker">Território e ecossistema</p></div>
+  <h2>O mapa do <em>jogo</em></h2>
+  <p>Layouts que situam a marca no espaço e entre parceiros. O mapa marca presença geográfica com pinos. A grade de serviços lista o que a marca oferece, cada item com seu glifo. O mural de logos mostra o ecossistema de parceiros.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Onde a marca esta e com quem</span>
+    <div class="cat">
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">Onde a marca atua</p>
+        <h2 class="s-title" style="margin-bottom:10px">As praças no <em>mapa</em></h2>
+        <div class="s-map">
+          <span class="pin hot" style="left:34%;top:46%"></span>
+          <span class="pin" style="left:46%;top:30%"></span>
+          <span class="pin" style="left:40%;top:64%"></span>
+          <span class="pin" style="left:68%;top:54%"></span>
+          <span style="position:absolute;left:34%;top:52%;color:var(--accent);font-size:var(--fs-small);font-weight:var(--w-label)">Campo Grande</span>
+        </div>
+        <div class="s-foot"><span>Mapa / território</span></div>
+      </div></div></div><figcaption>Mapa / território</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">O que a marca faz</p>
+        <h2 class="s-title" style="margin-bottom:12px">As frentes de <em>serviço</em></h2>
+        <div class="s-wall s-wall-4" style="height:60%">
+          <div class="card s-pillar"><span class="ico"><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="4" width="14" height="14" rx="2"/><path d="M8 11 L10.5 13.5 L15 8"/></svg></span><h4>Estratégia</h4></div>
+          <div class="card s-pillar"><span class="ico"><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 16 V8 M9 16 V5 M14 16 V10 M19 16 V3"/></svg></span><h4>Dados</h4></div>
+          <div class="card s-pillar"><span class="ico"><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="8" r="4"/><path d="M4 19 C4 14 18 14 18 19"/></svg></span><h4>Conteúdo</h4></div>
+          <div class="card s-pillar"><span class="ico"><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 11 L19 11 M13 5 L19 11 L13 17"/></svg></span><h4>Mídia</h4></div>
+        </div>
+        <div class="s-foot"><span>Grade de serviços</span></div>
+      </div></div></div><figcaption>Grade de ícones / serviços</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">Quem caminha junto</p>
+        <h2 class="s-title" style="margin-bottom:14px">O <em>ecossistema</em></h2>
+        <div class="s-wall s-wall-4" style="height:60%;grid-template-rows:1fr 1fr">
+          <div class="s-logobox">Parceiro</div><div class="s-logobox">Parceiro</div><div class="s-logobox">Parceiro</div><div class="s-logobox">Parceiro</div>
+          <div class="s-logobox">Parceiro</div><div class="s-logobox">Parceiro</div><div class="s-logobox">Parceiro</div><div class="s-logobox">Parceiro</div>
+        </div>
+        <div class="s-foot"><span>Mural de logos</span></div>
+      </div></div></div><figcaption>Mural de logos / ecossistema</figcaption></figure>
+
+    </div>
+  </div>
+  <p class="doc-when"><b>Quando usar o mapa:</b> presença geográfica de fato, com praças nomeadas. O pino-herói na joia marca a praça principal; os demais ficam na tinta. Especificidade sempre: o nome da cidade, nunca um pino mudo.</p>
+</div></section>
+
+<!-- ============================ DEFINICAO E FECHAMENTO ============================ -->
+<section class="doc-section"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">11</span><p class="doc-kicker">Definição e fechamento</p></div>
+  <h2>Onde o deck se <em>resolve</em></h2>
+  <p>Os layouts de término: a página de definição para ancorar um conceito, e os próximos passos para deixar claro o que acontece depois da reunião. O deck não termina com aplauso, termina com combinado.</p>
+
+  <div class="doc-specimen">
+    <span class="doc-specimen-label">Ancorar e combinar</span>
+    <div class="cat">
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <div class="s-def">
+          <p class="pos">Conceito-chave</p>
+          <p class="term">Presença de <em>marca</em></p>
+          <p class="gloss">Estar na memória do público antes de ele precisar decidir. Não é propaganda no momento da compra: é ser lembrado quando ela chega.</p>
+        </div>
+        <div class="s-foot"><span>Definição</span></div>
+      </div></div></div><figcaption>Página de definição</figcaption></figure>
+
+      <figure><div class="frame"><div class="stage"><div class="slide active">
+        <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+        <p class="s-eyebrow">A partir daqui</p>
+        <h2 class="s-title">O que acontece <em>agora</em></h2>
+        <ol class="s-seq">
+          <li><div><span class="s-seq-title">Validar a plataforma</span><p class="s-seq-desc">Aprovação do posicionamento até sexta-feira.</p></div></li>
+          <li><div><span class="s-seq-title">Abrir a produção</span><p class="s-seq-desc">Primeiro lote de conteúdo em duas semanas.</p></div></li>
+          <li><div><span class="s-seq-title">Marcar o balanço</span><p class="s-seq-desc">Encontro de leitura ao fim do trimestre.</p></div></li>
+        </ol>
+        <div class="s-foot"><span>Próximos passos</span></div>
+      </div></div></div><figcaption>Próximos passos</figcaption></figure>
+
+    </div>
+  </div>
+  <p class="doc-when"><b>Quando usar a definição:</b> sempre que um termo do deck pode significar coisas diferentes para o cliente. Ancorar cedo evita que o resto do raciocínio escorregue por mal-entendido.</p>
+
+  <div class="doc-note dont" style="margin-top:18px">
+    <span class="doc-note-tag">Não faça</span>
+    Fechar o deck com o marcador editorial de encerramento. A contracapa e os próximos passos já sinalizam o fim: nav e indicador de progresso bastam.
+  </div>
+</div></section>
+
+<footer class="doc-foot"><div class="doc-wrap">
+  <img src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+  <div class="doc-addr"><span>São Paulo · SP</span><span>Campo Grande · MS</span><span>Cuiabá · MT</span></div>
+  <p class="doc-foot-meta">Sistema de Design 80 20 · Montserrat · campo-laranja, palco escuro, papel claro</p>
+</div></footer>
+
+<!-- catalogo: miniaturas em escala fixa por CSS (sem dependencia de JS) -->
+
+</body>
+</html>

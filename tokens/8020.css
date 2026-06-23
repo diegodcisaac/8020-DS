@@ -85,6 +85,12 @@
   :root { --dur: .001s; --dur-fast: .001s; }
 }
 
+/* impressao / PDF: preservar as cores de fundo (o campo laranja e identidade,
+   nao decoracao). Vale para export de deck/book e para conferencia headless. */
+@media print {
+  :where(html) { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
 /* base de conveniencia (especificidade zero, sobrescrevivel) */
 :where(html) { -webkit-text-size-adjust: 100%; }
 :where(body) {

@@ -248,3 +248,8 @@ section { padding-block: clamp(56px, 9vw, 128px); }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
 }
+/* impressao / PDF: revela tudo (IntersectionObserver nao dispara em headless) */
+@media print {
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .book-nav, .book-progress, .book-menu-toggle { display: none !important; }
+}
