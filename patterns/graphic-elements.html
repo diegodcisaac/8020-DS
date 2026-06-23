@@ -21,23 +21,6 @@
   .ge-seam svg { height: 24px; width: auto; display: block; }
   .ge-seam .ge-seam-word { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-h2); color: var(--ink); letter-spacing: -.01em; margin-left: 6px; }
 
-  /* placeholders de forma recortada: SEM foto real, so cor/gradiente */
-  .ge-shape { aspect-ratio: 4/5; display: grid; place-items: end start; padding: 18px; color: var(--ink); }
-  .ge-shape .ge-shape-tag { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-small); letter-spacing: .02em; }
-  .ge-fill-laranja { background: var(--surface); }
-  .ge-fill-jewel-q { background: var(--jewel-quente); }
-  .ge-fill-jewel-f { background: var(--jewel-frio); }
-  .ge-fill-azul    { background: var(--accent-azul); color: #fff; }
-  .ge-fill-cross   { background: repeating-linear-gradient(135deg, rgba(255,255,255,.10) 0 12px, transparent 12px 24px), var(--surface); }
-
-  /* mascara organica grande (espelha .b-figure.organica) */
-  .ge-organica { clip-path: path("M 0 80 C 120 0 460 0 600 70 C 740 140 760 360 640 460 C 520 560 160 580 60 500 C -40 420 -20 160 0 80 Z"); }
-  /* blob (espelha .s-photo--blob) */
-  .ge-blob { border-radius: 48% 52% 56% 44% / 52% 44% 56% 48%; }
-  /* recorte poligonal: pedra / lasca */
-  .ge-poly-stone { clip-path: polygon(8% 0, 100% 6%, 92% 100%, 0 88%); }
-  .ge-poly-arrow { clip-path: polygon(0 0, 78% 0, 100% 50%, 78% 100%, 0 100%, 20% 50%); }
-
   /* paralelogramos: recorte inclinado */
   .ge-para { display: grid; gap: 14px; }
   .ge-para-block {
@@ -54,28 +37,29 @@
   }
   .ge-para-mark > span { display: inline-block; transform: skewX(9deg); }
   .ge-para-band {
-    background: var(--accent-azul); color: #fff;
+    background: var(--accent); color: var(--accent-ink);
     padding: 16px 28px; border-radius: var(--radius-sm);
     clip-path: polygon(0 0, 96% 0, 100% 100%, 4% 100%);
     font-family: var(--font-display); font-weight: var(--w-label);
     letter-spacing: var(--tracking-label); text-transform: uppercase; font-size: var(--fs-small);
   }
 
-  /* swatches de joia-gradiente */
-  .ge-jewel { display: grid; gap: 8px; }
-  .ge-jewel-chip {
-    height: 96px; border-radius: var(--radius);
+  /* swatches de gradiente de marca */
+  .ge-grad { display: grid; gap: 8px; }
+  .ge-grad-chip {
+    height: 96px; border-radius: var(--radius); border: 1px solid var(--line);
     display: grid; place-items: end start; padding: 14px;
     font-family: var(--font-display); font-weight: var(--w-display);
-    font-size: var(--fs-small); color: var(--accent-ink);
+    font-size: var(--fs-small); color: var(--ink);
   }
-  .ge-jewel-chip.is-azul { color: #fff; }
-  .ge-jewel-meta { font-size: var(--fs-micro); color: var(--muted); }
-  .ge-jewel-meta .doc-code { display: inline-block; margin-top: 2px; }
+  .ge-grad-chip.is-quente { background: var(--grad-quente); }
+  .ge-grad-chip.is-fundo  { background: var(--grad-fundo); }
+  .ge-grad-meta { font-size: var(--fs-micro); color: var(--muted); }
+  .ge-grad-meta .doc-code { display: inline-block; margin-top: 2px; }
 
   /* demo do erro: gradiente sob texto corrido (so dentro da nota dont) */
   .ge-bad-grad {
-    background: var(--jewel-quente); color: #0a0a0a;
+    background: var(--grad-quente); color: var(--ink);
     padding: 16px 18px; border-radius: var(--radius-sm);
     font-size: var(--fs-small); line-height: 1.5;
   }
@@ -107,7 +91,7 @@
 <header class="doc-hero"><div class="doc-wrap">
   <p class="doc-eyebrow">Vocabulário gráfico</p>
   <h1>O alfabeto que a casa fala sem <em>palavras</em></h1>
-  <p class="doc-lead">Quatro famílias de forma sustentam o sistema: os fragmentos do display que pontuam as costuras, a máscara recortada que dá protagonismo à imagem, o corte inclinado que tensiona o bloco e a joia em gradiente, sempre escassa. Cada uma tem um lugar certo e um lugar proibido.</p>
+  <p class="doc-lead">Três famílias de forma sustentam o sistema: os fragmentos do display que pontuam as costuras, o corte inclinado que tensiona o bloco e o gradiente de marca, sempre escasso. Cada uma tem um lugar certo e um lugar proibido.</p>
 </div></header>
 
 <!-- ============================ 01 DASH-GLYPHS ============================ -->
@@ -185,73 +169,9 @@
   </div>
 </div></section>
 
-<!-- ============================ 02 MASCARAS ORGANICAS ============================ -->
+<!-- ============================ 02 PARALELOGRAMOS ============================ -->
 <section class="doc-section"><div class="doc-wrap">
-  <div class="doc-shoulder"><span class="doc-num">02</span><p class="doc-kicker">Máscaras orgânicas</p></div>
-  <h2>A imagem entra recortada e sempre <em>sangra</em></h2>
-  <p>A forma recortada é a assinatura da casa para fotografia. A imagem nunca aparece num retângulo fechado quando é protagonista emocional: ela recebe uma máscara orgânica e encosta na borda do quadro, criando a sensação de que continua para fora. A máscara canônica é a mesma de <span class="doc-code">.b-figure.organica</span> e <span class="doc-code">.s-photo--organica</span>. O blob por <span class="doc-code">border-radius</span> e os recortes em polígono são variações para usos mais geométricos. Os specimens abaixo usam cor e gradiente como espaço reservado, sem foto real.</p>
-
-  <div class="doc-specimen">
-    <span class="doc-specimen-label">A. Máscara orgânica que sangra (path)</span>
-    <div class="doc-grid doc-2">
-      <div>
-        <div class="ge-shape ge-organica ge-fill-laranja"><span class="ge-shape-tag">protagonista</span></div>
-        <p class="doc-when"><b>Quando usar:</b> retrato ou cena que carrega a emoção da peça. O mesmo recorte de <span class="doc-code">.b-figure.organica</span>, encostado na margem para sangrar.</p>
-      </div>
-      <div>
-        <div class="ge-shape ge-organica ge-fill-jewel-f"><span class="ge-shape-tag">cena de apoio</span></div>
-        <p class="doc-when"><b>Quando usar:</b> imagem secundária dentro de um split. A máscara é a mesma; o que muda é a escala e o papel na composição.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="doc-specimen">
-    <span class="doc-specimen-label">B. Blob por border-radius</span>
-    <div class="doc-grid doc-3">
-      <div>
-        <div class="ge-shape ge-blob ge-fill-laranja"><span class="ge-shape-tag">retrato</span></div>
-        <p class="doc-when"><b>Quando usar:</b> a forma de <span class="doc-code">.s-photo--blob</span>, mais arredondada e amigável, boa para persona e rosto isolado.</p>
-      </div>
-      <div>
-        <div class="ge-shape ge-blob ge-fill-azul"><span class="ge-shape-tag">detalhe</span></div>
-        <p class="doc-when"><b>Quando usar:</b> bolha de apoio sobre o campo. Sobre o azul, mantenha o texto branco.</p>
-      </div>
-      <div>
-        <div class="ge-shape ge-blob ge-fill-cross"><span class="ge-shape-tag">textura</span></div>
-        <p class="doc-when"><b>Quando usar:</b> espaço reservado de imagem ainda não definida, com hachura discreta no lugar da foto.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="doc-specimen">
-    <span class="doc-specimen-label">C. Recorte poligonal (clip-path polygon)</span>
-    <div class="doc-grid doc-2">
-      <div>
-        <div class="ge-shape ge-poly-stone ge-fill-jewel-q"><span class="ge-shape-tag">pedra</span></div>
-        <p class="doc-when"><b>Quando usar:</b> corte de quatro lados levemente torto, mais firme que o orgânico. Bom para bloco de imagem que precisa de aresta sem virar retângulo.</p>
-      </div>
-      <div>
-        <div class="ge-shape ge-poly-arrow ge-fill-azul"><span class="ge-shape-tag">avanço</span></div>
-        <p class="doc-when"><b>Quando usar:</b> recorte com ponta, que sugere direção dentro de uma sequência. Use com parcimônia, um por composição.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="doc-grid doc-2">
-    <div class="doc-note do">
-      <span class="doc-note-tag">Faça</span>
-      <p>Imagem protagonista sempre recortada e sangrando a borda. Reaproveite o <span class="doc-code">path()</span> canônico de <span class="doc-code">.b-figure.organica</span> em vez de inventar uma curva nova a cada peça.</p>
-    </div>
-    <div class="doc-note dont">
-      <span class="doc-note-tag">Não faça</span>
-      <p>Foto protagonista num retângulo fechado e contido no meio do campo. Recorte que não encosta em nenhuma borda perde a assinatura e parece miniatura solta.</p>
-    </div>
-  </div>
-</div></section>
-
-<!-- ============================ 03 PARALELOGRAMOS ============================ -->
-<section class="doc-section"><div class="doc-wrap">
-  <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">Paralelogramos</p></div>
+  <div class="doc-shoulder"><span class="doc-num">02</span><p class="doc-kicker">Paralelogramos</p></div>
   <h2>O corte inclinado que tensiona o <em>bloco</em></h2>
   <p>A inclinação herda o ângulo do italismo do display e leva esse movimento para os blocos. Um bloco de conteúdo com lateral cortada, um realce de palavra em <span class="doc-code">skewX</span>, uma faixa de rótulo levemente torta: tudo isso cria tensão controlada sem recorrer a cor. O corte por <span class="doc-code">clip-path: polygon</span> mantém o texto reto dentro de uma caixa inclinada; o <span class="doc-code">skewX</span> inclina o conjunto e pede contra-inclinação no filho para o texto voltar à vertical.</p>
 
@@ -272,7 +192,7 @@
   <div class="doc-specimen">
     <span class="doc-specimen-label">Faixa de rótulo inclinada</span>
     <div class="ge-para-band">campo · movimento · costura</div>
-    <p class="doc-when"><b>Quando usar:</b> eyebrow ou rótulo de categoria que precisa de mais presença que o texto esmaecido. Aqui a faixa usa o azul como acento de rótulo, não como cor de dado.</p>
+    <p class="doc-when"><b>Quando usar:</b> eyebrow ou rótulo de categoria que precisa de mais presença que o texto esmaecido. Aqui a faixa usa o acento como destaque de rótulo, não como cor de dado.</p>
   </div>
 
   <div class="doc-grid doc-2">
@@ -287,54 +207,31 @@
   </div>
 </div></section>
 
-<!-- ============================ 04 JOIAS-GRADIENTE ============================ -->
+<!-- ============================ 03 GRADIENTE DE MARCA ============================ -->
 <section class="doc-section"><div class="doc-wrap">
-  <div class="doc-shoulder"><span class="doc-num">04</span><p class="doc-kicker">Joias-gradiente</p></div>
-  <h2>O gradiente é joia: aparece pouco e <em>brilha</em></h2>
-  <p>As duas joias em gradiente são o ponto mais alto de cor do sistema. A quente vai do verde ao ouro; a fria, do azul à areia. Elas existem como superfície-herói: um cartão de destaque, um plano de fundo de um único número, uma forma recortada que carrega o olho. Ao lado delas vivem as joias sólidas, usadas como acento pontual. A regra que organiza tudo: o gradiente é joia, então é raro. Em peça cliente, vale o teto de três joias por página. Nesta referência interna, mostramos todas para documentar, mas a disciplina de escassez permanece a lei do uso real.</p>
+  <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">Gradiente de marca</p></div>
+  <h2>O gradiente é escasso e <em>brilha</em></h2>
+  <p>Os dois gradientes de marca são o ponto mais alto de superfície do sistema. O quente desce do laranja ao laranja aprofundado; o de fundo vai do laranja aprofundado ao chumbo, o tom mais grave da casa. Eles existem como superfície-herói: um cartão de destaque, um plano de fundo de um único número, um bloco de abertura que carrega o olho. Quando o destaque precisa de acento sobre o gradiente, o acento é o branco, o ponto mais claro do campo. A regra que organiza tudo: o gradiente aparece pouco. Em peça cliente, vale o teto de três acentos por página, e o gradiente entra sempre como um deles.</p>
 
   <div class="doc-specimen">
-    <span class="doc-specimen-label">Gradientes-joia</span>
+    <span class="doc-specimen-label">Gradientes de marca</span>
     <div class="doc-grid doc-2">
-      <div class="ge-jewel">
-        <div class="ge-jewel-chip ge-fill-jewel-q">quente</div>
-        <p class="ge-jewel-meta">Verde para ouro. <span class="doc-code">--jewel-quente</span></p>
+      <div class="ge-grad">
+        <div class="ge-grad-chip is-quente">quente</div>
+        <p class="ge-grad-meta">Laranja para laranja aprofundado. <span class="doc-code">--grad-quente</span></p>
       </div>
-      <div class="ge-jewel">
-        <div class="ge-jewel-chip ge-fill-jewel-f is-azul">fria</div>
-        <p class="ge-jewel-meta">Azul para areia. <span class="doc-code">--jewel-frio</span></p>
-      </div>
-    </div>
-    <p class="doc-when"><b>Quando usar:</b> uma superfície-herói por página, no máximo. Fundo de um número que precisa saltar, cartão de chamada, ou forma recortada protagonista. Nunca sob texto corrido.</p>
-  </div>
-
-  <div class="doc-specimen">
-    <span class="doc-specimen-label">Joias sólidas (acento pontual)</span>
-    <div class="doc-grid doc-4">
-      <div class="ge-jewel">
-        <div class="ge-jewel-chip" style="background:var(--accent-azul);color:#fff;">azul</div>
-        <p class="ge-jewel-meta"><span class="doc-code">--accent-azul</span></p>
-      </div>
-      <div class="ge-jewel">
-        <div class="ge-jewel-chip" style="background:var(--accent-verde);">verde</div>
-        <p class="ge-jewel-meta"><span class="doc-code">--accent-verde</span></p>
-      </div>
-      <div class="ge-jewel">
-        <div class="ge-jewel-chip" style="background:var(--accent);">ouro</div>
-        <p class="ge-jewel-meta"><span class="doc-code">--accent</span></p>
-      </div>
-      <div class="ge-jewel">
-        <div class="ge-jewel-chip" style="background:var(--accent-areia);">areia</div>
-        <p class="ge-jewel-meta"><span class="doc-code">--accent-areia</span></p>
+      <div class="ge-grad">
+        <div class="ge-grad-chip is-fundo">fundo</div>
+        <p class="ge-grad-meta">Laranja aprofundado para chumbo. <span class="doc-code">--grad-fundo</span></p>
       </div>
     </div>
-    <p class="doc-when"><b>Quando usar:</b> realce de uma palavra, barra de um dado-herói, marcador de um item numa lista. O azul também é a cor de dado negativo, nunca o vermelho.</p>
+    <p class="doc-when"><b>Quando usar:</b> uma superfície-herói por página, no máximo. Fundo de um número que precisa saltar, cartão de chamada, ou bloco de abertura protagonista. Nunca sob texto corrido.</p>
   </div>
 
   <div class="doc-note dont" style="margin-top:18px;">
     <span class="doc-note-tag">Erro crítico</span>
-    <p>Gradiente serve só como joia, em superfície-herói. <strong>Nunca sob texto corrido.</strong> Um parágrafo sobre gradiente fica ilegível no meio e nas pontas, porque o contraste varia ao longo da extensão, e ainda some o caráter de escassez que dá valor à joia. Veja o que evitar:</p>
-    <p class="ge-bad-grad" aria-hidden="true">Texto longo assentado diretamente sobre o gradiente quente. Repare como a leitura fica desconfortável onde o fundo clareia, e como o bloco inteiro perde a hierarquia. O gradiente deixa de ser joia e vira ruído.</p>
+    <p>O gradiente serve só como superfície-herói. <strong>Nunca sob texto corrido.</strong> Um parágrafo sobre o gradiente fica ilegível no meio e nas pontas, porque o contraste varia ao longo da extensão, e ainda se perde o caráter de escassez que dá valor ao recurso. Veja o que evitar:</p>
+    <p class="ge-bad-grad" aria-hidden="true">Texto longo assentado diretamente sobre o gradiente quente. Repare como a leitura fica desconfortável onde o fundo varia, e como o bloco inteiro perde a hierarquia. O gradiente deixa de brilhar e vira ruído.</p>
   </div>
 </div></section>
 

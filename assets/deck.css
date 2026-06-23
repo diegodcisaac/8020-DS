@@ -15,7 +15,6 @@
   position: relative;
   width: 1280px; height: 720px;
   transform-origin: center center; /* deck.js calcula a escala */
-  box-shadow: 0 24px 80px rgba(0,0,0,.5);
 }
 
 /* ---------- slide ---------- */
@@ -23,11 +22,17 @@
   position: absolute; inset: 0;
   background: var(--paper);
   color: var(--ink);
-  padding: 64px 80px 0;
+  /* zona segura RIGIDA: topo livre para a logo, base livre para o rodape (.s-foot, 40px).
+     Nada de conteudo encosta no topo nem no rodape; o overflow:hidden e a trava final. */
+  padding: 78px 96px 64px;
   opacity: 0; visibility: hidden;
   transition: opacity var(--dur) var(--ease);
   overflow: hidden;
 }
+/* todo bloco de conteudo do slide fica preso a zona segura: nunca mais alto que ela,
+   e o que sobrar e recortado dentro do proprio bloco (nao avanca sobre logo nem rodape) */
+.slide > div { max-height: 100%; overflow: hidden; }
+.s-logo, .s-cobrand, .s-foot { max-height: none; }
 .slide.active { opacity: 1; visibility: visible; }
 .slide.print-page { /* impressao: ver @media print */ }
 
@@ -35,7 +40,9 @@
 .s-logo, .s-cobrand {
   position: absolute; top: 40px; height: 30px; z-index: 3;
 }
-.s-logo { left: 80px; }
+/* logo: branca no campo/escuro; no papel claro o token --logo-invert vira 1 e inverte para escura.
+   A contracapa fica sempre sobre o chao escuro, entao nunca inverte (ver .slide.close abaixo). */
+.s-logo { left: 80px; filter: invert(var(--logo-invert, 0)); }
 .s-cobrand { right: 80px; font-weight: var(--w-display);
   font-size: 22px; letter-spacing: -.01em; color: var(--ink); }
 .s-logo img { height: 100%; width: auto; display: block; }
@@ -80,8 +87,9 @@
 .s-label { font-weight: var(--w-label); color: var(--ink); display: block; margin-bottom: 4px; }
 
 /* ---------- citacao ---------- */
-.s-quote { font-family: var(--font-display); font-weight: var(--w-medium); font-style: italic; font-size: var(--fs-h2); line-height: 1.25; max-width: 30ch; }
-.s-attrib { margin-top: 14px; font-style: normal; font-weight: var(--w-label); font-size: var(--fs-small); color: var(--muted); }
+/* citacao: peso de declaracao, bem alinhada, com a atribuicao separada por filete */
+.s-quote { font-family: var(--font-display); font-weight: var(--w-display); font-style: italic; font-size: var(--fs-statement); line-height: 1.14; letter-spacing: -.015em; max-width: 22ch; color: var(--ink); margin: 0; }
+.s-attrib { display: inline-block; margin-top: 30px; padding-top: 16px; border-top: 1px solid var(--line); font-style: normal; font-weight: var(--w-label); font-size: var(--fs-micro); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--muted); }
 
 /* ---------- split 50/50 ---------- */
 .s-split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; height: 100%; padding-bottom: 56px; }
@@ -89,10 +97,10 @@
 .s-col { min-width: 0; }
 
 /* ---------- imagem ---------- */
+/* imagem sempre reta: retangulo com raio e borda fina (sem mascara organica) */
 .s-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
-.s-photo--organica { clip-path: path("M 0 60 C 80 -10 320 0 420 70 C 520 140 540 360 460 470 C 380 580 120 600 40 520 C -40 440 -10 130 0 60 Z"); }
-.s-photo--blob { border-radius: 48% 52% 56% 44% / 52% 44% 56% 48%; overflow: hidden; }
-.s-photo--rect { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); }
+.s-photo--rect, .s-photo { border-radius: var(--radius); overflow: hidden; }
+.s-photo-frame { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); }
 .s-figcap { font-size: var(--fs-small); color: var(--muted); margin-top: 12px; }
 
 /* ---------- numero grande (stat) ---------- */
@@ -105,8 +113,11 @@
 .s-glyphs svg { height: 26px; width: auto; fill: var(--ink); }
 
 /* ---------- modificadores de slide ---------- */
-.slide.cover { padding: 56px 80px; }
+.slide.cover { padding: 96px 96px 64px; }
 .slide.cover .s-title, .slide.cover .s-statement { color: var(--ink); }
+/* capa estourada, mas com a zona do topo livre para a logo (padding-top do slide). */
+.slide.cover .s-title { font-size: clamp(54px, 6.6vw, 98px); line-height: .98; letter-spacing: -.03em; margin: 0 0 22px; max-width: 18ch; }
+.slide.cover .s-title em, .slide.cover .s-title .grow { font-size: 1.05em; }
 
 .slide.divider { display: flex; flex-direction: column; justify-content: center; }
 .slide.divider .s-title { font-size: var(--fs-statement); max-width: 22ch; }
@@ -119,9 +130,9 @@
 .slide.aparte { display: grid; place-items: center; }
 .slide.aparte .s-card {
   background: var(--surface); color: var(--surface-ink);
-  border-radius: var(--radius-lg); padding: 56px 64px; max-width: 60ch;
+  border-radius: var(--radius-lg); padding: 60px 72px; max-width: 62ch;
   font-family: var(--font-display); font-weight: var(--w-medium); font-size: var(--fs-statement);
-  line-height: 1.12; box-shadow: 0 24px 60px rgba(0,0,0,.28);
+  line-height: 1.14;
 }
 
 /* viz embed (chart / diagrama) */
@@ -151,13 +162,13 @@
 .s-overlay .s-overlay-text { position: absolute; z-index: 2; left: 80px; bottom: 80px; max-width: 52%; color: #fff; }
 
 /* ---------- persona (placeholder de imagem) ---------- */
-.s-persona { display: grid; grid-template-columns: 320px 1fr; gap: 48px; align-items: center; height: 100%; padding-bottom: 56px; }
-.s-persona .s-portrait { aspect-ratio: 3/4; border-radius: var(--radius-lg); background: var(--surface); display: grid; place-items: center; color: var(--muted); border: 1px dashed var(--line); overflow: hidden; font-size: var(--fs-small); }
+.s-persona { display: grid; grid-template-columns: 300px 1fr; gap: 60px; align-items: center; height: 100%; padding-bottom: 60px; }
+.s-persona .s-portrait { aspect-ratio: 3/4; border-radius: var(--radius); background: var(--surface); display: grid; place-items: center; color: var(--muted); border: 1px solid var(--line); overflow: hidden; font-size: var(--fs-micro); letter-spacing: var(--tracking-label); text-transform: uppercase; }
 .s-persona .s-portrait img { width: 100%; height: 100%; object-fit: cover; }
-.s-persona .s-persona-name { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-title); }
-.s-persona .s-persona-role { color: var(--muted); margin-bottom: 14px; }
-.s-persona .s-attr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
-.s-persona .s-attr { background: var(--surface); border-left: 3px solid var(--accent); padding: 12px 14px; border-radius: var(--radius-sm); }
+.s-persona .s-persona-name { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-title); line-height: var(--lh-tight); }
+.s-persona .s-persona-role { color: var(--muted); margin: 6px 0 22px; }
+.s-persona .s-attr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+.s-persona .s-attr { background: var(--surface); border-left: 2px solid var(--accent); padding: 16px 18px; border-radius: var(--radius-sm); }
 .s-persona .s-attr b { display: block; font-size: var(--fs-micro); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
 
 /* ---------- quadrante 2x2 ---------- */

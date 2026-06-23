@@ -12,13 +12,19 @@
   /* ============================================================
      scaffolding local de specimen (so esta pagina de graficos)
      Tudo via papeis semanticos. As cores de DADO vivem dentro do
-     SVG, na ordem categorical_order/sequential_scale do brand.json:
-     branco -> brancos esmaecidos -> joia so no heroi.
+     SVG e adaptam aos tres tons: a tinta e var(--ink), a massa das
+     series desce em fill-opacity (.58, .40, .26), o dado-heroi vai
+     em var(--accent) e o negativo em var(--negative). Nada de cor
+     crua nem de joia.
      ============================================================ */
 
   /* moldura de um grafico dentro do specimen */
   .ch { display: block; }
-  .ch svg { width: 100%; height: auto; overflow: visible; display: block; }
+  .ch svg { width: 100%; height: auto; overflow: visible; display: block; padding: 6px 0; }
+  /* mais respiro entre o grafico e a legenda, e entre os blocos de grafico */
+  .doc-specimen { margin-block: clamp(28px, 4vw, 48px); }
+  .doc-specimen .ch + .ch-key,
+  .doc-specimen .ch + .ch-cap { margin-top: 22px; }
   /* legenda inline sob/junto ao grafico: nomeia os itens na propria frase */
   .ch-cap { font-size: var(--fs-small); color: var(--muted); margin: 12px 0 0; max-width: 64ch; }
   .ch-cap b { color: var(--ink); font-weight: var(--w-label); }
@@ -46,11 +52,11 @@
   .ch-prog-head { display: flex; justify-content: space-between; align-items: baseline; font-size: var(--fs-small); }
   .ch-prog-head .ch-prog-name { color: var(--ink); font-weight: var(--w-label); }
   .ch-prog-head .ch-prog-pct { font-family: var(--font-data); font-variant-numeric: tabular-nums; color: var(--ink); font-weight: var(--w-title); }
-  .ch-prog-track { height: 10px; border-radius: var(--radius-pill); background: rgba(255,255,255,.16); overflow: hidden; }
+  .ch-prog-track { height: 10px; border-radius: var(--radius-pill); background: var(--line); overflow: hidden; }
   .ch-prog-fill { height: 100%; border-radius: var(--radius-pill); background: var(--ink); transition: width 1s var(--ease); }
-  .ch-prog-fill.is-jewel { background: var(--accent); }
+  .ch-prog-fill.is-accent { background: var(--accent); }
 
-  /* heatmap: grade de bolinhas 0-5 por linha, foco em joia */
+  /* heatmap: grade de bolinhas 0-5 por linha, foco no acento */
   .ch-heat { width: 100%; border-collapse: collapse; font-size: var(--fs-small); }
   .ch-heat th, .ch-heat td { padding: 9px 10px; text-align: center; border-bottom: 1px solid var(--hairline); }
   .ch-heat th { font-size: var(--fs-micro); text-transform: uppercase; letter-spacing: var(--tracking-label); color: var(--muted); font-weight: var(--w-label); }
@@ -59,7 +65,7 @@
   .ch-heat td.is-focus { background: color-mix(in srgb, var(--accent) 16%, transparent); }
   .ch-heat thead th.is-focus { color: var(--accent); }
   .ch-dots { display: inline-flex; gap: 4px; }
-  .ch-dots i { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,.20); display: inline-block; }
+  .ch-dots i { width: 11px; height: 11px; border-radius: 50%; background: var(--line); display: inline-block; }
   .ch-dots i.on { background: var(--ink); }
   .ch-dots.focus i.on { background: var(--accent); }
   .ch-heat-legend { display: flex; align-items: center; gap: 14px; margin: 14px 0 0; font-size: var(--fs-micro); color: var(--muted); }
@@ -94,37 +100,37 @@
 <header class="doc-hero"><div class="doc-wrap">
   <p class="doc-eyebrow">Dados em SVG</p>
   <h1>O número entra desenhado, nunca em <em>div</em></h1>
-  <p class="doc-lead">Todo gráfico da casa é SVG de verdade: retângulo, traço, círculo e polígono com geometria real, não barra de div esticada por porcentagem. A massa das séries vive em branco e brancos esmaecidos sobre o campo laranja; a joia entra só no dado-herói. Negativo é azul, nunca vermelho, nunca laranja sobre laranja.</p>
+  <p class="doc-lead">Todo gráfico da casa é SVG de verdade: retângulo, traço, círculo e polígono com geometria real, não barra de div esticada por porcentagem. A massa das séries vive na mesma tinta, com a opacidade descendo a cada série; o acento entra só no dado-herói. Negativo é preto, nunca vermelho, nunca laranja sobre laranja.</p>
 </div></header>
 
 <!-- ============================ 01 BARRA HORIZONTAL ============================ -->
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">01</span><p class="doc-kicker">Barra horizontal</p></div>
   <h2>A comparação que se lê de cima para <em>baixo</em></h2>
-  <p>A barra horizontal é a forma mais legível para ranquear categorias, porque o rótulo cabe inteiro à esquerda sem girar. A maior fica no topo, em branco cheio; as demais descem em brancos esmaecidos. Quando há um dado-herói, ele recebe ouro, e só ele. O comprimento de cada barra é largura real no atributo <span class="doc-code">width</span>, calculada sobre a escala, não uma <span class="doc-code">div</span> de porcentagem.</p>
+  <p>A barra horizontal é a forma mais legível para ranquear categorias, porque o rótulo cabe inteiro à esquerda sem girar. A maior fica no topo, na tinta cheia; as demais descem com a opacidade reduzida. Quando há um dado-herói, ele recebe o acento, e só ele. O comprimento de cada barra é largura real no atributo <span class="doc-code">width</span>, calculada sobre a escala, não uma <span class="doc-code">div</span> de porcentagem.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Origem do tráfego, por canal</span>
     <div class="ch">
-      <svg viewBox="0 0 600 232" role="img" aria-label="Barra horizontal da origem do tráfego por canal: busca orgânica 42%, indicação 28%, redes sociais 19%, email 11%. Busca orgânica é o canal-herói, destacado em ouro.">
+      <svg viewBox="0 0 600 232" role="img" aria-label="Barra horizontal da origem do tráfego por canal: busca orgânica 42%, indicação 28%, redes sociais 19%, email 11%. Busca orgânica é o canal-herói, destacado no acento.">
         <title>Origem do tráfego por canal</title>
         <desc>Busca orgânica 42 por cento, indicação 28 por cento, redes sociais 19 por cento, email 11 por cento.</desc>
         <!-- escala: 0..50%, largura util 360px a partir de x=150; fator 7.2px por ponto -->
-        <!-- busca organica: heroi, ouro -->
+        <!-- busca organica: heroi, acento -->
         <text class="ch-lab" x="142" y="30" text-anchor="end">Busca orgânica</text>
-        <rect x="150" y="18" width="302.4" height="22" rx="4" fill="#f5c542"/>
+        <rect x="150" y="18" width="302.4" height="22" rx="4" style="fill:var(--accent)"/>
         <text class="ch-val" x="460" y="34">42%</text>
         <!-- indicacao -->
         <text class="ch-lab" x="142" y="74" text-anchor="end">Indicação</text>
-        <rect x="150" y="62" width="201.6" height="22" rx="4" fill="#ffffff"/>
+        <rect x="150" y="62" width="201.6" height="22" rx="4" style="fill:var(--ink)" fill-opacity="0.58"/>
         <text class="ch-val" x="360" y="78">28%</text>
         <!-- redes sociais -->
         <text class="ch-lab" x="142" y="118" text-anchor="end">Redes sociais</text>
-        <rect x="150" y="106" width="136.8" height="22" rx="4" fill="rgba(255,255,255,.62)"/>
+        <rect x="150" y="106" width="136.8" height="22" rx="4" style="fill:var(--ink)" fill-opacity="0.40"/>
         <text class="ch-val" x="295" y="122">19%</text>
         <!-- email -->
         <text class="ch-lab" x="142" y="162" text-anchor="end">Email</text>
-        <rect x="150" y="150" width="79.2" height="22" rx="4" fill="rgba(255,255,255,.40)"/>
+        <rect x="150" y="150" width="79.2" height="22" rx="4" style="fill:var(--ink)" fill-opacity="0.26"/>
         <text class="ch-val" x="238" y="166">11%</text>
         <!-- eixo base -->
         <line x1="150" y1="190" x2="510" y2="190" stroke="var(--hairline)" stroke-width="1"/>
@@ -133,14 +139,14 @@
         <text class="ch-axis" x="510" y="208" text-anchor="end">50%</text>
       </svg>
     </div>
-    <p class="ch-cap"><b>Busca orgânica responde por 42 por cento</b> da origem do tráfego e por isso aparece em ouro; indicação, redes sociais e email descem em branco esmaecido. Espelha o gráfico-resumo do checkpoint.</p>
-    <p class="doc-when"><b>Quando usar:</b> ranking de até seis categorias com rótulos longos. Ordene da maior para a menor e reserve a joia para o item que carrega a leitura.</p>
+    <p class="ch-cap"><b>Busca orgânica responde por 42 por cento</b> da origem do tráfego e por isso aparece no acento; indicação, redes sociais e email descem com a opacidade reduzida. Espelha o gráfico-resumo do checkpoint.</p>
+    <p class="doc-when"><b>Quando usar:</b> ranking de até seis categorias com rótulos longos. Ordene da maior para a menor e reserve o acento para o item que carrega a leitura.</p>
   </div>
 
   <div class="doc-grid doc-2">
     <div class="doc-note do">
       <span class="doc-note-tag">Faça</span>
-      <p>Largura real no atributo <span class="doc-code">width</span>, ordenado por valor, um único item em joia. <span class="doc-code">role="img"</span> e <span class="doc-code">aria-label</span> com os números na própria descrição.</p>
+      <p>Largura real no atributo <span class="doc-code">width</span>, ordenado por valor, um único item no acento. <span class="doc-code">role="img"</span> e <span class="doc-code">aria-label</span> com os números na própria descrição.</p>
     </div>
     <div class="doc-note dont">
       <span class="doc-note-tag">Não faça</span>
@@ -153,39 +159,39 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">02</span><p class="doc-kicker">Barra vertical</p></div>
   <h2>A série no tempo, lida da esquerda para a <em>direita</em></h2>
-  <p>A coluna vertical é a leitura natural de uma série temporal curta. As barras crescem do eixo de base para cima, com altura real, e o valor fica acima de cada coluna. O ano mais recente, que é a conclusão da história, recebe ouro; os anteriores ficam em branco esmaecido para que o olho chegue ao presente.</p>
+  <p>A coluna vertical é a leitura natural de uma série temporal curta. As barras crescem do eixo de base para cima, com altura real, e o valor fica acima de cada coluna. O ano mais recente, que é a conclusão da história, recebe o acento; os anteriores ficam com a opacidade reduzida para que o olho chegue ao presente.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Receita anual, em milhões de reais</span>
     <div class="ch">
-      <svg viewBox="0 0 600 248" role="img" aria-label="Barra vertical da receita anual em milhões de reais: 2021 com 18, 2022 com 24, 2023 com 31, 2024 com 39, 2025 com 52. 2025 é o ano-herói em ouro.">
+      <svg viewBox="0 0 600 248" role="img" aria-label="Barra vertical da receita anual em milhões de reais: 2021 com 18, 2022 com 24, 2023 com 31, 2024 com 39, 2025 com 52. 2025 é o ano-herói no acento.">
         <title>Receita anual em milhões de reais</title>
         <desc>2021: 18; 2022: 24; 2023: 31; 2024: 39; 2025: 52.</desc>
         <!-- escala 0..60, util 168px de altura, base y=200, topo y=32; fator 2.8px por milhao -->
         <line x1="64" y1="200" x2="556" y2="200" stroke="var(--hairline)" stroke-width="1"/>
         <!-- 2021: 18 -> 50.4 -->
-        <rect x="80"  y="149.6" width="60" height="50.4"  rx="4" fill="rgba(255,255,255,.40)"/>
+        <rect x="80"  y="149.6" width="60" height="50.4"  rx="4" style="fill:var(--ink)" fill-opacity="0.26"/>
         <text class="ch-val" x="110" y="142" text-anchor="middle">18</text>
         <text class="ch-axis" x="110" y="220" text-anchor="middle">2021</text>
         <!-- 2022: 24 -> 67.2 -->
-        <rect x="180" y="132.8" width="60" height="67.2"  rx="4" fill="rgba(255,255,255,.40)"/>
+        <rect x="180" y="132.8" width="60" height="67.2"  rx="4" style="fill:var(--ink)" fill-opacity="0.26"/>
         <text class="ch-val" x="210" y="125" text-anchor="middle">24</text>
         <text class="ch-axis" x="210" y="220" text-anchor="middle">2022</text>
         <!-- 2023: 31 -> 86.8 -->
-        <rect x="280" y="113.2" width="60" height="86.8"  rx="4" fill="rgba(255,255,255,.62)"/>
+        <rect x="280" y="113.2" width="60" height="86.8"  rx="4" style="fill:var(--ink)" fill-opacity="0.40"/>
         <text class="ch-val" x="310" y="105" text-anchor="middle">31</text>
         <text class="ch-axis" x="310" y="220" text-anchor="middle">2023</text>
         <!-- 2024: 39 -> 109.2 -->
-        <rect x="380" y="90.8" width="60" height="109.2" rx="4" fill="#ffffff"/>
+        <rect x="380" y="90.8" width="60" height="109.2" rx="4" style="fill:var(--ink)" fill-opacity="0.58"/>
         <text class="ch-val" x="410" y="83" text-anchor="middle">39</text>
         <text class="ch-axis" x="410" y="220" text-anchor="middle">2024</text>
-        <!-- 2025: 52 -> 145.6 -> heroi ouro -->
-        <rect x="480" y="54.4" width="60" height="145.6" rx="4" fill="#f5c542"/>
+        <!-- 2025: 52 -> 145.6 -> heroi acento -->
+        <rect x="480" y="54.4" width="60" height="145.6" rx="4" style="fill:var(--accent)"/>
         <text class="ch-val" x="510" y="47" text-anchor="middle">52</text>
         <text class="ch-axis" x="510" y="220" text-anchor="middle">2025</text>
       </svg>
     </div>
-    <p class="ch-cap"><b>A receita saiu de 18 milhões em 2021 para 52 milhões em 2025</b>, quase o triplo; por isso 2025 fecha a série em ouro e os anos anteriores ficam esmaecidos.</p>
+    <p class="ch-cap"><b>A receita saiu de 18 milhões em 2021 para 52 milhões em 2025</b>, quase o triplo; por isso 2025 fecha a série no acento e os anos anteriores ficam com a opacidade reduzida.</p>
     <p class="doc-when"><b>Quando usar:</b> série temporal de até oito pontos discretos. Para mais pontos, prefira a linha, que não sobrecarrega o eixo com colunas finas.</p>
   </div>
 </div></section>
@@ -194,7 +200,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">Barra agrupada</p></div>
   <h2>Duas séries lado a lado, sem somar uma na <em>outra</em></h2>
-  <p>Quando duas medidas precisam ser comparadas dentro de cada categoria, as colunas ficam emparelhadas, não empilhadas. A série principal vai em branco cheio e a comparação em branco esmaecido, mantendo a hierarquia clara sem recorrer a duas cores fortes. A legenda nomeia as duas séries para que o gráfico se leia sozinho.</p>
+  <p>Quando duas medidas precisam ser comparadas dentro de cada categoria, as colunas ficam emparelhadas, não empilhadas. A série principal vai na tinta cheia e a comparação com a opacidade reduzida, mantendo a hierarquia clara sem recorrer a duas cores fortes. A legenda nomeia as duas séries para que o gráfico se leia sozinho.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Sessões previstas contra realizadas, por trimestre</span>
@@ -205,28 +211,28 @@
         <!-- escala 0..60, base y=196, util 156px, fator 2.6px por mil -->
         <line x1="56" y1="196" x2="556" y2="196" stroke="var(--hairline)" stroke-width="1"/>
         <!-- T1 -->
-        <rect x="78"  y="118"   width="40" height="78"   rx="3" fill="rgba(255,255,255,.40)"/>
-        <rect x="122" y="107.6" width="40" height="88.4" rx="3" fill="#ffffff"/>
+        <rect x="78"  y="118"   width="40" height="78"   rx="3" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <rect x="122" y="107.6" width="40" height="88.4" rx="3" style="fill:var(--ink)"/>
         <text class="ch-axis" x="120" y="216" text-anchor="middle">1º tri.</text>
         <!-- T2 -->
-        <rect x="208" y="97.2"  width="40" height="98.8"  rx="3" fill="rgba(255,255,255,.40)"/>
-        <rect x="252" y="102.4" width="40" height="93.6"  rx="3" fill="#ffffff"/>
+        <rect x="208" y="97.2"  width="40" height="98.8"  rx="3" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <rect x="252" y="102.4" width="40" height="93.6"  rx="3" style="fill:var(--ink)"/>
         <text class="ch-axis" x="250" y="216" text-anchor="middle">2º tri.</text>
         <!-- T3 -->
-        <rect x="338" y="86.8"  width="40" height="109.2" rx="3" fill="rgba(255,255,255,.40)"/>
-        <rect x="382" y="68.6"  width="40" height="127.4" rx="3" fill="#ffffff"/>
+        <rect x="338" y="86.8"  width="40" height="109.2" rx="3" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <rect x="382" y="68.6"  width="40" height="127.4" rx="3" style="fill:var(--ink)"/>
         <text class="ch-axis" x="380" y="216" text-anchor="middle">3º tri.</text>
         <!-- T4 -->
-        <rect x="468" y="66"    width="40" height="130"   rx="3" fill="rgba(255,255,255,.40)"/>
-        <rect x="512" y="45.2"  width="40" height="150.8" rx="3" fill="#ffffff"/>
+        <rect x="468" y="66"    width="40" height="130"   rx="3" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <rect x="512" y="45.2"  width="40" height="150.8" rx="3" style="fill:var(--ink)"/>
         <text class="ch-axis" x="510" y="216" text-anchor="middle">4º tri.</text>
       </svg>
     </div>
     <div class="ch-key" aria-hidden="true">
-      <span><i style="background:rgba(255,255,255,.40)"></i>Previsto</span>
-      <span><i style="background:#ffffff"></i>Realizado</span>
+      <span><i style="background:var(--ink);opacity:.40"></i>Previsto</span>
+      <span><i style="background:var(--ink)"></i>Realizado</span>
     </div>
-    <p class="ch-cap"><b>O realizado superou o previsto no terceiro e no quarto trimestres</b> (49 contra 42 mil e 58 contra 50 mil), com pequena queda no segundo. A série realizada fica em branco cheio por ser a leitura principal.</p>
+    <p class="ch-cap"><b>O realizado superou o previsto no terceiro e no quarto trimestres</b> (49 contra 42 mil e 58 contra 50 mil), com pequena queda no segundo. A série realizada fica na tinta cheia por ser a leitura principal.</p>
     <p class="doc-when"><b>Quando usar:</b> comparar duas medidas dentro das mesmas categorias (previsto contra real, antes contra depois). Acima de três séries, o agrupamento fica apertado: prefira linhas ou pequenos múltiplos.</p>
   </div>
 </div></section>
@@ -235,7 +241,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">04</span><p class="doc-kicker">Barra empilhada</p></div>
   <h2>O todo dividido em partes, sem perder o <em>total</em></h2>
-  <p>A barra empilhada serve quando a soma das partes importa tanto quanto cada fatia. Os segmentos se acumulam na ordem da escala, do branco cheio na base ao esmaecido no topo, e a posição vertical de cada segmento é calculada de verdade, não desenhada por estimativa. Cada coluna soma cem por cento.</p>
+  <p>A barra empilhada serve quando a soma das partes importa tanto quanto cada fatia. Os segmentos se acumulam na ordem da escala, da tinta cheia na base ao mais esmaecido no topo, e a posição vertical de cada segmento é calculada de verdade, não desenhada por estimativa. Cada coluna soma cem por cento.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Composição do investimento por mídia, três campanhas</span>
@@ -246,31 +252,31 @@
         <!-- altura util 160px = 100%; base y=200; fator 1.6px por ponto -->
         <line x1="120" y1="200" x2="540" y2="200" stroke="var(--hairline)" stroke-width="1"/>
         <!-- Campanha A: digital 55 (88px), fora 30 (48px), impresso 15 (24px) -->
-        <rect x="150" y="112" width="76" height="88" fill="#ffffff"/>
-        <rect x="150" y="64"  width="76" height="48" fill="rgba(255,255,255,.40)"/>
-        <rect x="150" y="40"  width="76" height="24" fill="rgba(255,255,255,.22)"/>
-        <text class="ch-val" x="188" y="161" text-anchor="middle" fill="#0a0a0a">55</text>
+        <rect x="150" y="112" width="76" height="88" style="fill:var(--ink)"/>
+        <rect x="150" y="64"  width="76" height="48" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <rect x="150" y="40"  width="76" height="24" style="fill:var(--ink)" fill-opacity="0.26"/>
+        <text class="ch-val" x="188" y="161" text-anchor="middle" style="fill:var(--surface)">55</text>
         <text class="ch-axis" x="188" y="220" text-anchor="middle">Campanha A</text>
         <!-- Campanha B: digital 70 (112px), fora 20 (32px), impresso 10 (16px) -->
-        <rect x="282" y="88" width="76" height="112" fill="#ffffff"/>
-        <rect x="282" y="56" width="76" height="32"  fill="rgba(255,255,255,.40)"/>
-        <rect x="282" y="40" width="76" height="16"  fill="rgba(255,255,255,.22)"/>
-        <text class="ch-val" x="320" y="149" text-anchor="middle" fill="#0a0a0a">70</text>
+        <rect x="282" y="88" width="76" height="112" style="fill:var(--ink)"/>
+        <rect x="282" y="56" width="76" height="32"  style="fill:var(--ink)" fill-opacity="0.40"/>
+        <rect x="282" y="40" width="76" height="16"  style="fill:var(--ink)" fill-opacity="0.26"/>
+        <text class="ch-val" x="320" y="149" text-anchor="middle" style="fill:var(--surface)">70</text>
         <text class="ch-axis" x="320" y="220" text-anchor="middle">Campanha B</text>
         <!-- Campanha C: digital 45 (72px), fora 40 (64px), impresso 15 (24px) -->
-        <rect x="414" y="128" width="76" height="72" fill="#ffffff"/>
-        <rect x="414" y="64"  width="76" height="64" fill="rgba(255,255,255,.40)"/>
-        <rect x="414" y="40"  width="76" height="24" fill="rgba(255,255,255,.22)"/>
-        <text class="ch-val" x="452" y="169" text-anchor="middle" fill="#0a0a0a">45</text>
+        <rect x="414" y="128" width="76" height="72" style="fill:var(--ink)"/>
+        <rect x="414" y="64"  width="76" height="64" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <rect x="414" y="40"  width="76" height="24" style="fill:var(--ink)" fill-opacity="0.26"/>
+        <text class="ch-val" x="452" y="169" text-anchor="middle" style="fill:var(--surface)">45</text>
         <text class="ch-axis" x="452" y="220" text-anchor="middle">Campanha C</text>
       </svg>
     </div>
     <div class="ch-key" aria-hidden="true">
-      <span><i style="background:#ffffff"></i>Digital</span>
-      <span><i style="background:rgba(255,255,255,.40)"></i>Fora de casa</span>
-      <span><i style="background:rgba(255,255,255,.22)"></i>Impresso</span>
+      <span><i style="background:var(--ink)"></i>Digital</span>
+      <span><i style="background:var(--ink);opacity:.40"></i>Fora de casa</span>
+      <span><i style="background:var(--ink);opacity:.26"></i>Impresso</span>
     </div>
-    <p class="ch-cap"><b>O digital domina as três campanhas, chegando a 70 por cento na campanha B</b>; fora de casa e impresso dividem o restante. A fatia maior fica na base, em branco cheio, para ancorar a leitura.</p>
+    <p class="ch-cap"><b>O digital domina as três campanhas, chegando a 70 por cento na campanha B</b>; fora de casa e impresso dividem o restante. A fatia maior fica na base, na tinta cheia, para ancorar a leitura.</p>
     <p class="doc-when"><b>Quando usar:</b> mostrar parte e todo ao mesmo tempo, com três a quatro segmentos. Com muitos segmentos finos a leitura quebra: agrupe os menores num único "outros".</p>
   </div>
 </div></section>
@@ -279,7 +285,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">05</span><p class="doc-kicker">Linha e multi-linha</p></div>
   <h2>A tendência traçada em um único <em>gesto</em></h2>
-  <p>A linha conta a direção de uma série densa sem o peso visual das colunas. O traçado é uma <span class="doc-code">polyline</span> real, com os pontos marcados em círculo nas inflexões. Quando há duas séries, a principal vai em branco cheio e mais grossa; a de referência fica esmaecida e mais fina, para que a comparação seja imediata.</p>
+  <p>A linha conta a direção de uma série densa sem o peso visual das colunas. O traçado é uma <span class="doc-code">polyline</span> real, com os pontos marcados em círculo nas inflexões. Quando há duas séries, a principal vai na tinta cheia e mais grossa; a de referência fica com a opacidade reduzida e mais fina, para que a comparação seja imediata.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Engajamento mensal, marca contra média do setor</span>
@@ -299,23 +305,23 @@
         <text class="ch-axis" x="50" y="44"  text-anchor="end">80</text>
         <!-- meses x: jan60 fev160 mar260 abr360 mai460 jun560 -->
         <!-- setor (esmaecido): 30,33,35,38,41,44 -> y 140,134,130,124,118,112 -->
-        <polyline fill="none" stroke="rgba(255,255,255,.40)" stroke-width="2" stroke-linejoin="round"
+        <polyline fill="none" style="stroke:var(--ink)" stroke-opacity="0.40" stroke-width="2" stroke-linejoin="round"
           points="60,140 160,134 260,130 360,124 460,118 560,112"/>
-        <circle cx="60"  cy="140" r="3" fill="rgba(255,255,255,.40)"/>
-        <circle cx="160" cy="134" r="3" fill="rgba(255,255,255,.40)"/>
-        <circle cx="260" cy="130" r="3" fill="rgba(255,255,255,.40)"/>
-        <circle cx="360" cy="124" r="3" fill="rgba(255,255,255,.40)"/>
-        <circle cx="460" cy="118" r="3" fill="rgba(255,255,255,.40)"/>
-        <circle cx="560" cy="112" r="3" fill="rgba(255,255,255,.40)"/>
-        <!-- marca (branco cheio): 32,38,44,53,62,71 -> y 136,124,112,94,76,58 -->
-        <polyline fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"
+        <circle cx="60"  cy="140" r="3" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <circle cx="160" cy="134" r="3" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <circle cx="260" cy="130" r="3" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <circle cx="360" cy="124" r="3" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <circle cx="460" cy="118" r="3" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <circle cx="560" cy="112" r="3" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <!-- marca (tinta cheia): 32,38,44,53,62,71 -> y 136,124,112,94,76,58 -->
+        <polyline fill="none" style="stroke:var(--ink)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"
           points="60,136 160,124 260,112 360,94 460,76 560,58"/>
-        <circle cx="60"  cy="136" r="4" fill="#ffffff"/>
-        <circle cx="160" cy="124" r="4" fill="#ffffff"/>
-        <circle cx="260" cy="112" r="4" fill="#ffffff"/>
-        <circle cx="360" cy="94"  r="4" fill="#ffffff"/>
-        <circle cx="460" cy="76"  r="4" fill="#ffffff"/>
-        <circle cx="560" cy="58"  r="4" fill="#ffffff"/>
+        <circle cx="60"  cy="136" r="4" style="fill:var(--ink)"/>
+        <circle cx="160" cy="124" r="4" style="fill:var(--ink)"/>
+        <circle cx="260" cy="112" r="4" style="fill:var(--ink)"/>
+        <circle cx="360" cy="94"  r="4" style="fill:var(--ink)"/>
+        <circle cx="460" cy="76"  r="4" style="fill:var(--ink)"/>
+        <circle cx="560" cy="58"  r="4" style="fill:var(--ink)"/>
         <!-- rotulo do ponto final da marca -->
         <text class="ch-val" x="560" y="48" text-anchor="end">71</text>
         <!-- eixo x -->
@@ -328,10 +334,10 @@
       </svg>
     </div>
     <div class="ch-key" aria-hidden="true">
-      <span><i style="background:#ffffff"></i>Marca</span>
-      <span><i style="background:rgba(255,255,255,.40)"></i>Média do setor</span>
+      <span><i style="background:var(--ink)"></i>Marca</span>
+      <span><i style="background:var(--ink);opacity:.40"></i>Média do setor</span>
     </div>
-    <p class="ch-cap"><b>O engajamento da marca dobrou no semestre, de 32 a 71 pontos</b>, abrindo distância da média do setor, que foi de 30 a 44. A linha da marca é mais grossa e em branco cheio por ser a leitura principal.</p>
+    <p class="ch-cap"><b>O engajamento da marca dobrou no semestre, de 32 a 71 pontos</b>, abrindo distância da média do setor, que foi de 30 a 44. A linha da marca é mais grossa e na tinta cheia por ser a leitura principal.</p>
     <p class="doc-when"><b>Quando usar:</b> série com muitos pontos ou comparação de duas trajetórias. Limite a duas ou três linhas; acima disso o cruzamento confunde.</p>
   </div>
 </div></section>
@@ -340,7 +346,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">06</span><p class="doc-kicker">Área</p></div>
   <h2>O volume sob a curva, preenchido com <em>discrição</em></h2>
-  <p>A área é a linha com o espaço abaixo preenchido, usada quando o acúmulo importa mais que o ponto exato. O preenchimento é um <span class="doc-code">path</span> fechado com opacidade baixa, para não competir com o traço de topo, que permanece em branco cheio. A geometria do preenchimento é real: o mesmo caminho da curva desce até a base e fecha.</p>
+  <p>A área é a linha com o espaço abaixo preenchido, usada quando o acúmulo importa mais que o ponto exato. O preenchimento é um <span class="doc-code">path</span> fechado com opacidade baixa, para não competir com o traço de topo, que permanece na tinta cheia. A geometria do preenchimento é real: o mesmo caminho da curva desce até a base e fecha.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Base de assinantes acumulada, em milhares</span>
@@ -353,11 +359,11 @@
         <!-- pontos: 8->178.7 14->164 22->145.7 33->120.6 41->102.3 52->77.1 64->49.7 -->
         <!-- area preenchida (path fechado) -->
         <path d="M60,178.7 L140,164 L220,145.7 L300,120.6 L380,102.3 L460,77.1 L540,49.7 L540,196 L60,196 Z"
-              fill="#ffffff" fill-opacity="0.18"/>
+              style="fill:var(--ink)" fill-opacity="0.18"/>
         <!-- linha de topo -->
         <path d="M60,178.7 L140,164 L220,145.7 L300,120.6 L380,102.3 L460,77.1 L540,49.7"
-              fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
-        <circle cx="540" cy="49.7" r="4" fill="#ffffff"/>
+              fill="none" style="stroke:var(--ink)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+        <circle cx="540" cy="49.7" r="4" style="fill:var(--ink)"/>
         <text class="ch-val" x="540" y="40" text-anchor="end">64</text>
         <!-- eixos -->
         <text class="ch-axis" x="60"  y="214" text-anchor="middle">Jan</text>
@@ -375,38 +381,38 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">07</span><p class="doc-kicker">Donut e gauge</p></div>
   <h2>A fração de um todo, com o número no <em>centro</em></h2>
-  <p>O donut e o gauge mostram uma proporção única de forma imediata, com o valor sempre legível no miolo. O arco é um <span class="doc-code">circle</span> com <span class="doc-code">stroke-dasharray</span> calculado sobre a circunferência real, não uma estimativa visual. A fatia preenchida fica em branco cheio ou em joia quando é o dado-herói; o restante fica em branco bem esmaecido como trilho.</p>
+  <p>O donut e o gauge mostram uma proporção única de forma imediata, com o valor sempre legível no miolo. O arco é um <span class="doc-code">circle</span> com <span class="doc-code">stroke-dasharray</span> calculado sobre a circunferência real, não uma estimativa visual. A fatia preenchida fica na tinta cheia ou no acento quando é o dado-herói; o restante fica em tinta bem esmaecida como trilho.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Donut e gauge, lado a lado</span>
     <div class="doc-grid doc-2">
       <div class="ch">
-        <svg viewBox="0 0 220 220" role="img" aria-label="Donut: 68 por cento da meta trimestral atingida. Fatia preenchida em ouro, restante em branco esmaecido.">
+        <svg viewBox="0 0 220 220" role="img" aria-label="Donut: 68 por cento da meta trimestral atingida. Fatia preenchida no acento, restante em tinta esmaecida.">
           <title>Meta trimestral atingida</title>
           <desc>68 por cento de 100.</desc>
           <!-- r=80, circunferencia = 502.65; 68% = 341.8 -->
-          <circle cx="110" cy="110" r="80" fill="none" stroke="rgba(255,255,255,.20)" stroke-width="22"/>
-          <circle cx="110" cy="110" r="80" fill="none" stroke="#f5c542" stroke-width="22"
+          <circle cx="110" cy="110" r="80" fill="none" style="stroke:var(--ink)" stroke-opacity="0.20" stroke-width="22"/>
+          <circle cx="110" cy="110" r="80" fill="none" style="stroke:var(--accent)" stroke-width="22"
                   stroke-dasharray="341.8 502.65" stroke-dashoffset="0" stroke-linecap="round"
                   transform="rotate(-90 110 110)"/>
-          <text x="110" y="104" text-anchor="middle" style="font-family:var(--font-display);font-weight:900;font-size:44px;" fill="var(--ink)">68%</text>
+          <text x="110" y="104" text-anchor="middle" style="font-family:var(--font-display);font-weight:900;font-size:44px;fill:var(--ink)">68%</text>
           <text class="ch-axis" x="110" y="130" text-anchor="middle">da meta</text>
         </svg>
       </div>
       <div class="ch">
-        <svg viewBox="0 0 220 160" role="img" aria-label="Gauge de meio arco: índice de satisfação em 82 de 100. Arco preenchido em branco cheio.">
+        <svg viewBox="0 0 220 160" role="img" aria-label="Gauge de meio arco: índice de satisfação em 82 de 100. Arco preenchido na tinta cheia.">
           <title>Índice de satisfação</title>
           <desc>82 de 100, em meio arco.</desc>
           <!-- semicircunferencia r=80 = pi*80 = 251.3; 82% = 206.1 -->
-          <path d="M30,140 A80,80 0 0 1 190,140" fill="none" stroke="rgba(255,255,255,.20)" stroke-width="20" stroke-linecap="round"/>
-          <path d="M30,140 A80,80 0 0 1 190,140" fill="none" stroke="#ffffff" stroke-width="20" stroke-linecap="round"
+          <path d="M30,140 A80,80 0 0 1 190,140" fill="none" style="stroke:var(--ink)" stroke-opacity="0.20" stroke-width="20" stroke-linecap="round"/>
+          <path d="M30,140 A80,80 0 0 1 190,140" fill="none" style="stroke:var(--ink)" stroke-width="20" stroke-linecap="round"
                 stroke-dasharray="206.1 251.3"/>
-          <text x="110" y="120" text-anchor="middle" style="font-family:var(--font-display);font-weight:900;font-size:42px;" fill="var(--ink)">82</text>
+          <text x="110" y="120" text-anchor="middle" style="font-family:var(--font-display);font-weight:900;font-size:42px;fill:var(--ink)">82</text>
           <text class="ch-axis" x="110" y="142" text-anchor="middle">satisfação</text>
         </svg>
       </div>
     </div>
-    <p class="ch-cap"><b>68 por cento da meta trimestral atingida</b> no donut, em ouro por ser o número que carrega a leitura; <b>satisfação em 82 de 100</b> no gauge, em branco cheio. O valor central é sempre o foco.</p>
+    <p class="ch-cap"><b>68 por cento da meta trimestral atingida</b> no donut, no acento por ser o número que carrega a leitura; <b>satisfação em 82 de 100</b> no gauge, na tinta cheia. O valor central é sempre o foco.</p>
     <p class="doc-when"><b>Quando usar:</b> uma proporção única que merece destaque visual. Para comparar várias proporções entre si, a barra horizontal lê melhor que vários donuts.</p>
   </div>
 
@@ -420,34 +426,34 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">08</span><p class="doc-kicker">Funil</p></div>
   <h2>Onde a jornada perde gente a cada <em>passo</em></h2>
-  <p>O funil mostra a retenção ao longo de uma sequência de etapas, com cada faixa mais estreita que a anterior. Cada degrau é um trapézio real, com a largura proporcional ao volume daquela etapa. A massa fica em branco esmaecido descendente, e a etapa de conversão final, que é a leitura-herói, recebe a joia.</p>
+  <p>O funil mostra a retenção ao longo de uma sequência de etapas, com cada faixa mais estreita que a anterior. Cada degrau é um trapézio real, com a largura proporcional ao volume daquela etapa. A massa fica na tinta com a opacidade descendente, e a etapa de conversão final, que é a leitura-herói, recebe o acento.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Funil de conversão da campanha, em pessoas</span>
     <div class="ch">
-      <svg viewBox="0 0 600 280" role="img" aria-label="Funil de conversão em quatro etapas, em pessoas: visitantes 12.000, cadastros 4.800, propostas 1.600, fechamentos 520. A etapa de fechamento, com 520 pessoas, é o dado-herói em ouro.">
+      <svg viewBox="0 0 600 280" role="img" aria-label="Funil de conversão em quatro etapas, em pessoas: visitantes 12.000, cadastros 4.800, propostas 1.600, fechamentos 520. A etapa de fechamento, com 520 pessoas, é o dado-herói no acento.">
         <title>Funil de conversão da campanha</title>
         <desc>Visitantes 12000, cadastros 4800, propostas 1600, fechamentos 520.</desc>
         <!-- centro de funil x=400; rotulo de etapa a esquerda (x=150), valor centrado na faixa -->
         <!-- etapa 1: visitantes (largura proporcional 12000 -> 280, faixa 260..540 estreitando) -->
-        <polygon points="270,18 530,18 478,72 322,72" fill="rgba(255,255,255,.62)"/>
+        <polygon points="270,18 530,18 478,72 322,72" style="fill:var(--ink)" fill-opacity="0.58"/>
         <text class="ch-lab" x="150" y="50" text-anchor="start">Visitantes</text>
-        <text class="ch-val" x="400" y="50" text-anchor="middle" fill="#0a0a0a">12.000</text>
+        <text class="ch-val" x="400" y="50" text-anchor="middle" style="fill:var(--surface)">12.000</text>
         <!-- etapa 2: cadastros (4800 -> 116) -->
-        <polygon points="322,80 478,80 446,134 354,134" fill="rgba(255,255,255,.40)"/>
+        <polygon points="322,80 478,80 446,134 354,134" style="fill:var(--ink)" fill-opacity="0.40"/>
         <text class="ch-lab" x="150" y="112" text-anchor="start">Cadastros</text>
-        <text class="ch-val" x="400" y="112" text-anchor="middle" fill="#0a0a0a">4.800</text>
+        <text class="ch-val" x="400" y="112" text-anchor="middle" style="fill:var(--surface)">4.800</text>
         <!-- etapa 3: propostas (1600 -> 72) -->
-        <polygon points="354,142 446,142 428,196 372,196" fill="rgba(255,255,255,.30)"/>
+        <polygon points="354,142 446,142 428,196 372,196" style="fill:var(--ink)" fill-opacity="0.26"/>
         <text class="ch-lab" x="150" y="174" text-anchor="start">Propostas</text>
-        <text class="ch-val" x="400" y="174" text-anchor="middle" fill="#0a0a0a">1.600</text>
-        <!-- etapa 4: fechamentos (520 -> faixa minima) -> heroi ouro -->
-        <polygon points="372,204 428,204 416,258 384,258" fill="#f5c542"/>
+        <text class="ch-val" x="400" y="174" text-anchor="middle" style="fill:var(--surface)">1.600</text>
+        <!-- etapa 4: fechamentos (520 -> faixa minima) -> heroi acento -->
+        <polygon points="372,204 428,204 416,258 384,258" style="fill:var(--accent)"/>
         <text class="ch-lab" x="150" y="234" text-anchor="start">Fechamentos</text>
-        <text class="ch-val" x="400" y="234" text-anchor="middle" fill="#0a0a0a">520</text>
+        <text class="ch-val" x="400" y="234" text-anchor="middle" style="fill:var(--surface)">520</text>
       </svg>
     </div>
-    <p class="ch-cap"><b>De 12 mil visitantes, 520 fecharam negócio</b>, uma conversão de pouco mais de 4 por cento ao fim da jornada; a maior perda acontece entre visita e cadastro. O degrau de fechamento aparece em ouro por ser o resultado que importa.</p>
+    <p class="ch-cap"><b>De 12 mil visitantes, 520 fecharam negócio</b>, uma conversão de pouco mais de 4 por cento ao fim da jornada; a maior perda acontece entre visita e cadastro. O degrau de fechamento aparece no acento por ser o resultado que importa.</p>
     <p class="doc-when"><b>Quando usar:</b> jornada com etapas sequenciais e perda esperada a cada passo. Mantenha de três a cinco etapas; muitos degraus achatam as faixas finais.</p>
   </div>
 </div></section>
@@ -456,12 +462,12 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">09</span><p class="doc-kicker">Slope e bump</p></div>
   <h2>Quem subiu e quem desceu entre dois <em>momentos</em></h2>
-  <p>O gráfico de inclinação liga dois instantes por uma reta para cada item, deixando a mudança de posição imediata: linhas que sobem ganharam, linhas que descem perderam. Cada conector é uma reta real entre dois pontos. O item que mais se move recebe branco cheio; os demais ficam esmaecidos. Quando se trata de ranking, o azul marca a queda, nunca o vermelho.</p>
+  <p>O gráfico de inclinação liga dois instantes por uma reta para cada item, deixando a mudança de posição imediata: linhas que sobem ganharam, linhas que descem perderam. Cada conector é uma reta real entre dois pontos. O item que mais se move recebe a tinta cheia; os demais ficam com a opacidade reduzida. Quando se trata de ranking, o preto marca a queda, nunca o vermelho.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Participação de mercado, 2024 contra 2025</span>
     <div class="ch">
-      <svg viewBox="0 0 600 260" role="img" aria-label="Gráfico de inclinação da participação de mercado de 2024 para 2025, em por cento. Marca A subiu de 22 para 34. Marca B caiu de 30 para 25, em azul. Marca C ficou estável em 18.">
+      <svg viewBox="0 0 600 260" role="img" aria-label="Gráfico de inclinação da participação de mercado de 2024 para 2025, em por cento. Marca A subiu de 22 para 34. Marca B caiu de 30 para 25, em preto. Marca C ficou estável em 18.">
         <title>Participação de mercado, 2024 contra 2025</title>
         <desc>Marca A: 22 para 34. Marca B: 30 para 25. Marca C: 18 para 18. Em por cento.</desc>
         <!-- colunas x=180 (2024) e x=420 (2025); escala 0..40 -> y 220..40, fator 4.5px por ponto -->
@@ -469,24 +475,24 @@
         <line x1="420" y1="32" x2="420" y2="228" stroke="var(--hairline)" stroke-width="1"/>
         <text class="ch-axis" x="180" y="248" text-anchor="middle">2024</text>
         <text class="ch-axis" x="420" y="248" text-anchor="middle">2025</text>
-        <!-- Marca A: 22->121, 34->67 (heroi branco cheio) -->
-        <line x1="180" y1="121" x2="420" y2="67" stroke="#ffffff" stroke-width="3"/>
-        <circle cx="180" cy="121" r="5" fill="#ffffff"/><circle cx="420" cy="67" r="5" fill="#ffffff"/>
+        <!-- Marca A: 22->121, 34->67 (heroi tinta cheia) -->
+        <line x1="180" y1="121" x2="420" y2="67" style="stroke:var(--ink)" stroke-width="3"/>
+        <circle cx="180" cy="121" r="5" style="fill:var(--ink)"/><circle cx="420" cy="67" r="5" style="fill:var(--ink)"/>
         <text class="ch-lab" x="168" y="125" text-anchor="end">A · 22%</text>
         <text class="ch-val" x="432" y="71">34%</text>
-        <!-- Marca B: 30->85, 25->107.5 (queda -> azul) -->
-        <line x1="180" y1="85" x2="420" y2="107.5" stroke="#1f4ea8" stroke-width="3"/>
-        <circle cx="180" cy="85" r="5" fill="#1f4ea8"/><circle cx="420" cy="107.5" r="5" fill="#1f4ea8"/>
+        <!-- Marca B: 30->85, 25->107.5 (queda -> negativo) -->
+        <line x1="180" y1="85" x2="420" y2="107.5" style="stroke:var(--negative)" stroke-width="3"/>
+        <circle cx="180" cy="85" r="5" style="fill:var(--negative)"/><circle cx="420" cy="107.5" r="5" style="fill:var(--negative)"/>
         <text class="ch-lab" x="168" y="89" text-anchor="end">B · 30%</text>
         <text class="ch-lab-dim" x="432" y="111">25%</text>
         <!-- Marca C: 18->139 estavel -->
-        <line x1="180" y1="139" x2="420" y2="139" stroke="rgba(255,255,255,.40)" stroke-width="2.5"/>
-        <circle cx="180" cy="139" r="4.5" fill="rgba(255,255,255,.40)"/><circle cx="420" cy="139" r="4.5" fill="rgba(255,255,255,.40)"/>
+        <line x1="180" y1="139" x2="420" y2="139" style="stroke:var(--ink)" stroke-opacity="0.40" stroke-width="2.5"/>
+        <circle cx="180" cy="139" r="4.5" style="fill:var(--ink)" fill-opacity="0.40"/><circle cx="420" cy="139" r="4.5" style="fill:var(--ink)" fill-opacity="0.40"/>
         <text class="ch-lab-dim" x="168" y="143" text-anchor="end">C · 18%</text>
         <text class="ch-lab-dim" x="432" y="143">18%</text>
       </svg>
     </div>
-    <p class="ch-cap"><b>A marca A passou de 22 para 34 por cento e assumiu a liderança</b>, enquanto a marca B recuou de 30 para 25 e a marca C ficou estável em 18. A queda da marca B aparece em azul, a cor de dado negativo da casa.</p>
+    <p class="ch-cap"><b>A marca A passou de 22 para 34 por cento e assumiu a liderança</b>, enquanto a marca B recuou de 30 para 25 e a marca C ficou estável em 18. A queda da marca B aparece em preto, a cor de dado negativo da casa.</p>
     <p class="doc-when"><b>Quando usar:</b> comparar posições de vários itens entre exatamente dois momentos. Para mais de dois instantes, o bump vira um emaranhado: volte para a multi-linha.</p>
   </div>
 </div></section>
@@ -495,12 +501,12 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">10</span><p class="doc-kicker">Dispersão</p></div>
   <h2>Cada ponto é um caso, a nuvem é o <em>padrão</em></h2>
-  <p>A dispersão cruza duas variáveis num plano e deixa a correlação aparecer pela forma da nuvem. Cada caso é um <span class="doc-code">circle</span> posicionado por suas coordenadas reais. A massa fica em branco esmaecido; o caso que merece destaque, um cliente exemplar ou um fora-da-curva relevante, ganha a joia e um rótulo.</p>
+  <p>A dispersão cruza duas variáveis num plano e deixa a correlação aparecer pela forma da nuvem. Cada caso é um <span class="doc-code">circle</span> posicionado por suas coordenadas reais. A massa fica na tinta com a opacidade reduzida; o caso que merece destaque, um cliente exemplar ou um fora-da-curva relevante, ganha o acento e um rótulo.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Investimento contra retorno, por cliente</span>
     <div class="ch">
-      <svg viewBox="0 0 600 280" role="img" aria-label="Dispersão de investimento no eixo horizontal contra retorno no eixo vertical, por cliente. A nuvem mostra correlação positiva. Um cliente fora da curva, com retorno alto para investimento médio, aparece destacado em ouro.">
+      <svg viewBox="0 0 600 280" role="img" aria-label="Dispersão de investimento no eixo horizontal contra retorno no eixo vertical, por cliente. A nuvem mostra correlação positiva. Um cliente fora da curva, com retorno alto para investimento médio, aparece destacado no acento.">
         <title>Investimento contra retorno por cliente</title>
         <desc>Correlação positiva entre investimento e retorno; um cliente destaque com retorno acima do esperado.</desc>
         <!-- eixos -->
@@ -508,27 +514,27 @@
         <line x1="60" y1="232" x2="560" y2="232" stroke="var(--line)" stroke-width="1"/>
         <text class="ch-axis" x="56" y="44" text-anchor="end">Retorno</text>
         <text class="ch-axis" x="556" y="252" text-anchor="end">Investimento</text>
-        <!-- nuvem (branco esmaecido) -->
-        <circle cx="110" cy="208" r="6" fill="rgba(255,255,255,.40)"/>
-        <circle cx="150" cy="196" r="6" fill="rgba(255,255,255,.40)"/>
-        <circle cx="185" cy="200" r="6" fill="rgba(255,255,255,.40)"/>
-        <circle cx="210" cy="180" r="6" fill="rgba(255,255,255,.40)"/>
-        <circle cx="250" cy="172" r="6" fill="rgba(255,255,255,.40)"/>
-        <circle cx="280" cy="158" r="6" fill="rgba(255,255,255,.62)"/>
-        <circle cx="300" cy="166" r="6" fill="rgba(255,255,255,.40)"/>
-        <circle cx="340" cy="138" r="6" fill="rgba(255,255,255,.62)"/>
-        <circle cx="370" cy="150" r="6" fill="rgba(255,255,255,.40)"/>
-        <circle cx="410" cy="120" r="6" fill="rgba(255,255,255,.62)"/>
-        <circle cx="445" cy="108" r="6" fill="rgba(255,255,255,.62)"/>
-        <circle cx="490" cy="96"  r="6" fill="rgba(255,255,255,.62)"/>
-        <circle cx="520" cy="88"  r="6" fill="rgba(255,255,255,.40)"/>
-        <!-- destaque (heroi ouro): retorno alto, investimento medio -->
-        <circle cx="300" cy="72" r="9" fill="#f5c542"/>
+        <!-- nuvem (tinta com opacidade reduzida) -->
+        <circle cx="110" cy="208" r="6" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <circle cx="150" cy="196" r="6" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <circle cx="185" cy="200" r="6" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <circle cx="210" cy="180" r="6" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <circle cx="250" cy="172" r="6" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <circle cx="280" cy="158" r="6" style="fill:var(--ink)" fill-opacity="0.58"/>
+        <circle cx="300" cy="166" r="6" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <circle cx="340" cy="138" r="6" style="fill:var(--ink)" fill-opacity="0.58"/>
+        <circle cx="370" cy="150" r="6" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <circle cx="410" cy="120" r="6" style="fill:var(--ink)" fill-opacity="0.58"/>
+        <circle cx="445" cy="108" r="6" style="fill:var(--ink)" fill-opacity="0.58"/>
+        <circle cx="490" cy="96"  r="6" style="fill:var(--ink)" fill-opacity="0.58"/>
+        <circle cx="520" cy="88"  r="6" style="fill:var(--ink)" fill-opacity="0.40"/>
+        <!-- destaque (heroi acento): retorno alto, investimento medio -->
+        <circle cx="300" cy="72" r="9" style="fill:var(--accent)"/>
         <text class="ch-lab" x="300" y="56" text-anchor="middle">Cliente destaque</text>
       </svg>
     </div>
-    <p class="ch-cap"><b>O retorno cresce com o investimento na maioria dos clientes</b>, mas um deles entrega retorno bem acima do esperado para um aporte médio: é o caso destacado em ouro, candidato a estudo de boas práticas.</p>
-    <p class="doc-when"><b>Quando usar:</b> revelar relação entre duas variáveis numéricas e destacar exceções. Reserve a joia para um único ponto: dois ou três destaques já diluem o foco.</p>
+    <p class="ch-cap"><b>O retorno cresce com o investimento na maioria dos clientes</b>, mas um deles entrega retorno bem acima do esperado para um aporte médio: é o caso destacado no acento, candidato a estudo de boas práticas.</p>
+    <p class="doc-when"><b>Quando usar:</b> revelar relação entre duas variáveis numéricas e destacar exceções. Reserve o acento para um único ponto: dois ou três destaques já diluem o foco.</p>
   </div>
 </div></section>
 
@@ -536,7 +542,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">11</span><p class="doc-kicker">Sparkline</p></div>
   <h2>A microtendência ao lado do número que ela <em>explica</em></h2>
-  <p>A sparkline é uma linha minúscula sem eixos nem grade, feita para viver dentro de uma frase ou ao lado de um indicador. Ela mostra o formato da tendência, não o valor exato, e termina num ponto que marca o presente. É traço real em <span class="doc-code">polyline</span>; o ponto final em joia quando a leitura é positiva, em azul quando a série caiu.</p>
+  <p>A sparkline é uma linha minúscula sem eixos nem grade, feita para viver dentro de uma frase ou ao lado de um indicador. Ela mostra o formato da tendência, não o valor exato, e termina num ponto que marca o presente. É traço real em <span class="doc-code">polyline</span>; o ponto final no acento quando a leitura é positiva, em preto quando a série caiu.</p>
 
   <div class="doc-specimen tight">
     <span class="doc-specimen-label">Indicadores com microtendência</span>
@@ -548,9 +554,9 @@
           <span class="ch" style="width:96px;">
             <svg viewBox="0 0 96 30" role="img" aria-label="Sparkline do tráfego semanal: tendência de alta, encerrando em alta de 18 por cento.">
               <title>Tráfego semanal em alta</title>
-              <polyline fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"
+              <polyline fill="none" style="stroke:var(--ink)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"
                 points="2,24 16,22 30,25 44,18 58,16 72,10 92,6"/>
-              <circle cx="92" cy="6" r="3.5" fill="#f5c542"/>
+              <circle cx="92" cy="6" r="3.5" style="fill:var(--accent)"/>
             </svg>
           </span>
         </p>
@@ -562,9 +568,9 @@
           <span class="ch" style="width:96px;">
             <svg viewBox="0 0 96 30" role="img" aria-label="Sparkline do tempo na página: leve oscilação, tendência estável em 3 minutos e 12 segundos.">
               <title>Tempo na página estável</title>
-              <polyline fill="none" stroke="rgba(255,255,255,.62)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"
+              <polyline fill="none" style="stroke:var(--ink)" stroke-opacity="0.58" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"
                 points="2,16 16,14 30,18 44,15 58,17 72,14 92,15"/>
-              <circle cx="92" cy="15" r="3.5" fill="#ffffff"/>
+              <circle cx="92" cy="15" r="3.5" style="fill:var(--ink)"/>
             </svg>
           </span>
         </p>
@@ -574,17 +580,17 @@
         <p style="display:flex;align-items:baseline;gap:12px;margin:0;">
           <span style="font-family:var(--font-display);font-weight:900;font-size:34px;color:var(--ink);font-variant-numeric:tabular-nums;">-9%</span>
           <span class="ch" style="width:96px;">
-            <svg viewBox="0 0 96 30" role="img" aria-label="Sparkline da taxa de rejeição: tendência de queda de 9 por cento, marcada em azul.">
+            <svg viewBox="0 0 96 30" role="img" aria-label="Sparkline da taxa de rejeição: tendência de queda de 9 por cento, marcada em preto.">
               <title>Rejeição em queda</title>
-              <polyline fill="none" stroke="rgba(255,255,255,.62)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"
+              <polyline fill="none" style="stroke:var(--ink)" stroke-opacity="0.58" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"
                 points="2,8 16,10 30,9 44,14 58,16 72,20 92,24"/>
-              <circle cx="92" cy="24" r="3.5" fill="#1f4ea8"/>
+              <circle cx="92" cy="24" r="3.5" style="fill:var(--negative)"/>
             </svg>
           </span>
         </p>
       </div>
     </div>
-    <p class="ch-cap"><b>Tráfego em alta de 18 por cento, tempo na página estável em 3 minutos e 12 segundos, rejeição em queda de 9 por cento</b>: cada sparkline dá o formato da tendência ao lado do número. O ponto final em ouro celebra a alta; em azul, sinaliza a queda da rejeição.</p>
+    <p class="ch-cap"><b>Tráfego em alta de 18 por cento, tempo na página estável em 3 minutos e 12 segundos, rejeição em queda de 9 por cento</b>: cada sparkline dá o formato da tendência ao lado do número. O ponto final no acento celebra a alta; em preto, sinaliza a queda da rejeição.</p>
     <p class="doc-when"><b>Quando usar:</b> ao lado de um indicador, num cartão ou numa tabela, quando o leitor quer a direção sem precisar de um gráfico inteiro.</p>
   </div>
 </div></section>
@@ -619,11 +625,11 @@
       <div class="ch-prog-row">
         <div class="ch-prog-head"><span class="ch-prog-name">Validação (frente atual)</span><span class="ch-prog-pct" style="color:var(--accent);">28%</span></div>
         <div class="ch-prog-track" role="img" aria-label="Validação, a frente atual: 28 por cento concluída.">
-          <div class="ch-prog-fill is-jewel" style="width:28%;" data-fill="28%"></div>
+          <div class="ch-prog-fill is-accent" style="width:28%;" data-fill="28%"></div>
         </div>
       </div>
     </div>
-    <p class="ch-cap"><b>A pesquisa está fechada, o conteúdo em 72 por cento e a validação, a frente atual, em 28 por cento</b>, destacada em ouro por ser onde o trabalho acontece agora. Todas as larguras estão escritas no <span class="doc-code">style</span>.</p>
+    <p class="ch-cap"><b>A pesquisa está fechada, o conteúdo em 72 por cento e a validação, a frente atual, em 28 por cento</b>, destacada no acento por ser onde o trabalho acontece agora. Todas as larguras estão escritas no <span class="doc-code">style</span>.</p>
     <p class="doc-when"><b>Quando usar:</b> progresso de tarefas, etapas de formulário, andamento de meta com teto. Para comparar valores sem teto fixo, use a barra horizontal em SVG.</p>
   </div>
 
@@ -637,12 +643,12 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">13</span><p class="doc-kicker">Gantt</p></div>
   <h2>Quem começa quando e quanto cada fase <em>ocupa</em></h2>
-  <p>O Gantt posiciona barras no tempo: a posição horizontal marca o início e o comprimento marca a duração de cada frente. As barras vivem em branco esmaecido, e a fase em andamento recebe a joia. Cada barra é um <span class="doc-code">rect</span> com <span class="doc-code">x</span> e <span class="doc-code">width</span> reais, ancorados num eixo de meses.</p>
+  <p>O Gantt posiciona barras no tempo: a posição horizontal marca o início e o comprimento marca a duração de cada frente. As barras vivem na tinta com a opacidade reduzida, e a fase em andamento recebe o acento. Cada barra é um <span class="doc-code">rect</span> com <span class="doc-code">x</span> e <span class="doc-code">width</span> reais, ancorados num eixo de meses.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Cronograma da campanha, por fase</span>
     <div class="ch">
-      <svg viewBox="0 0 600 248" role="img" aria-label="Gantt do cronograma da campanha em seis meses, de janeiro a junho. Pesquisa de janeiro a fevereiro. Conceito de fevereiro a março. Produção de março a maio. Veiculação de maio a junho, a fase em andamento, em ouro. Mensuração em junho.">
+      <svg viewBox="0 0 600 248" role="img" aria-label="Gantt do cronograma da campanha em seis meses, de janeiro a junho. Pesquisa de janeiro a fevereiro. Conceito de fevereiro a março. Produção de março a maio. Veiculação de maio a junho, a fase em andamento, no acento. Mensuração em junho.">
         <title>Cronograma da campanha por fase</title>
         <desc>Pesquisa jan-fev; conceito fev-mar; produção mar-mai; veiculação mai-jun, em andamento; mensuração jun.</desc>
         <!-- eixo de meses: 6 colunas de 70px a partir de x=150; jan150 fev220 mar290 abr360 mai430 jun500 ate 570 -->
@@ -661,23 +667,23 @@
         <text class="ch-axis" x="535" y="28" text-anchor="middle">Jun</text>
         <!-- Pesquisa: jan-fev (150..290) -->
         <text class="ch-lab" x="142" y="58" text-anchor="end">Pesquisa</text>
-        <rect x="150" y="46" width="140" height="20" rx="4" fill="rgba(255,255,255,.40)"/>
+        <rect x="150" y="46" width="140" height="20" rx="4" style="fill:var(--ink)" fill-opacity="0.40"/>
         <!-- Conceito: fev-mar (220..360) -->
         <text class="ch-lab" x="142" y="90" text-anchor="end">Conceito</text>
-        <rect x="220" y="78" width="140" height="20" rx="4" fill="rgba(255,255,255,.40)"/>
+        <rect x="220" y="78" width="140" height="20" rx="4" style="fill:var(--ink)" fill-opacity="0.40"/>
         <!-- Producao: mar-mai (290..500) -->
         <text class="ch-lab" x="142" y="122" text-anchor="end">Produção</text>
-        <rect x="290" y="110" width="210" height="20" rx="4" fill="rgba(255,255,255,.62)"/>
-        <!-- Veiculacao: mai-jun (430..570) -> heroi em andamento (ouro) -->
+        <rect x="290" y="110" width="210" height="20" rx="4" style="fill:var(--ink)" fill-opacity="0.58"/>
+        <!-- Veiculacao: mai-jun (430..570) -> heroi em andamento (acento) -->
         <text class="ch-lab" x="142" y="154" text-anchor="end">Veiculação</text>
-        <rect x="430" y="142" width="140" height="20" rx="4" fill="#f5c542"/>
-        <text class="ch-lab" x="500" y="156" text-anchor="middle" fill="#0a0a0a" style="font-size:10px;">em andamento</text>
+        <rect x="430" y="142" width="140" height="20" rx="4" style="fill:var(--accent)"/>
+        <text class="ch-lab" x="500" y="156" text-anchor="middle" style="fill:var(--surface);font-size:10px;">em andamento</text>
         <!-- Mensuracao: jun (500..570) -->
         <text class="ch-lab" x="142" y="186" text-anchor="end">Mensuração</text>
-        <rect x="500" y="174" width="70" height="20" rx="4" fill="rgba(255,255,255,.40)"/>
+        <rect x="500" y="174" width="70" height="20" rx="4" style="fill:var(--ink)" fill-opacity="0.40"/>
       </svg>
     </div>
-    <p class="ch-cap"><b>A produção ocupa o miolo do cronograma, de março a maio, e a veiculação está em andamento</b> entre maio e junho, por isso aparece em ouro. Início e duração de cada fase são lidos direto do eixo de meses.</p>
+    <p class="ch-cap"><b>A produção ocupa o miolo do cronograma, de março a maio, e a veiculação está em andamento</b> entre maio e junho, por isso aparece no acento. Início e duração de cada fase são lidos direto do eixo de meses.</p>
     <p class="doc-when"><b>Quando usar:</b> cronograma com fases que se sobrepõem no tempo. Para uma sequência linear sem sobreposição, a linha do tempo de <span class="doc-code">.b-timeline</span> é mais leve.</p>
   </div>
 </div></section>
@@ -695,19 +701,19 @@
         <title>Audiência de dois produtos</title>
         <desc>Produto A 180 mil, produto B 120 mil, interseção 64 mil.</desc>
         <!-- A maior (r=92, area maior), B menor (r=76); sobrepostos -->
-        <circle cx="248" cy="140" r="92" fill="#ffffff" fill-opacity="0.16" stroke="#ffffff" stroke-width="2"/>
-        <circle cx="372" cy="140" r="76" fill="rgba(255,255,255,.62)" fill-opacity="0.18" stroke="rgba(255,255,255,.62)" stroke-width="2"/>
+        <circle cx="248" cy="140" r="92" style="fill:var(--ink);stroke:var(--ink)" fill-opacity="0.16" stroke-width="2"/>
+        <circle cx="372" cy="140" r="76" style="fill:var(--ink);stroke:var(--ink)" fill-opacity="0.18" stroke-opacity="0.58" stroke-width="2"/>
         <!-- rotulos centrais -->
         <text class="ch-lab" x="196" y="138" text-anchor="middle">Produto A</text>
         <text class="ch-val" x="196" y="160" text-anchor="middle">180</text>
         <text class="ch-lab" x="424" y="138" text-anchor="middle">Produto B</text>
         <text class="ch-val" x="424" y="160" text-anchor="middle">120</text>
         <!-- intersecao destacada -->
-        <text x="310" y="140" text-anchor="middle" style="font-family:var(--font-display);font-weight:900;font-size:22px;" fill="#f5c542">64</text>
+        <text x="310" y="140" text-anchor="middle" style="font-family:var(--font-display);font-weight:900;font-size:22px;fill:var(--accent)">64</text>
         <text class="ch-axis" x="310" y="160" text-anchor="middle">em comum</text>
       </svg>
     </div>
-    <p class="ch-cap"><b>O produto A alcança 180 mil pessoas e o produto B, 120 mil, com 64 mil em comum</b> nos dois; esse núcleo compartilhado, em ouro, é o público que sustenta uma oferta combinada. O círculo de A é maior por refletir a audiência maior.</p>
+    <p class="ch-cap"><b>O produto A alcança 180 mil pessoas e o produto B, 120 mil, com 64 mil em comum</b> nos dois; esse núcleo compartilhado, no acento, é o público que sustenta uma oferta combinada. O círculo de A é maior por refletir a audiência maior.</p>
     <p class="doc-when"><b>Quando usar:</b> mostrar sobreposição entre dois (no máximo três) conjuntos quando o tamanho relativo importa. Com mais conjuntos, a interseção vira ilegível: use uma tabela de cruzamento.</p>
   </div>
 </div></section>
@@ -739,12 +745,12 @@
         <!-- notoriedade topo: (220, 190-104)=(220,86) -->
         <!-- confianca dir-cima -18deg from up? usar angulos: eixo2 a -18 -> (cos? ) calculamos vertices reais: -->
         <!-- eixo1 -90: (220,190-r) ; eixo2 -18: (220 + r*sin72, 190 - r*cos72)... usamos pontos pre-calculados -->
-        <polygon points="220,86 343.6,151.8 280.3,251.4 199.7,243.5 122.6,158" fill="#f5c542" fill-opacity="0.22" stroke="#f5c542" stroke-width="2.5"/>
-        <circle cx="220" cy="86" r="3.5" fill="#f5c542"/>
-        <circle cx="343.6" cy="151.8" r="3.5" fill="#f5c542"/>
-        <circle cx="280.3" cy="251.4" r="3.5" fill="#f5c542"/>
-        <circle cx="199.7" cy="243.5" r="3.5" fill="#f5c542"/>
-        <circle cx="122.6" cy="158" r="3.5" fill="#f5c542"/>
+        <polygon points="220,86 343.6,151.8 280.3,251.4 199.7,243.5 122.6,158" style="fill:var(--accent);stroke:var(--accent)" fill-opacity="0.22" stroke-width="2.5"/>
+        <circle cx="220" cy="86" r="3.5" style="fill:var(--accent)"/>
+        <circle cx="343.6" cy="151.8" r="3.5" style="fill:var(--accent)"/>
+        <circle cx="280.3" cy="251.4" r="3.5" style="fill:var(--accent)"/>
+        <circle cx="199.7" cy="243.5" r="3.5" style="fill:var(--accent)"/>
+        <circle cx="122.6" cy="158" r="3.5" style="fill:var(--accent)"/>
         <!-- rotulos dos eixos -->
         <text class="ch-lab" x="220" y="48" text-anchor="middle">Notoriedade</text>
         <text class="ch-lab" x="350" y="138" text-anchor="start">Confiança</text>
@@ -753,7 +759,7 @@
         <text class="ch-lab" x="90" y="138" text-anchor="end">Recomendação</text>
       </svg>
     </div>
-    <p class="ch-cap"><b>A marca pontua alto em confiança (5) e notoriedade (4), e fica baixa em preço percebido (2)</b>, o que desenha um perfil de marca sólida mas vista como cara. O polígono em ouro é o único dado preenchido.</p>
+    <p class="ch-cap"><b>A marca pontua alto em confiança (5) e notoriedade (4), e fica baixa em preço percebido (2)</b>, o que desenha um perfil de marca sólida mas vista como cara. O polígono no acento é o único dado preenchido.</p>
     <p class="doc-when"><b>Quando usar:</b> comparar o perfil de um item (ou no máximo dois) em quatro a seis dimensões. Mais de dois polígonos sobrepostos viram um nó: separe em radares pequenos.</p>
   </div>
 </div></section>
@@ -762,7 +768,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">16</span><p class="doc-kicker">Heatmap de intensidade</p></div>
   <h2>A escala de zero a cinco, lida em uma <em>grade</em></h2>
-  <p>Quando a comparação é de intensidade (mais forte, mais fraco) entre itens e dimensões, a casa usa uma grade de bolinhas de zero a cinco, não rótulos verbais soltos. Cada célula preenche tantas bolinhas quanto sua nota, o que torna a leitura quantitativa e imediata. A coluna ou célula de foco da análise é destacada em laranja, e a legenda deixa a escala explícita.</p>
+  <p>Quando a comparação é de intensidade (mais forte, mais fraco) entre itens e dimensões, a casa usa uma grade de bolinhas de zero a cinco, não rótulos verbais soltos. Cada célula preenche tantas bolinhas quanto sua nota, o que torna a leitura quantitativa e imediata. A coluna ou célula de foco da análise é destacada no acento, e a legenda deixa a escala explícita.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Intensidade por canal e por critério</span>
@@ -813,13 +819,13 @@
       <span class="ch-dots"><i></i><i></i><i></i><i></i><i></i></span> 0
       <span class="ch-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span> 5
     </p>
-    <p class="ch-cap"><b>A busca paga lidera em conversão, com nota 5, enquanto redes sociais ganham em alcance</b>; a coluna conversão está em laranja por ser o foco da análise. A escala vai de zero a cinco bolinhas em cada célula.</p>
+    <p class="ch-cap"><b>A busca paga lidera em conversão, com nota 5, enquanto redes sociais ganham em alcance</b>; a coluna conversão está no acento por ser o foco da análise. A escala vai de zero a cinco bolinhas em cada célula.</p>
     <p class="doc-when"><b>Quando usar:</b> comparar intensidade de muitos itens em várias dimensões de uma vez. Espelha o padrão da casa de escala visual quantitativa, em vez de rótulos como alto, médio e baixo.</p>
   </div>
 
   <div class="doc-note do">
     <span class="doc-note-tag">Faça</span>
-    <p>Bolinhas preenchidas de acordo com a nota (0 a 5), foco em laranja, legenda explícita da escala. Cada célula leva <span class="doc-code">role="img"</span> com o valor no <span class="doc-code">aria-label</span> (por exemplo, "Conversão 5 de 5").</p>
+    <p>Bolinhas preenchidas de acordo com a nota (0 a 5), foco no acento, legenda explícita da escala. Cada célula leva <span class="doc-code">role="img"</span> com o valor no <span class="doc-code">aria-label</span> (por exemplo, "Conversão 5 de 5").</p>
   </div>
 </div></section>
 
@@ -827,50 +833,50 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">17</span><p class="doc-kicker">Waterfall</p></div>
   <h2>Como se sai de um total e se chega a <em>outro</em></h2>
-  <p>O waterfall decompõe a variação entre um ponto de partida e um de chegada, mostrando cada acréscimo e cada perda como uma barra flutuante. As barras positivas ficam em branco, as negativas em azul, e as colunas de início e fim assentam na base como totais. A altura e a posição vertical de cada barra são calculadas de verdade, encadeando uma na outra.</p>
+  <p>O waterfall decompõe a variação entre um ponto de partida e um de chegada, mostrando cada acréscimo e cada perda como uma barra flutuante. As barras positivas ficam na tinta cheia, as negativas em preto, e as colunas de início e fim assentam na base como totais. A altura e a posição vertical de cada barra são calculadas de verdade, encadeando uma na outra.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Da receita bruta à receita líquida, em milhões</span>
     <div class="ch">
-      <svg viewBox="0 0 600 264" role="img" aria-label="Waterfall da receita bruta à líquida, em milhões: bruta 100, mais novos clientes 22, menos cancelamentos 14 em azul, menos descontos 8 em azul, resultando em líquida 100. Acréscimos em branco, perdas em azul.">
+      <svg viewBox="0 0 600 264" role="img" aria-label="Waterfall da receita bruta à líquida, em milhões: bruta 100, mais novos clientes 22, menos cancelamentos 14 em preto, menos descontos 8 em preto, resultando em líquida 100. Acréscimos na tinta cheia, perdas em preto.">
         <title>Da receita bruta à receita líquida</title>
         <desc>Bruta 100; novos clientes +22; cancelamentos -14; descontos -8; líquida 100.</desc>
         <!-- escala 0..130, base y=210, fator 1.4px por milhao. -->
         <line x1="60" y1="210" x2="556" y2="210" stroke="var(--line)" stroke-width="1"/>
         <!-- Bruta 100: total, base ate 100 -> altura 140, y=70 -->
-        <rect x="74" y="70" width="70" height="140" fill="rgba(255,255,255,.62)"/>
+        <rect x="74" y="70" width="70" height="140" style="fill:var(--ink)" fill-opacity="0.58"/>
         <text class="ch-val" x="109" y="62" text-anchor="middle">100</text>
         <text class="ch-axis" x="109" y="228" text-anchor="middle">Bruta</text>
         <!-- +22 novos clientes: flutua de 100 a 122 -> y de 70 a 39.2, altura 30.8 -->
-        <rect x="180" y="39.2" width="70" height="30.8" fill="#ffffff"/>
+        <rect x="180" y="39.2" width="70" height="30.8" style="fill:var(--ink)"/>
         <text class="ch-val" x="215" y="32" text-anchor="middle">+22</text>
         <text class="ch-axis" x="215" y="228" text-anchor="middle">Novos</text>
         <!-- conector -->
         <line x1="144" y1="70" x2="180" y2="70" stroke="var(--hairline)" stroke-width="1" stroke-dasharray="3 3"/>
-        <!-- -14 cancelamentos: de 122 a 108 -> y de 39.2 a 58.8, altura 19.6 (azul) -->
-        <rect x="286" y="39.2" width="70" height="19.6" fill="#1f4ea8"/>
-        <text class="ch-lab" x="321" y="32" text-anchor="middle" fill="#1f4ea8" style="font-weight:700;">-14</text>
+        <!-- -14 cancelamentos: de 122 a 108 -> y de 39.2 a 58.8, altura 19.6 (negativo) -->
+        <rect x="286" y="39.2" width="70" height="19.6" style="fill:var(--negative)"/>
+        <text class="ch-lab" x="321" y="32" text-anchor="middle" style="fill:var(--negative);font-weight:700;">-14</text>
         <text class="ch-axis" x="321" y="228" text-anchor="middle">Cancel.</text>
         <line x1="250" y1="39.2" x2="286" y2="39.2" stroke="var(--hairline)" stroke-width="1" stroke-dasharray="3 3"/>
-        <!-- -8 descontos: de 108 a 100 -> y de 58.8 a 70, altura 11.2 (azul) -->
-        <rect x="392" y="58.8" width="70" height="11.2" fill="#1f4ea8"/>
-        <text class="ch-lab" x="427" y="51" text-anchor="middle" fill="#1f4ea8" style="font-weight:700;">-8</text>
+        <!-- -8 descontos: de 108 a 100 -> y de 58.8 a 70, altura 11.2 (negativo) -->
+        <rect x="392" y="58.8" width="70" height="11.2" style="fill:var(--negative)"/>
+        <text class="ch-lab" x="427" y="51" text-anchor="middle" style="fill:var(--negative);font-weight:700;">-8</text>
         <text class="ch-axis" x="427" y="228" text-anchor="middle">Descontos</text>
         <line x1="356" y1="58.8" x2="392" y2="58.8" stroke="var(--hairline)" stroke-width="1" stroke-dasharray="3 3"/>
-        <!-- Liquida 100: total, base ate 100 -> altura 140, y=70 -->
-        <rect x="498" y="70" width="70" height="140" fill="#f5c542"/>
+        <!-- Liquida 100: total, base ate 100 -> altura 140, y=70 (heroi acento) -->
+        <rect x="498" y="70" width="70" height="140" style="fill:var(--accent)"/>
         <text class="ch-val" x="533" y="62" text-anchor="middle">100</text>
         <text class="ch-axis" x="533" y="228" text-anchor="middle">Líquida</text>
         <line x1="462" y1="70" x2="498" y2="70" stroke="var(--hairline)" stroke-width="1" stroke-dasharray="3 3"/>
       </svg>
     </div>
-    <p class="ch-cap"><b>Os 22 milhões de novos clientes foram quase todos consumidos por 14 de cancelamentos e 8 de descontos</b>, e a receita líquida fechou nos mesmos 100 milhões da bruta. As perdas aparecem em azul, a cor de dado negativo, e a chegada em ouro.</p>
+    <p class="ch-cap"><b>Os 22 milhões de novos clientes foram quase todos consumidos por 14 de cancelamentos e 8 de descontos</b>, e a receita líquida fechou nos mesmos 100 milhões da bruta. As perdas aparecem em preto, a cor de dado negativo, e a chegada no acento.</p>
     <p class="doc-when"><b>Quando usar:</b> explicar a ponte entre dois totais por meio de ganhos e perdas intermediários (de orçado a realizado, de bruto a líquido). Mantenha poucos passos para a cadeia continuar legível.</p>
   </div>
 
   <div class="doc-note dont">
     <span class="doc-note-tag">Não faça</span>
-    <p>Marcar a perda em vermelho. A regra editorial da casa é firme: dado negativo é sempre azul <span class="doc-code">#1f4ea8</span>, nunca vermelho, e nunca um segundo laranja sobre o campo.</p>
+    <p>Marcar a perda em vermelho. A regra editorial da casa é firme: dado negativo é sempre preto ou chumbo, via <span class="doc-code">var(--negative)</span>, nunca vermelho, nunca azul, nunca verde, e nunca um segundo laranja sobre o campo.</p>
   </div>
 </div></section>
 

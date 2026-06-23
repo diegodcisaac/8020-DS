@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>8020-DS · Deck de exemplo · Presença de marca no Cerrado</title>
 <meta name="description" content="Exemplo fictício do design system 80 20 Marketing: deck de apresentação sobre presença de marca no Cerrado de Mato Grosso do Sul.">
-<link rel="stylesheet" href="../../tokens/8020.css">
+<link id="tk-8020" rel="stylesheet" href="../../tokens/8020.css">
+<link id="tk-8020-noite" rel="stylesheet" href="../../tokens/8020-noite.css" disabled>
+<link id="tk-8020-claro" rel="stylesheet" href="../../tokens/8020-claro.css" disabled>
 <link rel="stylesheet" href="../../assets/deck.css">
 <style>
   /* ----------------------------------------------------------------
@@ -72,7 +74,7 @@
   .ex-svg .ex-val { font-weight: var(--w-black); font-size: 14px; fill: var(--ink); }
   .ex-svg .ex-axis { font-family: var(--font-body); font-weight: var(--w-label); font-size: 11px; fill: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
   .ex-svg .ex-node-t { font-weight: var(--w-label); font-size: 12.5px; fill: var(--surface-ink); }
-  .ex-svg .ex-node-s { font-family: var(--font-body); font-weight: var(--w-body); font-size: 10.5px; fill: rgba(255,255,255,.8); }
+  .ex-svg .ex-node-s { font-family: var(--font-body); font-weight: var(--w-body); font-size: 10.5px; fill: var(--surface-ink); fill-opacity: .74; }
   .ex-svg .ex-edge-t { font-family: var(--font-body); font-weight: var(--w-label); font-size: 10px; fill: var(--ink); text-transform: uppercase; letter-spacing: .06em; }
 
   /* timeline horizontal linear */
@@ -113,15 +115,29 @@
   .ex-agenda li b { font-weight: var(--w-label); color: var(--ink); }
 
   /* citacao com regua de acento */
-  .ex-quote-wrap { display: grid; align-content: center; height: 100%; padding-bottom: 64px; gap: 6px; max-width: 30ch; }
+  /* o limite de linha vem do proprio .s-quote (max-width em ch do tamanho da citacao);
+     o wrap nao cap a largura, senao o ch do corpo (15px) estrangula a coluna */
+  .ex-quote-wrap { display: grid; align-content: center; height: 100%; gap: 14px; }
   .ex-quote-mark { font-family: var(--font-display); font-weight: var(--w-black); font-size: 72px; line-height: .6; color: var(--accent); }
 
   /* sequencia de proximos passos: numeros em tinta neutra para manter
      o teto de joia (a ordem ja se le pela contagem, sem precisar de cor) */
   .ex-seq-neutral li::before { color: var(--ink); opacity: .85; }
+
+  /* seletor de variante (controle de UI; fora do deck; some na impressao) */
+  .vswitch { position: fixed; top: 14px; right: 14px; z-index: 100; display: flex; gap: 3px; background: rgba(10,10,10,.6); padding: 5px; border-radius: 999px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+  .vswitch button { border: 0; background: transparent; color: #fff; font: 600 11px/1 var(--font-body); letter-spacing: .03em; padding: 6px 13px; border-radius: 999px; cursor: pointer; opacity: .65; }
+  .vswitch button.on { background: #fa4616; opacity: 1; }
+  @media print { .vswitch { display: none !important; } }
 </style>
 </head>
 <body>
+
+<div class="vswitch" aria-label="Variante de cor">
+  <button data-v="8020" class="on">Laranja</button>
+  <button data-v="8020-noite">Escuro</button>
+  <button data-v="8020-claro">Claro</button>
+</div>
 
 <div class="deck"><div class="stage">
 
@@ -287,7 +303,7 @@
        09 · PILARES - tres colunas. PALCO ESCURO (variante noite).
        Prova que o mesmo layout roda no escuro.
        ============================================================ -->
-  <section class="slide" style="--paper:#0a0a0a;--ink:#fff;--ink-body:rgba(255,255,255,.88);--surface:#161616;--surface-ink:#fff;--accent:#fa4616;--accent-ink:#fff;--floor:#fa4616;--floor-ink:#fff;--line:rgba(255,255,255,.18);--muted:rgba(255,255,255,.66)">
+  <section class="slide">
     <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
     <span class="s-cobrand">Casa do Campo</span>
     <p class="s-eyebrow" style="position:absolute;top:96px;left:80px;">O que sustenta a presença</p>
@@ -315,7 +331,7 @@
        10 · APARTE DRAMATICO - respiro quase falado nas costuras.
        PALCO ESCURO. Assinatura de deck. Acento em laranja.
        ============================================================ -->
-  <section class="slide aparte" style="--paper:#0a0a0a;--ink:#fff;--ink-body:rgba(255,255,255,.88);--surface:#161616;--surface-ink:#fff;--accent:#fa4616;--accent-ink:#fff;--floor:#fa4616;--floor-ink:#fff;--line:rgba(255,255,255,.18);--muted:rgba(255,255,255,.66)">
+  <section class="slide aparte">
     <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
     <div class="s-card">
       Aqui dá para respirar um segundo. Tudo até agora foi diagnóstico: o estado das coisas. O que vem a seguir é decisão. E decisão, no Cerrado, não se toma com pressa: <span style="color:var(--accent);">se toma com pé firme no chão</span>.
@@ -390,25 +406,25 @@
       <p class="s-eyebrow">Como o público chega à marca</p>
       <h2 class="s-title" style="margin-bottom:8px;">A indicação ainda traz mais gente que <em>tudo</em></h2>
       <div class="s-viz ex-svg" style="max-width:760px;">
-        <svg viewBox="0 0 760 280" role="img" aria-label="Barra vertical de como o público conhece a Casa do Campo, em porcentagem: indicação de conhecidos 41, loja na rua 27, redes sociais 19, rádio e jornal local 13. Indicação é o canal-herói, em ouro.">
+        <svg viewBox="0 0 760 280" role="img" aria-label="Barra vertical de como o público conhece a Casa do Campo, em porcentagem: indicação de conhecidos 41, loja na rua 27, redes sociais 19, rádio e jornal local 13. Indicação é o canal-herói, em destaque.">
           <title>Como o público conhece a marca, por canal de origem</title>
           <desc>Indicação de conhecidos: 41 por cento. Loja na rua: 27. Redes sociais: 19. Rádio e jornal local: 13. Dados fictícios.</desc>
           <!-- escala 0..50, base y=210, util 168px, fator 3.36px por ponto -->
           <line x1="60" y1="210" x2="744" y2="210" stroke="var(--hairline)" stroke-width="1"/>
           <!-- indicacao 41 -> 137.8 (heroi ouro) -->
-          <rect x="92"  y="72.2"  width="110" height="137.8" rx="5" fill="#f5c542"/>
+          <rect x="92"  y="72.2"  width="110" height="137.8" rx="5" style="fill:var(--ink)"/>
           <text class="ex-val" x="147" y="62" text-anchor="middle">41%</text>
           <text class="ex-axis" x="147" y="232" text-anchor="middle">Indicação</text>
           <!-- loja na rua 27 -> 90.7 -->
-          <rect x="252" y="119.3" width="110" height="90.7"  rx="5" fill="#ffffff"/>
+          <rect x="252" y="119.3" width="110" height="90.7"  rx="5" style="fill:var(--ink);fill-opacity:.58"/>
           <text class="ex-val" x="307" y="109" text-anchor="middle">27%</text>
           <text class="ex-axis" x="307" y="232" text-anchor="middle">Loja na rua</text>
           <!-- redes 19 -> 63.8 -->
-          <rect x="412" y="146.2" width="110" height="63.8"  rx="5" fill="rgba(255,255,255,.62)"/>
+          <rect x="412" y="146.2" width="110" height="63.8"  rx="5" style="fill:var(--ink);fill-opacity:.4"/>
           <text class="ex-val" x="467" y="136" text-anchor="middle">19%</text>
           <text class="ex-axis" x="467" y="232" text-anchor="middle">Redes sociais</text>
           <!-- radio/jornal 13 -> 43.7 -->
-          <rect x="572" y="166.3" width="110" height="43.7"  rx="5" fill="rgba(255,255,255,.40)"/>
+          <rect x="572" y="166.3" width="110" height="43.7"  rx="5" style="fill:var(--ink);fill-opacity:.26"/>
           <text class="ex-val" x="627" y="156" text-anchor="middle">13%</text>
           <text class="ex-axis" x="627" y="232" text-anchor="middle">Rádio e jornal</text>
         </svg>
@@ -532,7 +548,7 @@
     <span class="s-cobrand">Casa do Campo</span>
     <div class="ex-quote-wrap">
       <span class="ex-quote-mark" aria-hidden="true">“</span>
-      <p class="s-quote">Eu canso de explicar a marca do zero para cada fornecedor. Queria que ela já chegasse pronta na mesa.</p>
+      <p class="s-quote">A marca devia chegar pronta. Eu não quero explicar tudo de novo.</p>
       <p class="s-attrib">Helena Vasconcelos · entrevista de descoberta · fala fictícia, montada para o exemplo</p>
     </div>
     <div class="s-foot"><span>Públicos · Na voz dela</span></div>
@@ -588,5 +604,14 @@
 <div class="deck-progress" aria-label="Progresso da apresentação"></div>
 
 <script src="../../assets/deck.js" defer></script>
+<script>
+(function(){
+  var ids=['8020','8020-noite','8020-claro'];
+  function set(v){ids.forEach(function(k){var el=document.getElementById('tk-'+k);if(el)el.disabled=(k!==v);});document.querySelectorAll('.vswitch button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v);});}
+  var h=(location.hash||'').replace('#','');
+  set(ids.indexOf(h)>=0?h:'8020');
+  document.querySelectorAll('.vswitch button').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.v);location.hash=b.dataset.v;});});
+})();
+</script>
 </body>
 </html>

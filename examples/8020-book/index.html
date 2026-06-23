@@ -5,12 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Presença de marca no cerrado · Exemplo de book · 80 20 Marketing</title>
 <meta name="description" content="Exemplo fictício de book longform do sistema de design da 80 20 Marketing. Marca regional, território do cerrado em Mato Grosso do Sul.">
-<link rel="stylesheet" href="../../tokens/8020.css">
+<link id="tk-8020" rel="stylesheet" href="../../tokens/8020.css">
+<link id="tk-8020-noite" rel="stylesheet" href="../../tokens/8020-noite.css" disabled>
+<link id="tk-8020-claro" rel="stylesheet" href="../../tokens/8020-claro.css" disabled>
 <link rel="stylesheet" href="../../assets/book.css">
 <script src="../../assets/book.js" defer></script>
 <style>
   /* CSS local desta página: só ajustes de composição do hub.
      Tudo o mais herda de book.css via papéis semânticos. */
+  .vswitch{position:fixed;top:14px;right:14px;z-index:100;display:flex;gap:3px;background:rgba(10,10,10,.6);padding:5px;border-radius:999px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  .vswitch button{border:0;background:transparent;color:#fff;font:600 11px/1 var(--font-body);letter-spacing:.03em;padding:6px 13px;border-radius:999px;cursor:pointer;opacity:.65}
+  .vswitch button.on{background:#fa4616;opacity:1}
+  @media print{.vswitch{display:none!important}}
   .b-hubgrid { margin-top: 8px; }
   .hub-meta { display: flex; flex-wrap: wrap; gap: 28px 56px; margin-top: 40px; }
   .hub-meta div { min-width: 160px; }
@@ -20,6 +26,8 @@
 </style>
 </head>
 <body class="book">
+
+<div class="vswitch" aria-label="Variante de cor"><button data-v="8020" class="on">Laranja</button><button data-v="8020-noite">Escuro</button><button data-v="8020-claro">Claro</button></div>
 
 <div class="book-progress"></div>
 
@@ -111,6 +119,8 @@
     <div class="b-addr"><span>São Paulo · SP</span><span>Campo Grande · MS</span><span>Cuiabá · MT</span></div>
   </div>
 </footer>
+
+<script>(function(){var ids=['8020','8020-noite','8020-claro'];function set(v){ids.forEach(function(k){var el=document.getElementById('tk-'+k);if(el)el.disabled=(k!==v);});document.querySelectorAll('.vswitch button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v);});}var h=(location.hash||'').replace('#','');set(ids.indexOf(h)>=0?h:'8020');document.querySelectorAll('.vswitch button').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.v);location.hash=b.dataset.v;});});})();</script>
 
 </body>
 </html>

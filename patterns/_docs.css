@@ -24,7 +24,7 @@
   border-bottom: 1px solid var(--hairline);
 }
 .doc-brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
-.doc-brand img { height: 24px; width: auto; display: block; }
+.doc-brand img { height: 24px; width: auto; display: block; filter: invert(var(--logo-invert, 0)); }
 .doc-brand span { font-size: var(--fs-micro); font-weight: var(--w-label); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--muted); }
 .doc-nav { display: flex; flex-wrap: wrap; gap: 4px 14px; justify-content: flex-end; }
 .doc-nav a { color: var(--ink); text-decoration: none; opacity: .72; font-size: var(--fs-small); font-weight: var(--w-medium); transition: opacity var(--dur-fast) var(--ease); }

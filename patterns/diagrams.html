@@ -18,12 +18,13 @@
   /* tipografia interna dos SVG (rotulos em <text>) */
   .dg text { font-family: var(--font-display); fill: var(--surface-ink); }
   .dg .dg-node-t { font-weight: var(--w-label); font-size: 13px; }
-  .dg .dg-node-s { font-weight: var(--w-body); font-size: 11px; fill: rgba(255,255,255,.78); }
+  .dg .dg-node-s { font-weight: var(--w-body); font-size: 11px; fill: var(--surface-ink); opacity: .78; }
   .dg .dg-edge-t { font-family: var(--font-body); font-weight: var(--w-label); font-size: 10.5px; fill: var(--ink); text-transform: uppercase; letter-spacing: .06em; }
   .dg .dg-axis-t { font-family: var(--font-body); font-weight: var(--w-label); font-size: 11px; fill: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
   .dg .dg-num { font-family: var(--font-display); font-weight: var(--w-black); fill: var(--ink); }
   .dg .dg-on-accent { fill: var(--accent-ink); }
-  .dg .dg-on-azul { fill: #fff; }
+  /* nota curta sobre o acento: tinta do acento, levemente recuada */
+  .dg .dg-on-accent-s { fill: var(--accent-ink); opacity: .72; }
 
   /* helper de coluna dupla de specimen quando o diagrama for largo */
   .dg-pair { display: grid; grid-template-columns: 1fr; gap: 18px; }
@@ -52,14 +53,14 @@
 <header class="doc-hero"><div class="doc-wrap">
   <p class="doc-eyebrow">Diagramas em SVG</p>
   <h1>Toda relação se desenha em <em>vetor</em></h1>
-  <p class="doc-lead">Fluxos, hierarquias, ciclos e jornadas vivem em SVG real, nunca em caixas de div com largura em porcentagem. Os nós são retângulos ou polígonos, os rótulos são texto vetorial, e o que liga um nó a outro é sempre uma curva de Bézier com seta por marcador. O catálogo abaixo cobre cada tipo de relação que a casa precisa contar.</p>
+  <p class="doc-lead">Fluxos, hierarquias, ciclos e jornadas vivem em SVG real, nunca em caixas de div com largura em porcentagem. Os nós são retângulos ou polígonos, os rótulos são texto vetorial, e o que liga um nó a outro é sempre um conector em ângulo reto: segmentos horizontais e verticais que dobram em esquina, com seta por marcador. O catálogo abaixo cobre cada tipo de relação que a casa precisa contar.</p>
 </div></header>
 
 <!-- ============================ 01 FLUXOGRAMA ============================ -->
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">01</span><p class="doc-kicker">Fluxograma</p></div>
-  <h2>Caixas ligadas por curvas que mostram o <em>caminho</em></h2>
-  <p>O fluxograma é a forma base de todos os outros diagramas: nós retangulares ligados por conectores em curva, com uma seta indicando a direção do fluxo. A regra técnica que sustenta a casa inteira está aqui: o conector é sempre uma <span class="doc-code">&lt;path&gt;</span> com curva de Bézier cúbica, desenhado <strong>antes</strong> dos nós para que a caixa fique por cima da linha, e a seta vem de um <span class="doc-code">&lt;marker&gt;</span> em <span class="doc-code">&lt;defs&gt;</span> com identificador único por SVG.</p>
+  <h2>Caixas ligadas por conectores em ângulo reto que mostram o <em>caminho</em></h2>
+  <p>O fluxograma é a forma base de todos os outros diagramas: nós retangulares ligados por conectores em ângulo reto, com uma seta indicando a direção do fluxo. A regra técnica que sustenta a casa inteira está aqui: o conector é sempre uma <span class="doc-code">&lt;path&gt;</span> de segmentos horizontais e verticais que dobram em esquina, desenhado <strong>antes</strong> dos nós para que a caixa fique por cima da linha, e a seta vem de um <span class="doc-code">&lt;marker&gt;</span> em <span class="doc-code">&lt;defs&gt;</span> com identificador único por SVG.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Fluxograma de entrada e ramificação</span>
@@ -69,14 +70,14 @@
       <defs>
         <marker id="arw-fl" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/></marker>
       </defs>
-      <!-- conectores ANTES dos nodes (z-order) -->
-      <g fill="none" stroke="var(--line)" stroke-width="2" color="var(--line)">
-        <path d="M150,80 C205,80 215,80 250,80" marker-end="url(#arw-fl)"/>
-        <path d="M450,80 C520,80 540,55 560,55" marker-end="url(#arw-fl)"/>
-        <path d="M450,95 C520,120 540,150 560,170" marker-end="url(#arw-fl)"/>
+      <!-- conectores ANTES dos nodes (z-order), so segmentos retos com dobra em angulo reto -->
+      <g fill="none" stroke="var(--line)" stroke-width="2" color="var(--line)" stroke-linejoin="miter">
+        <path d="M150,80 H250" marker-end="url(#arw-fl)"/>
+        <path d="M450,80 H505 V55 H560" marker-end="url(#arw-fl)"/>
+        <path d="M450,80 H505 V194 H560" marker-end="url(#arw-fl)"/>
       </g>
-      <!-- laco de retorno em cor de acento, curva mais ampla -->
-      <path d="M560,205 C400,255 350,210 350,128" fill="none" stroke="var(--accent)" stroke-width="2" color="var(--accent)" marker-end="url(#arw-fl)"/>
+      <!-- laco de retorno em acento, sempre em angulo reto -->
+      <path d="M560,194 H400 V104" fill="none" stroke="var(--accent)" stroke-width="2" color="var(--accent)" marker-end="url(#arw-fl)" stroke-linejoin="miter"/>
       <!-- nodes -->
       <g>
         <rect x="40" y="56" width="110" height="48" rx="8" fill="var(--surface)"/>
@@ -91,19 +92,19 @@
         <rect x="560" y="170" width="120" height="48" rx="8" fill="var(--surface)"/>
         <text class="dg-node-t" x="620" y="199" text-anchor="middle">Revisão</text>
       </g>
-      <text class="dg-edge-t" x="455" y="245" text-anchor="middle" fill="var(--accent)">retorno</text>
+      <text class="dg-edge-t" x="405" y="135" text-anchor="start" fill="var(--accent)">retorno</text>
     </svg>
-    <p class="doc-when"><b>Quando usar:</b> qualquer processo com mais de um caminho possível, em que uma etapa pode voltar atrás. O único nó em joia é o desfecho que você quer que o olho encontre primeiro.</p>
+    <p class="doc-when"><b>Quando usar:</b> qualquer processo com mais de um caminho possível, em que uma etapa pode voltar atrás. O único nó em acento é o desfecho que você quer que o olho encontre primeiro.</p>
   </div>
 
   <div class="doc-grid doc-2">
     <div class="doc-note do">
       <span class="doc-note-tag">Faça</span>
-      <p>Conector em <span class="doc-code">&lt;path&gt;</span> com curva de Bézier, desenhado antes do nó. Seta por <span class="doc-code">&lt;marker&gt;</span> com identificador único. Um nó em acento, no máximo, para o desfecho.</p>
+      <p>Conector em <span class="doc-code">&lt;path&gt;</span> de segmentos retos com dobra em ângulo reto, desenhado antes do nó. Seta por <span class="doc-code">&lt;marker&gt;</span> com identificador único. Um nó em acento, no máximo, para o desfecho.</p>
     </div>
     <div class="doc-note dont">
       <span class="doc-note-tag">Não faça</span>
-      <p>Linha reta para ligar etapas de fluxo, triângulo de seta desenhado à mão (não acompanha a rotação), ou um <span class="doc-code">&lt;div&gt;</span> com borda no lugar do nó vetorial.</p>
+      <p>Curva de Bézier para ligar etapas, triângulo de seta desenhado à mão (não acompanha a rotação), ou um <span class="doc-code">&lt;div&gt;</span> com borda no lugar do nó vetorial.</p>
     </div>
   </div>
 </div></section>
@@ -112,7 +113,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">02</span><p class="doc-kicker">Processo linear</p></div>
   <h2>Passos numerados que seguem em <em>sequência</em></h2>
-  <p>Quando não há ramificação, só ordem, o processo linear é a forma mais limpa: passos numerados, em fila, ligados por curvas curtas que confirmam a direção. O número fica grande dentro do nó, o rótulo embaixo. Serve para roteiro de método, etapas de um projeto, passos de um onboarding.</p>
+  <p>Quando não há ramificação, só ordem, o processo linear é a forma mais limpa: passos numerados, em fila, ligados por segmentos retos curtos que confirmam a direção. O número fica grande dentro do nó, o rótulo embaixo. Serve para roteiro de método, etapas de um projeto, passos de um onboarding.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Quatro passos em fila</span>
@@ -122,11 +123,11 @@
       <defs>
         <marker id="arw-pl" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/></marker>
       </defs>
-      <!-- conectores antes -->
+      <!-- conectores antes: passos alinhados, segmento reto horizontal -->
       <g fill="none" stroke="var(--line)" stroke-width="2" color="var(--line)">
-        <path d="M168,70 C188,70 192,70 212,70" marker-end="url(#arw-pl)"/>
-        <path d="M336,70 C356,70 360,70 380,70" marker-end="url(#arw-pl)"/>
-        <path d="M504,70 C524,70 528,70 548,70" marker-end="url(#arw-pl)"/>
+        <path d="M168,70 H212" marker-end="url(#arw-pl)"/>
+        <path d="M336,70 H380" marker-end="url(#arw-pl)"/>
+        <path d="M504,70 H548" marker-end="url(#arw-pl)"/>
       </g>
       <!-- nodes -->
       <g>
@@ -155,7 +156,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">Árvore de decisão</p></div>
   <h2>O losango que pergunta e abre dois <em>caminhos</em></h2>
-  <p>A pergunta que decide um fluxo vira um losango (um <span class="doc-code">&lt;polygon&gt;</span> de quatro pontos). De cada vértice lateral sai um caminho rotulado: Sim de um lado, Não do outro. Os rótulos das saídas vão sobre a curva, em texto curto e maiúsculo, para que a leitura do galho seja imediata.</p>
+  <p>A pergunta que decide um fluxo vira um losango (um <span class="doc-code">&lt;polygon&gt;</span> de quatro pontos). De cada vértice lateral sai um caminho rotulado: Sim de um lado, Não do outro. Os rótulos das saídas vão sobre o conector, em texto curto e maiúsculo, para que a leitura do galho seja imediata.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Decisão com saídas Sim e Não</span>
@@ -165,11 +166,11 @@
       <defs>
         <marker id="arw-dec" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/></marker>
       </defs>
-      <!-- entrada + ramos antes dos nodes -->
-      <g fill="none" stroke="var(--line)" stroke-width="2" color="var(--line)">
-        <path d="M360,40 C360,55 360,60 360,72" marker-end="url(#arw-dec)"/>
-        <path d="M280,128 C200,150 170,200 160,230" marker-end="url(#arw-dec)"/>
-        <path d="M440,128 C540,150 560,200 568,230" marker-end="url(#arw-dec)"/>
+      <!-- entrada + ramos antes dos nodes, so segmentos retos com dobra em angulo reto -->
+      <g fill="none" stroke="var(--line)" stroke-width="2" color="var(--line)" stroke-linejoin="miter">
+        <path d="M360,46 V72" marker-end="url(#arw-dec)"/>
+        <path d="M280,128 H160 V230" marker-end="url(#arw-dec)"/>
+        <path d="M440,128 H580 V230" marker-end="url(#arw-dec)"/>
       </g>
       <!-- entrada -->
       <rect x="290" y="14" width="140" height="32" rx="8" fill="var(--surface)"/>
@@ -178,17 +179,18 @@
       <polygon points="360,72 440,128 360,184 280,128" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.5"/>
       <text class="dg-node-t" x="360" y="124" text-anchor="middle">Tem dado</text>
       <text class="dg-node-t" x="360" y="140" text-anchor="middle">que sustente?</text>
-      <!-- rotulos das saidas -->
-      <text class="dg-edge-t" x="205" y="178" text-anchor="middle" fill="var(--accent-verde)">Sim</text>
-      <text class="dg-edge-t" x="520" y="178" text-anchor="middle" fill="var(--negative)">Não</text>
-      <!-- desfechos -->
-      <rect x="92" y="230" width="136" height="52" rx="10" fill="var(--accent-verde)"/>
-      <text class="dg-node-t" x="160" y="260" text-anchor="middle" fill="var(--accent-ink)">Publicar</text>
-      <rect x="500" y="230" width="160" height="52" rx="10" fill="var(--negative)"/>
-      <text class="dg-node-t dg-on-azul" x="580" y="254" text-anchor="middle">Suavizar</text>
-      <text class="dg-node-t dg-on-azul" x="580" y="270" text-anchor="middle">ou remover</text>
+      <!-- rotulos das saidas, em tinta neutra -->
+      <text class="dg-edge-t" x="200" y="120" text-anchor="middle">Sim</text>
+      <text class="dg-edge-t" x="520" y="120" text-anchor="middle">Não</text>
+      <!-- desfecho que aprova: o no-heroi, em acento -->
+      <rect x="92" y="230" width="136" height="52" rx="10" fill="var(--accent)"/>
+      <text class="dg-node-t dg-on-accent" x="160" y="260" text-anchor="middle">Publicar</text>
+      <!-- desfecho que barra: superficie neutra -->
+      <rect x="500" y="230" width="160" height="52" rx="10" fill="var(--surface)" stroke="var(--line)" stroke-width="1"/>
+      <text class="dg-node-t" x="580" y="254" text-anchor="middle">Suavizar</text>
+      <text class="dg-node-t" x="580" y="270" text-anchor="middle">ou remover</text>
     </svg>
-    <p class="doc-when"><b>Quando usar:</b> regra de decisão com resposta binária. Verde para o caminho que aprova, azul para o que barra ou exige correção, nunca o vermelho.</p>
+    <p class="doc-when"><b>Quando usar:</b> regra de decisão com resposta binária. Acento no caminho que aprova; superfície neutra no que barra ou exige correção. Sem cor extra para sinalizar erro.</p>
   </div>
 
   <div class="doc-note dont">
@@ -201,7 +203,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">04</span><p class="doc-kicker">Hierarquia</p></div>
   <h2>Uma raiz que desce em <em>galhos</em></h2>
-  <p>O organograma mostra subordinação ou desdobramento: um nó-raiz no topo e filhos abaixo, ligados por curvas que descem. Serve para estrutura de equipe, decomposição de um tema em frentes, ou pilares de uma plataforma. A raiz pode receber o acento; os filhos ficam em superfície.</p>
+  <p>O organograma mostra subordinação ou desdobramento: um nó-raiz no topo e filhos abaixo, ligados por conectores em ângulo reto que descem e dobram para cada galho. Serve para estrutura de equipe, decomposição de um tema em frentes, ou pilares de uma plataforma. A raiz pode receber o acento; os filhos ficam em superfície.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Raiz e três filhos</span>
@@ -211,11 +213,11 @@
       <defs>
         <marker id="arw-hi" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="currentColor"/></marker>
       </defs>
-      <!-- conectores antes -->
-      <g fill="none" stroke="var(--line)" stroke-width="2" color="var(--line)">
-        <path d="M360,72 C200,110 150,130 130,158" marker-end="url(#arw-hi)"/>
-        <path d="M360,72 C360,110 360,130 360,158" marker-end="url(#arw-hi)"/>
-        <path d="M360,72 C520,110 570,130 590,158" marker-end="url(#arw-hi)"/>
+      <!-- conectores antes: tronco vertical comum e dobra em angulo reto para cada filho -->
+      <g fill="none" stroke="var(--line)" stroke-width="2" color="var(--line)" stroke-linejoin="miter">
+        <path d="M360,72 V115 H130 V158" marker-end="url(#arw-hi)"/>
+        <path d="M360,72 V158" marker-end="url(#arw-hi)"/>
+        <path d="M360,72 V115 H590 V158" marker-end="url(#arw-hi)"/>
       </g>
       <!-- raiz -->
       <rect x="280" y="24" width="160" height="48" rx="10" fill="var(--accent)"/>
@@ -238,7 +240,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">05</span><p class="doc-kicker">Rede radial</p></div>
   <h2>Um centro que irradia para os <em>satélites</em></h2>
-  <p>Quando vários elementos giram em torno de um único, a rede radial deixa essa relação visível: o nó central no meio, os satélites distribuídos em volta, ligados por curvas que partem do centro. Diferente da hierarquia, aqui não há topo nem base, só órbita. Serve para mapear o que conversa com um tema central.</p>
+  <p>Quando vários elementos giram em torno de um único, a rede radial deixa essa relação visível: o nó central no meio, os satélites distribuídos em volta, ligados por raios retos que partem do centro. Diferente da hierarquia, aqui não há topo nem base, só órbita. Serve para mapear o que conversa com um tema central.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Centro e seis satélites</span>
@@ -248,14 +250,14 @@
       <defs>
         <marker id="arw-rd" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="currentColor"/></marker>
       </defs>
-      <!-- conectores do centro (360,180) para cada satelite, em curva leve -->
+      <!-- raios retos do centro (360,180) para cada satelite; o circulo central cobre a origem -->
       <g fill="none" stroke="var(--line)" stroke-width="1.8" color="var(--line)">
-        <path d="M360,150 C360,110 360,95 360,70" marker-end="url(#arw-rd)"/>
-        <path d="M388,165 C440,135 480,120 520,100" marker-end="url(#arw-rd)"/>
-        <path d="M388,195 C440,225 480,240 520,260" marker-end="url(#arw-rd)"/>
-        <path d="M360,210 C360,250 360,265 360,290" marker-end="url(#arw-rd)"/>
-        <path d="M332,195 C280,225 240,240 200,260" marker-end="url(#arw-rd)"/>
-        <path d="M332,165 C280,135 240,120 200,100" marker-end="url(#arw-rd)"/>
+        <path d="M360,180 L360,74" marker-end="url(#arw-rd)"/>
+        <path d="M360,180 L520,95" marker-end="url(#arw-rd)"/>
+        <path d="M360,180 L520,265" marker-end="url(#arw-rd)"/>
+        <path d="M360,180 L360,290" marker-end="url(#arw-rd)"/>
+        <path d="M360,180 L200,265" marker-end="url(#arw-rd)"/>
+        <path d="M360,180 L200,95" marker-end="url(#arw-rd)"/>
       </g>
       <!-- satelites -->
       <g>
@@ -288,22 +290,22 @@
       <defs>
         <marker id="arw-sw" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/></marker>
       </defs>
-      <!-- faixas das raias -->
+      <!-- faixas das raias, em tinta translucida que adapta aos 3 tons -->
       <g>
-        <rect x="0" y="20" width="720" height="76" fill="rgba(255,255,255,.05)"/>
-        <rect x="0" y="100" width="720" height="76" fill="rgba(255,255,255,.09)"/>
-        <rect x="0" y="180" width="720" height="76" fill="rgba(255,255,255,.05)"/>
+        <rect x="0" y="20" width="720" height="76" fill="color-mix(in srgb, var(--ink) 6%, transparent)"/>
+        <rect x="0" y="100" width="720" height="76" fill="color-mix(in srgb, var(--ink) 11%, transparent)"/>
+        <rect x="0" y="180" width="720" height="76" fill="color-mix(in srgb, var(--ink) 6%, transparent)"/>
         <line x1="150" y1="20" x2="150" y2="256" stroke="var(--hairline)" stroke-width="1"/>
       </g>
       <!-- rotulos das raias -->
       <text class="dg-axis-t" x="20" y="62" >Estratégia</text>
       <text class="dg-axis-t" x="20" y="142">Criação</text>
       <text class="dg-axis-t" x="20" y="222">Cliente</text>
-      <!-- conectores entre raias ANTES dos nodes -->
-      <g fill="none" stroke="var(--line)" stroke-width="2" color="var(--line)">
-        <path d="M300,58 C340,58 350,90 350,114" marker-end="url(#arw-sw)"/>
-        <path d="M460,138 C500,138 510,170 510,194" marker-end="url(#arw-sw)"/>
-        <path d="M620,194 C640,150 640,138 580,138" marker-end="url(#arw-sw)"/>
+      <!-- conectores entre raias ANTES dos nodes, so segmentos retos com dobra em angulo reto -->
+      <g fill="none" stroke="var(--line)" stroke-width="2" color="var(--line)" stroke-linejoin="miter">
+        <path d="M300,58 H350 V120" marker-end="url(#arw-sw)"/>
+        <path d="M460,138 H560 V200" marker-end="url(#arw-sw)"/>
+        <path d="M620,220 H660 V138 H620" marker-end="url(#arw-sw)"/>
       </g>
       <!-- nodes por raia -->
       <g>
@@ -321,7 +323,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">07</span><p class="doc-kicker">Ciclo</p></div>
   <h2>Quatro etapas que fecham o <em>loop</em></h2>
-  <p>O ciclo conta um processo que se repete: as etapas se dispõem em círculo e os conectores curvos seguem sempre na mesma rotação, fechando o anel. A última seta volta para a primeira etapa, deixando claro que não há fim, só recomeço. Serve para rituais recorrentes: planejar, executar, medir, ajustar.</p>
+  <p>O ciclo conta um processo que se repete: as etapas se dispõem em volta e os conectores em ângulo reto seguem sempre na mesma rotação, fechando o anel. A última seta volta para a primeira etapa, deixando claro que não há fim, só recomeço. Serve para rituais recorrentes: planejar, executar, medir, ajustar.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Ciclo de quatro etapas</span>
@@ -331,12 +333,12 @@
       <defs>
         <marker id="arw-cy" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/></marker>
       </defs>
-      <!-- arcos do ciclo ANTES dos nodes, sentido horario, centro (360,170) -->
-      <g fill="none" stroke="var(--line)" stroke-width="2.2" color="var(--line)">
-        <path d="M432,78 C500,98 540,140 552,196" marker-end="url(#arw-cy)"/>
-        <path d="M520,272 C470,300 380,300 320,288" marker-end="url(#arw-cy)"/>
-        <path d="M168,196 C180,140 220,98 288,78" marker-end="url(#arw-cy)"/>
-        <path d="M288,262 C220,242 180,200 168,150" marker-end="url(#arw-cy)" stroke="var(--accent)" color="var(--accent)"/>
+      <!-- conectores do ciclo ANTES dos nodes, sentido horario, so segmentos retos em angulo reto -->
+      <g fill="none" stroke="var(--line)" stroke-width="2.2" color="var(--line)" stroke-linejoin="miter">
+        <path d="M404,58 H572 V174" marker-end="url(#arw-cy)"/>
+        <path d="M572,262 V290 H404" marker-end="url(#arw-cy)"/>
+        <path d="M316,290 H148 V262" marker-end="url(#arw-cy)"/>
+        <path d="M148,174 V58 H316" marker-end="url(#arw-cy)" stroke="var(--accent)" color="var(--accent)"/>
       </g>
       <!-- etapas -->
       <g>
@@ -362,12 +364,12 @@
       <svg class="dg" viewBox="0 0 420 320" role="img" aria-label="Pirâmide de quatro camadas, da base ao topo: Dados, Estrutura, Narrativa e Decisão.">
         <title>Pirâmide de quatro camadas</title>
         <desc>Quatro camadas empilhadas da base ao topo: Dados na base, depois Estrutura, depois Narrativa, e Decisão no cume.</desc>
-        <!-- base larga -->
-        <polygon points="20,300 400,300 350,232 70,232" fill="rgba(255,255,255,.10)"/>
+        <!-- base larga; tinta sobe de tom a cada camada (adapta aos 3 tons) -->
+        <polygon points="20,300 400,300 350,232 70,232" fill="color-mix(in srgb, var(--ink) 12%, transparent)"/>
         <text class="dg-node-t" x="210" y="272" text-anchor="middle">Dados</text>
-        <polygon points="70,228 350,228 305,160 115,160" fill="rgba(255,255,255,.18)"/>
+        <polygon points="70,228 350,228 305,160 115,160" fill="color-mix(in srgb, var(--ink) 22%, transparent)"/>
         <text class="dg-node-t" x="210" y="200" text-anchor="middle">Estrutura</text>
-        <polygon points="115,156 305,156 260,88 160,88" fill="rgba(255,255,255,.30)"/>
+        <polygon points="115,156 305,156 260,88 160,88" fill="color-mix(in srgb, var(--ink) 34%, transparent)"/>
         <text class="dg-node-t" x="210" y="128" text-anchor="middle">Narrativa</text>
         <!-- cume em acento -->
         <polygon points="160,84 260,84 210,16" fill="var(--accent)"/>
@@ -395,23 +397,23 @@
     <svg class="dg" viewBox="0 0 720 280" role="img" aria-label="Pilha de quatro camadas, de baixo para cima: Tokens, Componentes, Padrões e Peça.">
       <title>Pilha de quatro camadas</title>
       <desc>Quatro retângulos empilhados, de baixo para cima: Tokens, Componentes, Padrões e Peça. Cada camada se apoia na de baixo.</desc>
-      <!-- da base ao topo -->
+      <!-- da base ao topo; tinta sobe de tom a cada nivel (adapta aos 3 tons) -->
       <g>
-        <rect x="60" y="208" width="600" height="56" rx="8" fill="rgba(255,255,255,.10)"/>
+        <rect x="60" y="208" width="600" height="56" rx="8" fill="color-mix(in srgb, var(--ink) 12%, transparent)"/>
         <text class="dg-node-t" x="84" y="241">Tokens</text>
         <text class="dg-node-s" x="640" y="241" text-anchor="end">cor, tipo, espaço, forma</text>
 
-        <rect x="60" y="146" width="600" height="56" rx="8" fill="rgba(255,255,255,.16)"/>
+        <rect x="60" y="146" width="600" height="56" rx="8" fill="color-mix(in srgb, var(--ink) 18%, transparent)"/>
         <text class="dg-node-t" x="84" y="179">Componentes</text>
         <text class="dg-node-s" x="640" y="179" text-anchor="end">cards, faixas, citações</text>
 
-        <rect x="60" y="84" width="600" height="56" rx="8" fill="rgba(255,255,255,.24)"/>
+        <rect x="60" y="84" width="600" height="56" rx="8" fill="color-mix(in srgb, var(--ink) 26%, transparent)"/>
         <text class="dg-node-t" x="84" y="117">Padrões</text>
         <text class="dg-node-s" x="640" y="117" text-anchor="end">diagramas, gráficos, layouts</text>
 
         <rect x="60" y="22" width="600" height="56" rx="8" fill="var(--accent)"/>
         <text class="dg-node-t dg-on-accent" x="84" y="55">Peça</text>
-        <text class="dg-node-s" x="640" y="55" text-anchor="end" fill="rgba(10,10,10,.7)">deck, book, landing</text>
+        <text class="dg-node-s dg-on-accent-s" x="640" y="55" text-anchor="end">deck, book, landing</text>
       </g>
     </svg>
     <p class="doc-when"><b>Quando usar:</b> arquitetura em camadas em que cada nível se apoia no de baixo mas todos pesam igual na largura. O nível de saída, no topo, recebe o acento.</p>
@@ -429,10 +431,11 @@
     <svg class="dg" viewBox="0 0 720 340" role="img" aria-label="Diagrama de Venn de três círculos, Marca, Público e Momento, com a interseção central rotulada Relevância.">
       <title>Venn de três conjuntos com interseção central</title>
       <desc>Três círculos sobrepostos: Marca, Público e Momento. A região onde os três se cruzam recebe o rótulo Relevância.</desc>
+      <!-- circulos translucidos: a sobreposicao adensa a tinta (adapta aos 3 tons) -->
       <g>
-        <circle cx="290" cy="150" r="120" fill="rgba(255,255,255,.16)" stroke="var(--line)" stroke-width="1.5"/>
-        <circle cx="430" cy="150" r="120" fill="rgba(255,255,255,.16)" stroke="var(--line)" stroke-width="1.5"/>
-        <circle cx="360" cy="250" r="120" fill="rgba(255,255,255,.16)" stroke="var(--line)" stroke-width="1.5"/>
+        <circle cx="290" cy="150" r="120" fill="color-mix(in srgb, var(--ink) 14%, transparent)" stroke="var(--line)" stroke-width="1.5"/>
+        <circle cx="430" cy="150" r="120" fill="color-mix(in srgb, var(--ink) 14%, transparent)" stroke="var(--line)" stroke-width="1.5"/>
+        <circle cx="360" cy="250" r="120" fill="color-mix(in srgb, var(--ink) 14%, transparent)" stroke="var(--line)" stroke-width="1.5"/>
       </g>
       <!-- rotulos dos conjuntos -->
       <text class="dg-node-t" x="222" y="110" text-anchor="middle">Marca</text>
@@ -465,8 +468,8 @@
       <defs>
         <marker id="arw-mx" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/></marker>
       </defs>
-      <!-- quadrante de prioridade destacado (fundo) -->
-      <rect x="60" y="40" width="220" height="150" fill="rgba(245,197,66,.18)"/>
+      <!-- quadrante de prioridade destacado: tinta de acento translucida -->
+      <rect x="60" y="40" width="220" height="150" fill="color-mix(in srgb, var(--accent) 18%, transparent)"/>
       <!-- grade -->
       <rect x="60" y="40" width="440" height="300" fill="none" stroke="var(--hairline)" stroke-width="1"/>
       <line x1="280" y1="40" x2="280" y2="340" stroke="var(--line)" stroke-width="1"/>
@@ -477,11 +480,11 @@
       <text class="dg-axis-t" x="280" y="384" text-anchor="middle">Esforço</text>
       <text class="dg-axis-t" x="20" y="190" text-anchor="middle" transform="rotate(-90 20 190)">Impacto</text>
       <!-- rotulos dos quadrantes -->
-      <text class="dg-node-t" x="170" y="118" text-anchor="middle" fill="var(--accent-ink)">Prioridade</text>
-      <text class="dg-node-s" x="170" y="138" text-anchor="middle" fill="rgba(10,10,10,.65)">alto impacto, baixo esforço</text>
-      <text class="dg-node-t" x="390" y="118" text-anchor="middle">Projeto</text>
-      <text class="dg-node-t" x="170" y="270" text-anchor="middle">Preencher</text>
-      <text class="dg-node-t" x="390" y="270" text-anchor="middle">Evitar</text>
+      <text class="dg-node-t" x="170" y="118" text-anchor="middle" fill="var(--ink)">Prioridade</text>
+      <text class="dg-node-s" x="170" y="138" text-anchor="middle" fill="var(--muted)">alto impacto, baixo esforço</text>
+      <text class="dg-node-t" x="390" y="118" text-anchor="middle" fill="var(--ink)">Projeto</text>
+      <text class="dg-node-t" x="170" y="270" text-anchor="middle" fill="var(--ink)">Preencher</text>
+      <text class="dg-node-t" x="390" y="270" text-anchor="middle" fill="var(--ink)">Evitar</text>
     </svg>
     <p class="doc-when"><b>Quando usar:</b> priorizar opções por duas variáveis ou posicionar concorrentes num campo. O acento marca o quadrante que você quer que a leitura busque primeiro.</p>
   </div>
@@ -512,28 +515,28 @@
       <defs>
         <marker id="arw-jr" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/></marker>
       </defs>
-      <!-- conectores entre fases ANTES -->
+      <!-- conectores entre fases ANTES: fases alinhadas, segmento reto horizontal -->
       <g fill="none" stroke="var(--line)" stroke-width="2" color="var(--line)">
-        <path d="M232,120 C250,120 254,120 268,120" marker-end="url(#arw-jr)"/>
-        <path d="M472,120 C490,120 494,120 508,120" marker-end="url(#arw-jr)"/>
+        <path d="M232,120 H268" marker-end="url(#arw-jr)"/>
+        <path d="M472,120 H508" marker-end="url(#arw-jr)"/>
       </g>
       <!-- fase 1 -->
       <g>
-        <rect x="20" y="48" width="212" height="144" rx="12" fill="rgba(255,255,255,.06)" stroke="var(--hairline)" stroke-width="1"/>
+        <rect x="20" y="48" width="212" height="144" rx="12" fill="color-mix(in srgb, var(--ink) 7%, transparent)" stroke="var(--hairline)" stroke-width="1"/>
         <text class="dg-axis-t" x="36" y="74">Conviver</text>
         <rect x="40" y="92" width="172" height="38" rx="7" fill="var(--surface)"/><text class="dg-node-t" x="126" y="115" text-anchor="middle">Presença</text>
         <rect x="40" y="138" width="172" height="38" rx="7" fill="var(--surface)"/><text class="dg-node-t" x="126" y="161" text-anchor="middle">Familiaridade</text>
       </g>
       <!-- fase 2 -->
       <g>
-        <rect x="260" y="48" width="212" height="144" rx="12" fill="rgba(255,255,255,.06)" stroke="var(--hairline)" stroke-width="1"/>
+        <rect x="260" y="48" width="212" height="144" rx="12" fill="color-mix(in srgb, var(--ink) 7%, transparent)" stroke="var(--hairline)" stroke-width="1"/>
         <text class="dg-axis-t" x="276" y="74">Avaliar</text>
         <rect x="280" y="92" width="172" height="38" rx="7" fill="var(--surface)"/><text class="dg-node-t" x="366" y="115" text-anchor="middle">Comparação</text>
         <rect x="280" y="138" width="172" height="38" rx="7" fill="var(--surface)"/><text class="dg-node-t" x="366" y="161" text-anchor="middle">Prova</text>
       </g>
-      <!-- fase 3 -->
+      <!-- fase 3: fase de chegada destacada em tinta de acento -->
       <g>
-        <rect x="500" y="48" width="212" height="144" rx="12" fill="rgba(245,197,66,.14)" stroke="var(--hairline)" stroke-width="1"/>
+        <rect x="500" y="48" width="212" height="144" rx="12" fill="color-mix(in srgb, var(--accent) 15%, transparent)" stroke="var(--hairline)" stroke-width="1"/>
         <text class="dg-axis-t" x="516" y="74" fill="var(--ink)">Aceitar</text>
         <rect x="520" y="92" width="172" height="38" rx="7" fill="var(--accent)"/><text class="dg-node-t dg-on-accent" x="606" y="115" text-anchor="middle">Decisão</text>
         <rect x="520" y="138" width="172" height="38" rx="7" fill="var(--surface)"/><text class="dg-node-t" x="606" y="161" text-anchor="middle">Adesão</text>
@@ -557,14 +560,14 @@
       <defs>
         <marker id="arw-ec" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="currentColor"/></marker>
       </defs>
-      <!-- conexoes ANTES dos nodes; centro em (360,180) -->
+      <!-- conexoes ANTES dos nodes; raios retos do centro (360,180); o circulo cobre a origem -->
       <g fill="none" stroke="var(--line)" stroke-width="1.8" color="var(--line)">
-        <path d="M306,148 C240,118 190,108 150,98" marker-end="url(#arw-ec)"/>
-        <path d="M414,148 C480,118 530,108 570,98" marker-end="url(#arw-ec)"/>
-        <path d="M414,212 C480,242 530,252 570,262" marker-end="url(#arw-ec)"/>
-        <path d="M306,212 C240,242 190,252 150,262" marker-end="url(#arw-ec)"/>
-        <!-- conexao lateral entre dois parceiros (alem do centro) -->
-        <path d="M150,80 C300,30 480,30 570,72" marker-end="url(#arw-ec)" stroke="var(--accent)" color="var(--accent)"/>
+        <path d="M360,180 L160,95" marker-end="url(#arw-ec)"/>
+        <path d="M360,180 L560,95" marker-end="url(#arw-ec)"/>
+        <path d="M360,180 L560,265" marker-end="url(#arw-ec)"/>
+        <path d="M360,180 L160,265" marker-end="url(#arw-ec)"/>
+        <!-- conexao lateral entre dois parceiros (alem do centro), em angulo reto -->
+        <path d="M126,62 V36 H594 V62" marker-end="url(#arw-ec)" stroke="var(--accent)" color="var(--accent)" stroke-linejoin="miter"/>
       </g>
       <!-- parceiros -->
       <g>
@@ -576,7 +579,7 @@
       <!-- marca central -->
       <circle cx="360" cy="180" r="48" fill="var(--accent)"/>
       <text class="dg-node-t dg-on-accent" x="360" y="178" text-anchor="middle" font-size="12">80 20</text>
-      <text class="dg-node-s" x="360" y="194" text-anchor="middle" fill="rgba(10,10,10,.7)">articula</text>
+      <text class="dg-node-s dg-on-accent-s" x="360" y="194" text-anchor="middle">articula</text>
     </svg>
     <p class="doc-when"><b>Quando usar:</b> mostrar uma rede de parceiros em que a marca articula mas não controla tudo. A conexão lateral em acento destaca uma relação que existe fora do eixo central.</p>
   </div>
@@ -586,36 +589,36 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">14</span><p class="doc-kicker">Mindmap</p></div>
   <h2>Um núcleo que se ramifica em <em>ideias</em></h2>
-  <p>O mapa mental abre um tema central em ramos, e cada ramo em sub-ramos, com curvas que se afinam à medida que se afastam do núcleo. É a forma mais solta do catálogo, boa para um brainstorm estruturado ou para abrir um conceito em suas dimensões. As curvas são sempre orgânicas, nunca quebradas em ângulos retos.</p>
+  <p>O mapa mental abre um tema central em ramos, e cada ramo em sub-ramos, ligados por conectores em ângulo reto que se afinam à medida que se afastam do núcleo. É a forma mais solta do catálogo, boa para um brainstorm estruturado ou para abrir um conceito em suas dimensões. Mesmo aqui o conector segue a regra da casa: segmentos retos que dobram em esquina, nunca curva de Bézier.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Núcleo, ramos e sub-ramos</span>
     <svg class="dg" viewBox="0 0 720 360" role="img" aria-label="Mapa mental: o núcleo Campanha abre em dois ramos, Mensagem e Canal; Mensagem se divide em Tom e Prova, Canal se divide em Próprio e Pago.">
       <title>Mapa mental de núcleo, ramos e sub-ramos</title>
       <desc>O núcleo Campanha abre dois ramos. Mensagem leva a Tom e a Prova. Canal leva a Próprio e a Pago.</desc>
-      <!-- ramos ANTES dos nodes, curvas que se afinam -->
-      <g fill="none" stroke="var(--line)">
-        <path d="M280,150 C220,110 180,90 140,78" stroke-width="2.4"/>
-        <path d="M280,210 C220,250 180,270 140,282" stroke-width="2.4"/>
+      <!-- ramos ANTES dos nodes, so segmentos retos com dobra em angulo reto; o traco afina do centro para a borda -->
+      <g fill="none" stroke="var(--line)" stroke-linejoin="miter">
+        <path d="M268,165 V78 H260" stroke-width="2.4"/>
+        <path d="M268,195 V282 H260" stroke-width="2.4"/>
         <!-- sub-ramos do ramo de cima -->
-        <path d="M120,70 C90,46 70,40 44,38" stroke-width="1.6"/>
-        <path d="M120,90 C90,118 70,128 44,138" stroke-width="1.6"/>
+        <path d="M130,78 H105 V35 H80" stroke-width="1.6"/>
+        <path d="M130,78 H105 V131 H80" stroke-width="1.6"/>
         <!-- sub-ramos do ramo de baixo -->
-        <path d="M120,274 C90,246 70,236 44,228" stroke-width="1.6"/>
-        <path d="M120,290 C90,316 70,322 44,326" stroke-width="1.6"/>
+        <path d="M130,282 H105 V243 H80" stroke-width="1.6"/>
+        <path d="M130,282 H105 V337 H80" stroke-width="1.6"/>
       </g>
       <!-- nucleo -->
       <ellipse cx="360" cy="180" rx="92" ry="56" fill="var(--accent)"/>
       <text class="dg-node-t dg-on-accent" x="360" y="185" text-anchor="middle" font-size="15">Campanha</text>
       <!-- ramos primarios -->
-      <rect x="60" y="58" width="120" height="40" rx="20" fill="var(--surface)"/><text class="dg-node-t" x="120" y="83" text-anchor="middle">Mensagem</text>
-      <rect x="60" y="262" width="120" height="40" rx="20" fill="var(--surface)"/><text class="dg-node-t" x="120" y="287" text-anchor="middle">Canal</text>
-      <!-- sub-ramos (pilulas menores) -->
+      <rect x="130" y="58" width="130" height="40" rx="20" fill="var(--surface)"/><text class="dg-node-t" x="195" y="83" text-anchor="middle">Mensagem</text>
+      <rect x="130" y="262" width="130" height="40" rx="20" fill="var(--surface)"/><text class="dg-node-t" x="195" y="287" text-anchor="middle">Canal</text>
+      <!-- sub-ramos (pilulas menores), em tinta esmaecida que adapta aos 3 tons -->
       <g>
-        <rect x="0" y="22" width="60" height="30" rx="15" fill="rgba(255,255,255,.12)"/><text class="dg-node-s" x="30" y="42" text-anchor="middle" fill="var(--ink)">Tom</text>
-        <rect x="0" y="124" width="60" height="30" rx="15" fill="rgba(255,255,255,.12)"/><text class="dg-node-s" x="30" y="144" text-anchor="middle" fill="var(--ink)">Prova</text>
-        <rect x="0" y="214" width="60" height="30" rx="15" fill="rgba(255,255,255,.12)"/><text class="dg-node-s" x="30" y="234" text-anchor="middle" fill="var(--ink)">Próprio</text>
-        <rect x="0" y="312" width="60" height="30" rx="15" fill="rgba(255,255,255,.12)"/><text class="dg-node-s" x="30" y="332" text-anchor="middle" fill="var(--ink)">Pago</text>
+        <rect x="12" y="20" width="68" height="30" rx="15" fill="color-mix(in srgb, var(--ink) 12%, transparent)"/><text class="dg-node-s" x="46" y="40" text-anchor="middle" fill="var(--ink)">Tom</text>
+        <rect x="12" y="116" width="68" height="30" rx="15" fill="color-mix(in srgb, var(--ink) 12%, transparent)"/><text class="dg-node-s" x="46" y="136" text-anchor="middle" fill="var(--ink)">Prova</text>
+        <rect x="12" y="228" width="68" height="30" rx="15" fill="color-mix(in srgb, var(--ink) 12%, transparent)"/><text class="dg-node-s" x="46" y="248" text-anchor="middle" fill="var(--ink)">Próprio</text>
+        <rect x="12" y="322" width="68" height="30" rx="15" fill="color-mix(in srgb, var(--ink) 12%, transparent)"/><text class="dg-node-s" x="46" y="342" text-anchor="middle" fill="var(--ink)">Pago</text>
       </g>
     </svg>
     <p class="doc-when"><b>Quando usar:</b> abrir um tema em dimensões, num brainstorm estruturado ou na decomposição de um conceito. O núcleo em acento; ramos em superfície; sub-ramos em tom esmaecido.</p>
@@ -624,11 +627,11 @@
   <div class="doc-grid doc-2">
     <div class="doc-note do">
       <span class="doc-note-tag">Faça</span>
-      <p>Curvas orgânicas que se afinam do centro para a borda. Um único núcleo em acento. Hierarquia de tom: ramo mais cheio que sub-ramo.</p>
+      <p>Conectores em ângulo reto que afinam o traço do centro para a borda. Um único núcleo em acento. Hierarquia de tom: ramo mais cheio que sub-ramo.</p>
     </div>
     <div class="doc-note dont">
       <span class="doc-note-tag">Não faça</span>
-      <p>Linhas quebradas em ângulo reto, dezenas de ramos que viram emaranhado, ou cor de joia espalhada por cada pílula. A escassez de cor vale aqui também.</p>
+      <p>Curva de Bézier para os ramos, dezenas de ramos que viram emaranhado, ou cor extra espalhada por cada pílula. A escassez de cor vale aqui também.</p>
     </div>
   </div>
 </div></section>

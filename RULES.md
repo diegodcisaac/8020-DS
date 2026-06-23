@@ -6,15 +6,17 @@ As regras inegociáveis do sistema de design da 80 20 Marketing. Quem gera uma p
 
 1. O laranja `#fa4616` é o substrato, não o enfeite. É o fundo da peça na variante canônica, nunca um detalhe de borda. Nunca outro laranja.
 2. O branco é a voz. Texto sempre em par aprovado pela matriz de contraste (`tokens/brand.json`). Título e display em branco sobre o laranja; corpo denso em preto sobre o laranja, ou na variante de papel claro.
-3. A imagem entra em um dos modos documentados (recortada, retangular, full-bleed ou com texto sobreposto), nunca solta sem tratamento. Foto protagonista é recortada e sangra a borda. Ver `patterns/images.html`.
-4. O gradiente aparece só como joia, em superfície de destaque, e nunca sob texto corrido.
+3. A imagem é sempre reta: retângulo com raio e borda fina, nunca máscara orgânica nem recorte. Nos modos documentados (retangular, full-bleed ou com texto sobreposto), nunca solta sem tratamento. Ver `patterns/images.html`.
+4. O gradiente é só de marca (laranja, laranja aprofundado, chumbo), aparece só como superfície de destaque e nunca sob texto corrido.
 5. Montserrat é a única família, do corpo ao display. O salto do último termo para o itálico é assinatura, marcado no HTML com `<em>`, não acaso.
-6. A joia (azul, verde, ouro, areia) é acento escasso: no máximo três momentos por página ou slide em peça cliente. A escassez é o que dá impacto.
-7. A logo 80 20 está sempre presente e nunca recolorida fora das três variantes aprovadas (branca, preta, original laranja e branco). Topo à esquerda na peça; co-marca do cliente topo à direita; contracapa preta com a logo e os três endereços (São Paulo, Campo Grande, Cuiabá).
+6. A paleta é fechada: laranja, laranja aprofundado, branco, preto e chumbos profundos. Sem azul, verde, ouro, areia ou vermelho. O acento (branco sobre o laranja, laranja sobre o escuro e o claro) é escasso: no máximo três momentos por página ou slide em peça cliente. A escassez é o que dá impacto.
+7. A logo 80 20 está sempre presente e nunca recolorida: assume a tinta da variante, branca no campo-laranja e no palco escuro, escura no papel claro. Topo à esquerda na peça; co-marca do cliente topo à direita; contracapa com a logo e os três endereços (São Paulo, Campo Grande, Cuiabá).
 
 ## Construção e acessibilidade
 
 8. Gráfico e diagrama em SVG real (`<rect>`, `<path>`, `<polyline>`, `<circle>`, `<polygon>`), nunca uma `div` com largura em porcentagem.
+8a. Diagramas usam ângulos retos: conectores em segmentos retos, com dobra em ângulo reto quando mudam de direção, nunca curva. Espaço generoso entre as linhas e os rótulos.
+8b. Sem sombras em parte alguma. A profundidade vem da cor (superfície, chumbo) e da borda fina, nunca de `box-shadow`.
 9. Toda seta vem de um `<marker>` em `<defs>`, com `orient="auto-start-reverse"`. O triângulo desenhado à mão não acompanha a curva.
 10. SVG de dado leva `role="img"`, `aria-label` descritivo e `<title>`/`<desc>` internos. SVG decorativo leva `aria-hidden="true"`.
 11. Toda animação respeita `prefers-reduced-motion`. O conteúdo essencial (número, texto, geometria do gráfico) vive no HTML e renderiza sem JavaScript: o valor final fica escrito no elemento, o `data-count` é só realce.

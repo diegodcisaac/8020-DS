@@ -37,12 +37,13 @@
   /* a moldura ja recorta; o slide herda os papeis semanticos do token */
   .frame .slide { box-shadow: none; }
 
-  /* placeholders de imagem: SEM foto real, so cor/recorte (cromo do specimen) */
+  /* placeholders de imagem: SEM foto real, so cor (cromo do specimen). Imagem e sempre
+     retangulo reto com raio e borda fina; sem recorte organico, sem blob, sem clip-path */
   .ph { background: var(--surface); display: grid; place-items: center;
-        color: var(--muted); font-size: var(--fs-small); width: 100%; height: 100%; }
+        color: var(--muted); font-size: var(--fs-small); width: 100%; height: 100%;
+        border: 1px solid var(--line); }
   .ph-rect { border-radius: var(--radius); overflow: hidden; }
-  .ph-jewel { background: var(--jewel-frio); color: #fff; }
-  .ph-organica { clip-path: path("M 0 60 C 80 -10 320 0 420 70 C 520 140 540 360 460 470 C 380 580 120 600 40 520 C -40 440 -10 130 0 60 Z"); }
+  .ph-fill { background: var(--floor); color: var(--floor-ink); }
   .ph-tag { font-family: var(--font-display); font-weight: var(--w-display); letter-spacing: .02em; }
 
   /* grade de fotos dentro de um slide */
@@ -69,7 +70,7 @@
   .s-frompara .cell p { font-family: var(--font-display); font-weight: var(--w-display);
                         font-size: var(--fs-h2); line-height: 1.12; margin: 0; }
   .s-frompara .cell.to { background: var(--accent); color: var(--accent-ink); }
-  .s-frompara .cell.to b { color: rgba(10,10,10,.62); }
+  .s-frompara .cell.to b { color: color-mix(in srgb, var(--accent-ink) 64%, transparent); }
   .s-frompara .arrow { color: var(--ink); }
 
   /* mural de citacoes / pilares / KPIs / logos / icones / servicos */
@@ -161,14 +162,14 @@
 <header class="doc-hero"><div class="doc-wrap">
   <p class="doc-eyebrow">Apresentação ao vivo · 16:9</p>
   <h1>O palco fala em <em>laranja</em></h1>
-  <p class="doc-lead">Este catálogo reúne as formas de slide do deck 80 20 em miniatura, do abre ao fecha. Cada layout consome só papéis semânticos, mantém o campo laranja como substrato, a tinta branca para o display e a joia reservada para o dado-herói. A regra-mãe: um slide carrega uma ideia.</p>
+  <p class="doc-lead">Este catálogo reúne as formas de slide do deck 80 20 em miniatura, do abre ao fecha. Cada layout consome só papéis semânticos, mantém o campo laranja como substrato, a tinta de display para o título e o acento reservado para o dado-herói. A regra-mãe: um slide carrega uma ideia.</p>
 </div></header>
 
 <!-- ============================ ABERTURA E COSTURAS ============================ -->
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">01</span><p class="doc-kicker">Abertura e costuras</p></div>
   <h2>As bordas da <em>narrativa</em></h2>
-  <p>Os layouts que abrem, dividem e fecham o deck. A capa é descritiva, nunca traz a mensagem-mãe. As separatrizes de capítulo usam número gigante na joia para marcar a virada. A contracapa volta ao chão preto com a logo e os três endereços.</p>
+  <p>Os layouts que abrem, dividem e fecham o deck. A capa é descritiva, nunca traz a mensagem-mãe. As separatrizes de capítulo usam número gigante no acento para marcar a virada. A contracapa volta ao chão escuro com a logo e os três endereços.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Aberturas, viradas e fecho</span>
@@ -223,7 +224,7 @@
 
     </div>
   </div>
-  <p class="doc-when"><b>Quando usar a separatriz:</b> sempre que o deck muda de assunto. O número gigante na joia faz o ouvinte saber que virou a página sem você precisar dizer. A capa nunca antecipa a mensagem central: ela situa.</p>
+  <p class="doc-when"><b>Quando usar a separatriz:</b> sempre que o deck muda de assunto. O número gigante no acento faz o ouvinte saber que virou a página sem você precisar dizer. A capa nunca antecipa a mensagem central: ela situa.</p>
 
   <div class="doc-grid doc-2" style="margin-top:18px">
     <div class="doc-note do">
@@ -341,7 +342,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">04</span><p class="doc-kicker">Número e dado</p></div>
   <h2>O peso de um <em>número</em></h2>
-  <p>Quando o dado é a prova, ele ocupa o slide inteiro. A linha de stats compara grandezas lado a lado: a massa fica em branco e só o número-herói recebe joia. O painel de KPIs reúne indicadores de operação numa grade densa.</p>
+  <p>Quando o dado é a prova, ele ocupa o slide inteiro. A linha de stats compara grandezas lado a lado: a massa fica na tinta e só o número-herói recebe o acento. O painel de KPIs reúne indicadores de operação numa grade densa.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Quando o dado e a prova</span>
@@ -387,7 +388,7 @@
 
   <div class="doc-note dont" style="margin-top:18px">
     <span class="doc-note-tag">Não faça</span>
-    Colorir todos os números de joia. A joia marca o dado-herói: se tudo brilha, nada salta. A massa fica em branco e branco esmaecido.
+    Pôr o acento em todos os números. O acento marca o dado-herói: se tudo salta, nada salta. A massa fica na tinta cheia e na tinta esmaecida.
   </div>
 </div></section>
 
@@ -405,7 +406,7 @@
         <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
         <div class="s-split">
           <div class="s-col">
-            <p class="s-eyebrow" style="color:var(--accent-azul)">Hoje</p>
+            <p class="s-eyebrow" style="color:var(--muted)">Hoje</p>
             <h2 class="s-title" style="font-size:var(--fs-h2)">Marca reativa</h2>
             <p class="s-body">Fala só quando precisa vender. Aparece tarde na decisão.</p>
           </div>
@@ -445,14 +446,14 @@
 
     </div>
   </div>
-  <p class="doc-when"><b>Quando usar o de/para:</b> a seta carrega a leitura. Estado antigo à esquerda em superfície neutra, estado novo à direita na joia. A direção é o argumento.</p>
+  <p class="doc-when"><b>Quando usar o de/para:</b> a seta carrega a leitura. Estado antigo à esquerda em superfície neutra, estado novo à direita no acento. A direção é o argumento.</p>
 </div></section>
 
 <!-- ============================ IMAGEM ============================ -->
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">06</span><p class="doc-kicker">Imagem em cena</p></div>
   <h2>Quando a foto <em>conduz</em></h2>
-  <p>A foto entra recortada, nunca em retângulo frio quando pode respirar. O split põe imagem de um lado e argumento do outro. A imagem com texto sobreposto usa o degradê escuro para garantir leitura. A grade de fotos resume um universo visual.</p>
+  <p>A foto entra em retângulo reto, com raio suave e borda fina, nunca recortada em forma orgânica. O split põe imagem de um lado e argumento do outro. A imagem com texto sobreposto usa o degradê escuro para garantir leitura. A grade de fotos resume um universo visual.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">A imagem como argumento</span>
@@ -461,7 +462,7 @@
       <figure><div class="frame"><div class="stage"><div class="slide active">
         <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
         <div class="s-split img-left">
-          <div class="ph ph-rect" style="height:78%"><span class="ph-tag">Foto recortada</span></div>
+          <div class="ph ph-rect" style="height:78%"><span class="ph-tag">Foto reta</span></div>
           <div class="s-col">
             <p class="s-eyebrow">O lugar da marca</p>
             <h2 class="s-title" style="font-size:var(--fs-h2)">Perto de quem <em>decide</em></h2>
@@ -473,10 +474,10 @@
 
       <figure><div class="frame"><div class="stage"><div class="slide active">
         <div class="s-overlay">
-          <div class="ph ph-jewel" style="position:absolute;inset:0"><span class="ph-tag" style="opacity:.5">Imagem de fundo</span></div>
+          <div class="ph ph-fill" style="position:absolute;inset:0"><span class="ph-tag" style="opacity:.5">Imagem de fundo</span></div>
           <div class="s-overlay-text">
-            <p class="s-eyebrow" style="color:rgba(255,255,255,.7)">No território</p>
-            <h2 class="s-statement" style="font-size:var(--fs-title);color:#fff">A marca onde o público já está</h2>
+            <p class="s-eyebrow" style="color:rgba(255,255,255,.78)">No território</p>
+            <h2 class="s-statement" style="font-size:var(--fs-title);color:var(--8020-branco)">A marca onde o público já está</h2>
           </div>
         </div>
         <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
@@ -484,7 +485,7 @@
       </div></div></div><figcaption>Imagem com texto sobreposto</figcaption></figure>
 
       <figure><div class="frame"><div class="stage"><div class="slide active">
-        <div class="ph ph-organica" style="position:absolute;inset:0"><span class="ph-tag" style="color:#fff;opacity:.55">Full-bleed</span></div>
+        <div class="ph ph-fill ph-rect" style="position:absolute;inset:0;border:none;border-radius:0"><span class="ph-tag" style="color:var(--8020-branco);opacity:.6">Full-bleed</span></div>
         <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
         <div class="s-foot"><span>Imagem full-bleed</span></div>
       </div></div></div><figcaption>Imagem full-bleed</figcaption></figure>
@@ -494,8 +495,8 @@
         <p class="s-eyebrow">Universo visual</p>
         <h2 class="s-title" style="margin-bottom:8px">A cara da <em>marca</em></h2>
         <div class="s-photogrid">
-          <div class="ph"></div><div class="ph ph-jewel"></div><div class="ph"></div>
-          <div class="ph"></div><div class="ph"></div><div class="ph ph-jewel"></div>
+          <div class="ph"></div><div class="ph ph-fill"></div><div class="ph"></div>
+          <div class="ph"></div><div class="ph"></div><div class="ph ph-fill"></div>
         </div>
         <div class="s-foot"><span>Grade de fotos</span></div>
       </div></div></div><figcaption>Grade de fotos</figcaption></figure>
@@ -523,15 +524,15 @@
           <svg viewBox="0 0 1000 220" role="img" aria-label="Fluxo em quatro etapas: marca, mensagem, canal e público, ligadas por setas da esquerda para a direita." style="width:100%;height:auto">
             <title>Fluxo da mensagem</title>
             <desc>Quatro nodes ligados em sequência: Marca, Mensagem, Canal, Público.</desc>
-            <defs><marker id="arw-flow" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="#ffffff"/></marker></defs>
-            <line x1="210" y1="110" x2="258" y2="110" stroke="#ffffff" stroke-width="2.5" marker-end="url(#arw-flow)"/>
-            <line x1="470" y1="110" x2="518" y2="110" stroke="#ffffff" stroke-width="2.5" marker-end="url(#arw-flow)"/>
-            <line x1="730" y1="110" x2="778" y2="110" stroke="#ffffff" stroke-width="2.5" marker-end="url(#arw-flow)"/>
-            <g font-family="Montserrat" font-weight="700" font-size="26" fill="#ffffff" text-anchor="middle">
-              <rect x="40" y="74" width="170" height="72" rx="10" fill="#d63a10"/><text x="125" y="118">Marca</text>
-              <rect x="300" y="74" width="170" height="72" rx="10" fill="#d63a10"/><text x="385" y="118">Mensagem</text>
-              <rect x="560" y="74" width="170" height="72" rx="10" fill="#d63a10"/><text x="645" y="118">Canal</text>
-              <rect x="820" y="74" width="160" height="72" rx="10" fill="#f5c542"/><text x="900" y="118" fill="#0a0a0a">Público</text>
+            <defs><marker id="arw-flow" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--ink)"/></marker></defs>
+            <line x1="210" y1="110" x2="258" y2="110" style="stroke:var(--ink)" stroke-width="2.5" marker-end="url(#arw-flow)"/>
+            <line x1="470" y1="110" x2="518" y2="110" style="stroke:var(--ink)" stroke-width="2.5" marker-end="url(#arw-flow)"/>
+            <line x1="730" y1="110" x2="778" y2="110" style="stroke:var(--ink)" stroke-width="2.5" marker-end="url(#arw-flow)"/>
+            <g font-family="Montserrat" font-weight="700" font-size="26" style="fill:var(--surface-ink)" text-anchor="middle">
+              <rect x="40" y="74" width="170" height="72" rx="10" style="fill:var(--surface)"/><text x="125" y="118">Marca</text>
+              <rect x="300" y="74" width="170" height="72" rx="10" style="fill:var(--surface)"/><text x="385" y="118">Mensagem</text>
+              <rect x="560" y="74" width="170" height="72" rx="10" style="fill:var(--surface)"/><text x="645" y="118">Canal</text>
+              <rect x="820" y="74" width="160" height="72" rx="10" style="fill:var(--accent)"/><text x="900" y="118" style="fill:var(--accent-ink)">Público</text>
             </g>
           </svg>
         </div>
@@ -546,14 +547,14 @@
           <svg viewBox="0 0 600 320" role="img" aria-label="Diagrama de Venn: o que a marca sabe fazer e o que o público quer se cruzam na zona de relevância." style="width:100%;height:auto">
             <title>Interseção de relevância</title>
             <desc>Dois círculos sobrepostos: capacidade da marca e desejo do público; o encontro é a relevância.</desc>
-            <circle cx="235" cy="160" r="135" fill="rgba(255,255,255,.22)" stroke="#ffffff" stroke-width="2"/>
-            <circle cx="365" cy="160" r="135" fill="rgba(31,78,168,.5)" stroke="#1f4ea8" stroke-width="2"/>
-            <g font-family="Montserrat" font-weight="700" fill="#ffffff" text-anchor="middle">
+            <circle cx="235" cy="160" r="135" style="fill:var(--ink)" fill-opacity=".26" stroke="var(--ink)" stroke-width="2"/>
+            <circle cx="365" cy="160" r="135" style="fill:var(--ink)" fill-opacity=".40" stroke="var(--ink)" stroke-width="2"/>
+            <g font-family="Montserrat" font-weight="700" style="fill:var(--ink)" text-anchor="middle">
               <text x="150" y="160" font-size="20">A marca</text>
               <text x="150" y="186" font-size="20">sabe</text>
               <text x="450" y="160" font-size="20">O público</text>
               <text x="450" y="186" font-size="20">quer</text>
-              <text x="300" y="168" font-size="18" fill="#0a0a0a" font-weight="800">Relevância</text>
+              <text x="300" y="168" font-size="18" style="fill:var(--paper)" font-weight="800">Relevância</text>
             </g>
           </svg>
         </div>
@@ -568,15 +569,15 @@
           <svg viewBox="0 0 760 260" role="img" aria-label="Organograma: uma liderança conecta três frentes, conteúdo, mídia e relacionamento." style="width:100%;height:auto">
             <title>Hierarquia da operação</title>
             <desc>Um node de topo liga-se a três nodes de base por conectores.</desc>
-            <defs><marker id="arw-org" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" fill="rgba(255,255,255,.7)"/></marker></defs>
-            <path d="M380 70 C 380 110, 160 110, 160 150" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" marker-end="url(#arw-org)"/>
-            <path d="M380 70 L 380 150" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" marker-end="url(#arw-org)"/>
-            <path d="M380 70 C 380 110, 600 110, 600 150" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" marker-end="url(#arw-org)"/>
-            <g font-family="Montserrat" font-weight="700" font-size="19" fill="#ffffff" text-anchor="middle">
-              <rect x="290" y="26" width="180" height="46" rx="9" fill="#f5c542"/><text x="380" y="55" fill="#0a0a0a">Liderança</text>
-              <rect x="78" y="156" width="164" height="46" rx="9" fill="#d63a10"/><text x="160" y="185">Conteúdo</text>
-              <rect x="298" y="156" width="164" height="46" rx="9" fill="#d63a10"/><text x="380" y="185">Mídia</text>
-              <rect x="518" y="156" width="164" height="46" rx="9" fill="#d63a10"/><text x="600" y="185">Relação</text>
+            <defs><marker id="arw-org" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--ink)" fill-opacity=".7"/></marker></defs>
+            <path d="M380 72 V112 H160 V152" fill="none" style="stroke:var(--ink)" stroke-opacity=".7" stroke-width="2" marker-end="url(#arw-org)"/>
+            <path d="M380 72 V152" fill="none" style="stroke:var(--ink)" stroke-opacity=".7" stroke-width="2" marker-end="url(#arw-org)"/>
+            <path d="M380 72 V112 H600 V152" fill="none" style="stroke:var(--ink)" stroke-opacity=".7" stroke-width="2" marker-end="url(#arw-org)"/>
+            <g font-family="Montserrat" font-weight="700" font-size="19" style="fill:var(--surface-ink)" text-anchor="middle">
+              <rect x="290" y="26" width="180" height="46" rx="9" style="fill:var(--accent)"/><text x="380" y="55" style="fill:var(--accent-ink)">Liderança</text>
+              <rect x="78" y="156" width="164" height="46" rx="9" style="fill:var(--surface)"/><text x="160" y="185">Conteúdo</text>
+              <rect x="298" y="156" width="164" height="46" rx="9" style="fill:var(--surface)"/><text x="380" y="185">Mídia</text>
+              <rect x="518" y="156" width="164" height="46" rx="9" style="fill:var(--surface)"/><text x="600" y="185">Relação</text>
             </g>
           </svg>
         </div>
@@ -591,13 +592,13 @@
           <svg viewBox="0 0 560 300" role="img" aria-label="Funil de três estágios: 100 mil alcançados, 24 mil interessados, 3 mil convertidos." style="width:100%;height:auto">
             <title>Funil de conversão</title>
             <desc>Três faixas trapezoidais decrescentes do topo para a base.</desc>
-            <polygon points="60,30 500,30 430,120 130,120" fill="rgba(255,255,255,.85)"/>
-            <polygon points="135,128 425,128 370,210 190,210" fill="rgba(255,255,255,.45)"/>
-            <polygon points="195,218 365,218 320,290 240,290" fill="#f5c542"/>
+            <polygon points="60,30 500,30 430,120 130,120" style="fill:var(--ink)" fill-opacity=".85"/>
+            <polygon points="135,128 425,128 370,210 190,210" style="fill:var(--ink)" fill-opacity=".45"/>
+            <polygon points="195,218 365,218 320,290 240,290" style="fill:var(--accent)"/>
             <g font-family="Montserrat" font-weight="800" text-anchor="middle">
-              <text x="280" y="85" font-size="22" fill="#0a0a0a">100 mil alcançados</text>
-              <text x="280" y="178" font-size="20" fill="#0a0a0a">24 mil interessados</text>
-              <text x="280" y="262" font-size="19" fill="#0a0a0a">3 mil convertidos</text>
+              <text x="280" y="85" font-size="22" style="fill:var(--paper)">100 mil alcançados</text>
+              <text x="280" y="178" font-size="20" style="fill:var(--paper)">24 mil interessados</text>
+              <text x="280" y="262" font-size="19" style="fill:var(--accent-ink)">3 mil convertidos</text>
             </g>
           </svg>
         </div>
@@ -636,15 +637,15 @@
           <svg viewBox="0 0 900 300" role="img" aria-label="Gráfico de barras de alcance por praça: Campo Grande 86, Cuiabá 64, Dourados 41, São Paulo 28." style="width:100%;height:auto">
             <title>Alcance por praça</title>
             <desc>Quatro barras horizontais; Campo Grande lidera com 86 e recebe destaque.</desc>
-            <g font-family="Montserrat" font-weight="600" font-size="20" fill="#ffffff">
+            <g font-family="Montserrat" font-weight="600" font-size="20" style="fill:var(--ink)">
               <text x="0" y="46">Campo Grande</text>
-              <rect x="220" y="26" width="630" height="34" rx="5" fill="#f5c542"/><text x="858" y="51" text-anchor="end" fill="#0a0a0a" font-weight="800">86</text>
+              <rect x="220" y="26" width="630" height="34" rx="5" style="fill:var(--accent)"/><text x="838" y="51" text-anchor="end" style="fill:var(--accent-ink)" font-weight="800">86</text>
               <text x="0" y="116">Cuiabá</text>
-              <rect x="220" y="96" width="469" height="34" rx="5" fill="#ffffff"/><text x="700" y="121" fill="#ffffff" font-weight="800">64</text>
+              <rect x="220" y="96" width="469" height="34" rx="5" style="fill:var(--ink)" fill-opacity=".58"/><text x="705" y="121" style="fill:var(--ink)" font-weight="800">64</text>
               <text x="0" y="186">Dourados</text>
-              <rect x="220" y="166" width="300" height="34" rx="5" fill="rgba(255,255,255,.55)"/><text x="532" y="191" fill="#ffffff" font-weight="800">41</text>
+              <rect x="220" y="166" width="300" height="34" rx="5" style="fill:var(--ink)" fill-opacity=".40"/><text x="536" y="191" style="fill:var(--ink)" font-weight="800">41</text>
               <text x="0" y="256">São Paulo</text>
-              <rect x="220" y="236" width="205" height="34" rx="5" fill="rgba(255,255,255,.35)"/><text x="437" y="261" fill="#ffffff" font-weight="800">28</text>
+              <rect x="220" y="236" width="205" height="34" rx="5" style="fill:var(--ink)" fill-opacity=".26"/><text x="441" y="261" style="fill:var(--ink)" font-weight="800">28</text>
             </g>
           </svg>
         </div>
@@ -659,12 +660,12 @@
           <svg viewBox="0 0 940 200" role="img" aria-label="Cronograma horizontal com quatro marcos: lançamento no primeiro trimestre, escuta no segundo, campanha no terceiro e balanço no quarto." style="width:100%;height:auto">
             <title>Cronograma do ano</title>
             <desc>Linha horizontal com quatro pontos rotulados ao longo dos trimestres.</desc>
-            <line x1="40" y1="90" x2="900" y2="90" stroke="rgba(255,255,255,.4)" stroke-width="2"/>
+            <line x1="40" y1="90" x2="900" y2="90" style="stroke:var(--ink)" stroke-opacity=".4" stroke-width="2"/>
             <g font-family="Montserrat" text-anchor="middle">
-              <circle cx="120" cy="90" r="9" fill="#ffffff"/><text x="120" y="56" font-size="17" font-weight="700" fill="#ffffff">1o tri</text><text x="120" y="124" font-size="15" fill="rgba(255,255,255,.72)">Lançamento</text>
-              <circle cx="360" cy="90" r="9" fill="#ffffff"/><text x="360" y="56" font-size="17" font-weight="700" fill="#ffffff">2o tri</text><text x="360" y="124" font-size="15" fill="rgba(255,255,255,.72)">Escuta</text>
-              <circle cx="600" cy="90" r="12" fill="#f5c542"/><text x="600" y="52" font-size="17" font-weight="800" fill="#f5c542">3o tri</text><text x="600" y="124" font-size="15" fill="#ffffff" font-weight="700">Campanha</text>
-              <circle cx="840" cy="90" r="9" fill="#ffffff"/><text x="840" y="56" font-size="17" font-weight="700" fill="#ffffff">4o tri</text><text x="840" y="124" font-size="15" fill="rgba(255,255,255,.72)">Balanço</text>
+              <circle cx="120" cy="90" r="9" style="fill:var(--ink)" fill-opacity=".58"/><text x="120" y="56" font-size="17" font-weight="700" style="fill:var(--ink)">1o tri</text><text x="120" y="124" font-size="15" style="fill:var(--muted)">Lançamento</text>
+              <circle cx="360" cy="90" r="9" style="fill:var(--ink)" fill-opacity=".58"/><text x="360" y="56" font-size="17" font-weight="700" style="fill:var(--ink)">2o tri</text><text x="360" y="124" font-size="15" style="fill:var(--muted)">Escuta</text>
+              <circle cx="600" cy="90" r="12" style="fill:var(--accent)"/><text x="600" y="52" font-size="17" font-weight="800" style="fill:var(--accent)">3o tri</text><text x="600" y="124" font-size="15" style="fill:var(--ink)" font-weight="700">Campanha</text>
+              <circle cx="840" cy="90" r="9" style="fill:var(--ink)" fill-opacity=".58"/><text x="840" y="56" font-size="17" font-weight="700" style="fill:var(--ink)">4o tri</text><text x="840" y="124" font-size="15" style="fill:var(--muted)">Balanço</text>
             </g>
           </svg>
         </div>
@@ -679,16 +680,16 @@
           <svg viewBox="0 0 920 250" role="img" aria-label="Gantt de três frentes ao longo de quatro trimestres: conteúdo do primeiro ao quarto, mídia do segundo ao terceiro, eventos no quarto." style="width:100%;height:auto">
             <title>Gantt das frentes</title>
             <desc>Três faixas horizontais com barras posicionadas por trimestre.</desc>
-            <g font-family="Montserrat" font-size="16" fill="rgba(255,255,255,.56)" font-weight="600">
+            <g font-family="Montserrat" font-size="16" style="fill:var(--muted)" font-weight="600">
               <text x="40" y="36">1o tri</text><text x="250" y="36">2o tri</text><text x="460" y="36">3o tri</text><text x="670" y="36">4o tri</text>
             </g>
-            <line x1="220" y1="20" x2="220" y2="230" stroke="rgba(255,255,255,.14)"/>
-            <line x1="430" y1="20" x2="430" y2="230" stroke="rgba(255,255,255,.14)"/>
-            <line x1="640" y1="20" x2="640" y2="230" stroke="rgba(255,255,255,.14)"/>
-            <g font-family="Montserrat" font-weight="700" font-size="17" fill="#ffffff">
-              <text x="40" y="86">Conteúdo</text><rect x="220" y="68" width="640" height="26" rx="6" fill="#ffffff"/>
-              <text x="40" y="146">Mídia</text><rect x="430" y="128" width="210" height="26" rx="6" fill="rgba(255,255,255,.55)"/>
-              <text x="40" y="206">Eventos</text><rect x="640" y="188" width="220" height="26" rx="6" fill="#f5c542"/>
+            <line x1="220" y1="20" x2="220" y2="230" style="stroke:var(--ink)" stroke-opacity=".14"/>
+            <line x1="430" y1="20" x2="430" y2="230" style="stroke:var(--ink)" stroke-opacity=".14"/>
+            <line x1="640" y1="20" x2="640" y2="230" style="stroke:var(--ink)" stroke-opacity=".14"/>
+            <g font-family="Montserrat" font-weight="700" font-size="17" style="fill:var(--ink)">
+              <text x="40" y="86">Conteúdo</text><rect x="220" y="68" width="640" height="26" rx="6" style="fill:var(--ink)" fill-opacity=".58"/>
+              <text x="40" y="146">Mídia</text><rect x="430" y="128" width="210" height="26" rx="6" style="fill:var(--ink)" fill-opacity=".40"/>
+              <text x="40" y="206">Eventos</text><rect x="640" y="188" width="220" height="26" rx="6" style="fill:var(--accent)"/>
             </g>
           </svg>
         </div>
@@ -702,14 +703,14 @@
         <div class="s-viz">
           <svg viewBox="0 0 920 210" role="img" aria-label="Roadmap de três fases: presença, relação e preferência, com a fase de relação em foco." style="width:100%;height:auto">
             <title>Roadmap de fases</title>
-            <desc>Três blocos sequenciais ligados por setas; o do meio recebe a joia.</desc>
-            <defs><marker id="arw-rm" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="rgba(255,255,255,.7)"/></marker></defs>
-            <line x1="288" y1="105" x2="320" y2="105" stroke="rgba(255,255,255,.7)" stroke-width="2.5" marker-end="url(#arw-rm)"/>
-            <line x1="600" y1="105" x2="632" y2="105" stroke="rgba(255,255,255,.7)" stroke-width="2.5" marker-end="url(#arw-rm)"/>
+            <desc>Três blocos sequenciais ligados por setas; o do meio recebe o acento.</desc>
+            <defs><marker id="arw-rm" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" style="fill:var(--ink)" fill-opacity=".7"/></marker></defs>
+            <line x1="288" y1="105" x2="320" y2="105" style="stroke:var(--ink)" stroke-opacity=".7" stroke-width="2.5" marker-end="url(#arw-rm)"/>
+            <line x1="600" y1="105" x2="632" y2="105" style="stroke:var(--ink)" stroke-opacity=".7" stroke-width="2.5" marker-end="url(#arw-rm)"/>
             <g font-family="Montserrat" text-anchor="middle">
-              <rect x="40" y="50" width="248" height="110" rx="12" fill="#d63a10"/><text x="164" y="100" font-size="22" font-weight="800" fill="#ffffff">Fase 1</text><text x="164" y="130" font-size="17" fill="rgba(255,255,255,.85)">Presença</text>
-              <rect x="336" y="50" width="264" height="110" rx="12" fill="#f5c542"/><text x="468" y="100" font-size="22" font-weight="800" fill="#0a0a0a">Fase 2</text><text x="468" y="130" font-size="17" fill="#0a0a0a">Relação</text>
-              <rect x="648" y="50" width="232" height="110" rx="12" fill="#d63a10"/><text x="764" y="100" font-size="22" font-weight="800" fill="#ffffff">Fase 3</text><text x="764" y="130" font-size="17" fill="rgba(255,255,255,.85)">Preferência</text>
+              <rect x="40" y="50" width="248" height="110" rx="12" style="fill:var(--surface)"/><text x="164" y="100" font-size="22" font-weight="800" style="fill:var(--surface-ink)">Fase 1</text><text x="164" y="130" font-size="17" style="fill:var(--surface-ink)" fill-opacity=".85">Presença</text>
+              <rect x="336" y="50" width="264" height="110" rx="12" style="fill:var(--accent)"/><text x="468" y="100" font-size="22" font-weight="800" style="fill:var(--accent-ink)">Fase 2</text><text x="468" y="130" font-size="17" style="fill:var(--accent-ink)">Relação</text>
+              <rect x="648" y="50" width="232" height="110" rx="12" style="fill:var(--surface)"/><text x="764" y="100" font-size="22" font-weight="800" style="fill:var(--surface-ink)">Fase 3</text><text x="764" y="130" font-size="17" style="fill:var(--surface-ink)" fill-opacity=".85">Preferência</text>
             </g>
           </svg>
         </div>
@@ -749,7 +750,7 @@
       <figure><div class="frame"><div class="stage"><div class="slide active">
         <img class="s-logo" src="../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
         <div class="s-persona">
-          <div class="s-portrait"><div class="ph ph-jewel"><span class="ph-tag" style="color:#fff;opacity:.6">Retrato</span></div></div>
+          <div class="s-portrait"><div class="ph ph-fill"><span class="ph-tag" style="color:var(--8020-branco);opacity:.65">Retrato</span></div></div>
           <div class="s-col">
             <p class="s-persona-name">Marina, 38</p>
             <p class="s-persona-role">Comerciante, decide a compra da família</p>
@@ -781,7 +782,7 @@
 
     </div>
   </div>
-  <p class="doc-when"><b>Quando usar a tabela:</b> quando há mais de duas opções e três ou mais critérios. A coluna que decide o argumento vai na tinta branca (<span class="doc-code">.col-hot</span>); o resto fica em corpo neutro.</p>
+  <p class="doc-when"><b>Quando usar a tabela:</b> quando há mais de duas opções e três ou mais critérios. A coluna que decide o argumento vai na tinta cheia (<span class="doc-code">.col-hot</span>); o resto fica em corpo neutro.</p>
 </div></section>
 
 <!-- ============================ TERRITORIO E ECOSSISTEMA ============================ -->
@@ -834,7 +835,7 @@
 
     </div>
   </div>
-  <p class="doc-when"><b>Quando usar o mapa:</b> presença geográfica de fato, com praças nomeadas. O pino-herói na joia marca a praça principal; os demais ficam na tinta. Especificidade sempre: o nome da cidade, nunca um pino mudo.</p>
+  <p class="doc-when"><b>Quando usar o mapa:</b> presença geográfica de fato, com praças nomeadas. O pino-herói no acento marca a praça principal; os demais ficam na tinta. Especificidade sempre: o nome da cidade, nunca um pino mudo.</p>
 </div></section>
 
 <!-- ============================ DEFINICAO E FECHAMENTO ============================ -->

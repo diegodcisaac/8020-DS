@@ -12,23 +12,22 @@
      CSS local SO desta pagina: scaffolding de specimen de imagem.
      Como o catalogo nao referencia arquivos externos, os lugares
      que pediriam <img> sao representados por placeholders <div>
-     com background. Eles imitam exatamente o tratamento real
-     (clip-path organica, raio retangular, scrim de overlay) para
-     a documentacao ser fiel. Em producao, troca-se o placeholder
-     pelo <img> dentro do mesmo invólucro .b-figure / .b-overlay.
-     Tudo via papeis semanticos.
+     com fundo de marca (gradiente laranja aprofundado -> chumbo).
+     Eles imitam o tratamento real (raio retangular, borda fina,
+     scrim de overlay) para a documentacao ser fiel. Em producao,
+     troca-se o placeholder pelo <img> dentro do mesmo invólucro
+     .b-figure / .b-overlay. Imagem e sempre reta: retangulo com
+     raio e borda fina, sem recorte organico. Tudo via papeis
+     semanticos, para adaptar aos tres tons.
      ============================================================ */
 
-  /* superficie-base de qualquer placeholder de foto */
+  /* superficie-base de qualquer placeholder de foto: gradiente de marca */
   .ph {
     position: relative;
     display: grid;
     place-items: center;
-    color: color-mix(in srgb, var(--ink) 78%, transparent);
-    background:
-      linear-gradient(135deg,
-        color-mix(in srgb, var(--floor) 92%, transparent) 0%,
-        color-mix(in srgb, var(--surface) 70%, var(--floor)) 100%);
+    color: var(--floor-ink);
+    background: var(--grad-fundo);
     overflow: hidden;
   }
   /* trama sutil pra leitura de "imagem", nao de bloco chapado */
@@ -37,7 +36,8 @@
     position: absolute; inset: 0;
     background-image:
       repeating-linear-gradient(135deg,
-        rgba(255,255,255,.05) 0 2px, transparent 2px 18px);
+        color-mix(in srgb, var(--floor-ink) 6%, transparent) 0 2px,
+        transparent 2px 18px);
     pointer-events: none;
   }
   .ph-tag {
@@ -48,16 +48,9 @@
     text-transform: uppercase;
     color: color-mix(in srgb, var(--floor-ink) 70%, transparent);
     padding: 5px 12px;
-    border: 1px solid var(--line);
+    border: 1px solid color-mix(in srgb, var(--floor-ink) 26%, transparent);
     border-radius: var(--radius-pill);
   }
-
-  /* - modo recortado (organica): placeholder usa o mesmo clip-path do .b-figure.organica - */
-  .ph-organica {
-    aspect-ratio: 6 / 5;
-    clip-path: path("M 0 80 C 120 0 460 0 600 70 C 740 140 760 360 640 460 C 520 560 160 580 60 500 C -40 420 -20 160 0 80 Z");
-  }
-  /* viewBox do path original e ~760x580; o aspect-ratio aproxima o enquadramento */
 
   /* - modo retangular: placeholder com raio + borda finos da casa - */
   .ph-rect {
@@ -72,12 +65,13 @@
     aspect-ratio: 21 / 9;
   }
 
-  /* - overlay: placeholder + scrim preto + titulo branco por cima - */
+  /* - overlay: placeholder reto + scrim escuro + titulo claro por cima - */
   .ph-overlay {
     position: relative;
     min-height: 320px;
     aspect-ratio: 16 / 9;
     border-radius: var(--radius);
+    border: 1px solid var(--line);
     overflow: hidden;
     display: grid;
     align-items: end;
@@ -85,11 +79,13 @@
   .ph-overlay::after {
     content: "";
     position: absolute; inset: 0;
-    background: linear-gradient(0deg, rgba(10,10,10,.82), rgba(10,10,10,.08) 70%);
+    background: linear-gradient(0deg,
+      color-mix(in srgb, var(--8020-chumbo) 88%, transparent),
+      color-mix(in srgb, var(--8020-chumbo) 8%, transparent) 70%);
   }
   .ph-overlay .ph-overlay-body { position: relative; z-index: 2; padding: 28px clamp(20px, 4vw, 40px); }
-  .ph-overlay .ph-eyebrow { font-size: var(--fs-micro); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: rgba(255,255,255,.78); margin: 0 0 8px; }
-  .ph-overlay h3 { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-statement); line-height: var(--lh-tight); color: #fff; margin: 0; }
+  .ph-overlay .ph-eyebrow { font-size: var(--fs-micro); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: color-mix(in srgb, var(--floor-ink) 78%, transparent); margin: 0 0 8px; }
+  .ph-overlay h3 { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-statement); line-height: var(--lh-tight); color: var(--floor-ink); margin: 0; }
   .ph-overlay h3 em { font-style: italic; font-weight: var(--w-black); font-size: 1.08em; }
 
   /* - grade de fotos: placeholders quadrados/retangulares em mosaico - */
@@ -102,7 +98,7 @@
   .ph-tintwrap .ph { position: absolute; inset: 0; }
   .ph-tintwrap .ph-tint {
     position: absolute; inset: 0; z-index: 1;
-    background: var(--paper);
+    background: var(--8020-laranja);
     mix-blend-mode: multiply;
     opacity: .55;
   }
@@ -110,19 +106,15 @@
     position: absolute; z-index: 2; left: 14px; bottom: 12px;
     font-family: var(--font-data); font-size: var(--fs-micro);
     letter-spacing: var(--tracking-label); text-transform: uppercase;
-    color: #fff; padding: 4px 10px;
-    background: rgba(10,10,10,.4); border-radius: var(--radius-pill);
+    color: var(--floor-ink); padding: 4px 10px;
+    background: color-mix(in srgb, var(--8020-chumbo) 55%, transparent); border-radius: var(--radius-pill);
   }
 
   /* par de placeholders lado a lado pra comparar com/sem tint */
   .ph-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
-  /* split texto + foto recortada (espelhavel), pra demonstrar uso */
-  .ph-split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-  .ph-split .ph-organica { aspect-ratio: 1 / 1; }
-
   @media (max-width: 700px) {
-    .ph-pair, .ph-split { grid-template-columns: 1fr; }
+    .ph-pair { grid-template-columns: 1fr; }
     .ph-grid { grid-template-columns: repeat(2, 1fr); }
     .ph-grid .ph.wide { grid-column: span 2; }
   }
@@ -150,7 +142,7 @@
 <header class="doc-hero"><div class="doc-wrap">
   <p class="doc-eyebrow">Imagens no sistema</p>
   <h1>Foto entra pela porta da <em>casa</em></h1>
-  <p class="doc-lead">A casa não usa foto solta. Toda imagem recebe um de seis tratamentos, cada um com um trabalho narrativo definido: recortar para emocionar, enquadrar para provar, sangrar para mergulhar, sobrepor para abrir, agrupar para contextualizar e tingir para unificar.</p>
+  <p class="doc-lead">A casa não usa foto solta nem recorte orgânico. Toda imagem é reta: retângulo com raio e borda fina. O que muda é a função narrativa, e cada tratamento tem um trabalho definido: enquadrar para provar, sangrar para mergulhar, sobrepor para abrir, agrupar para contextualizar e tingir para unificar.</p>
 </div></header>
 
 <!-- ============================================================
@@ -159,8 +151,8 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">00</span><p class="doc-kicker">A regra-mãe</p></div>
   <h2>Foto nunca aparece <em>crua</em></h2>
-  <p>O substrato laranja é exigente: uma fotografia jogada ali sem tratamento briga com a marca, perde contraste e some sob o display branco. Por isso a casa trabalha em modos. Cada modo decide a forma da borda, a presença de legenda e o respiro vertical, e isso resolve dois problemas de uma vez: a imagem fica legível e fala a mesma língua das outras páginas.</p>
-  <p>A escolha do modo segue a <strong>função da imagem</strong>, não o gosto da página. Se a foto é protagonista emocional, ela é recortada. Se é evidência de uma série, é retangular. Se separa dois movimentos do documento, é full-bleed. A pergunta certa antes de inserir uma foto é sempre a mesma: o que esta imagem precisa fazer aqui?</p>
+  <p>O substrato laranja é exigente: uma fotografia jogada ali sem tratamento briga com a marca, perde contraste e some sob o display branco. Por isso toda imagem entra reta, num retângulo com raio e borda fina, dentro de um invólucro que decide a presença de legenda e o respiro vertical. Isso resolve dois problemas de uma vez: a imagem fica legível e fala a mesma língua das outras páginas. A casa não recorta foto em forma orgânica.</p>
+  <p>O que muda não é a forma, é a <strong>função da imagem</strong> na página. Se é evidência de uma série, ela ganha legenda. Se separa dois movimentos do documento, ocupa a tela inteira. Se abre uma seção, recebe o título por cima. A pergunta certa antes de inserir uma foto é sempre a mesma: o que esta imagem precisa fazer aqui?</p>
 
   <div class="doc-grid doc-2" style="margin-top:28px;">
     <div class="doc-note do">
@@ -177,54 +169,12 @@
 </div></section>
 
 <!-- ============================================================
-     01 - RECORTADA (organica)
+     01 - RETANGULAR tradicional
      ============================================================ -->
 <section class="doc-section"><div class="doc-wrap">
-  <div class="doc-shoulder"><span class="doc-num">01</span><p class="doc-kicker">Modo recortado</p></div>
-  <h2>A borda orgânica que <em>sangra</em></h2>
-  <p>O recorte orgânico é a assinatura da casa. A foto é mascarada por uma forma de curvas largas via <code class="doc-code">clip-path</code>, perdendo o retângulo e ganhando movimento. A borda irregular dialoga com as máscaras orgânicas e os dash-glyphs documentados em Elementos, e cria a sensação de que a imagem brota do campo laranja em vez de pousar sobre ele.</p>
-
-  <div class="doc-specimen">
-    <span class="doc-specimen-label">Recorte orgânico via clip-path</span>
-    <div class="ph ph-organica" aria-hidden="true">
-      <span class="ph-tag">imagem · retrato</span>
-    </div>
-    <p class="doc-when"><b>Quando usar:</b> abertura de seção, retrato de pessoa, qualquer imagem que seja protagonista emocional. É o modo que carrega afeto e presença, por isso entra com parcimônia, no momento alto da página.</p>
-  </div>
-
-  <h3>Aplicado em um split texto e foto</h3>
-  <p>O recorte rende bem ao lado de texto, espelhável conforme a leitura. A forma orgânica equilibra a coluna tipográfica e dá ar ao bloco.</p>
-  <div class="doc-specimen plain">
-    <span class="doc-specimen-label">Split: recorte orgânico ao lado do texto</span>
-    <div class="ph-split">
-      <div class="ph ph-organica" aria-hidden="true"><span class="ph-tag">imagem · retrato</span></div>
-      <div>
-        <h3 style="margin-top:0;">Presença, não pose</h3>
-        <p style="color:var(--ink-body);">No retrato recortado a pessoa parece pertencer à página, não posar para ela. A forma orgânica recorta o fundo distrativo e mantém o olhar no rosto. Esse é o uso clássico em abertura de persona ou depoimento.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="doc-grid doc-2" style="margin-top:24px;">
-    <div class="doc-note do">
-      <span class="doc-note-tag">Faça</span>
-      <span>Reservar o recorte para o momento emocional alto. Conferir que o assunto da foto cabe dentro da máscara, sem cortar rosto ou ponto focal na curva.</span>
-    </div>
-    <div class="doc-note dont">
-      <span class="doc-note-tag">Não faça</span>
-      <span>Recortar tabela, captura de tela, gráfico ou documento. A forma orgânica deforma a leitura de qualquer imagem que dependa de retângulo. Para isso existe o modo retangular.</span>
-    </div>
-  </div>
-  <p style="margin-top:18px;font-size:var(--fs-small);color:var(--muted);">No book, este modo é a classe <code class="doc-code">.b-figure.organica</code> com um <code class="doc-code">&lt;img&gt;</code> dentro. O mesmo recorte vive no deck como <code class="doc-code">.s-photo--organica</code> e <code class="doc-code">.s-photo--blob</code>.</p>
-</div></section>
-
-<!-- ============================================================
-     02 - RETANGULAR tradicional
-     ============================================================ -->
-<section class="doc-section"><div class="doc-wrap">
-  <div class="doc-shoulder"><span class="doc-num">02</span><p class="doc-kicker">Modo retangular</p></div>
+  <div class="doc-shoulder"><span class="doc-num">01</span><p class="doc-kicker">Modo retangular</p></div>
   <h2>O enquadramento que <em>prova</em></h2>
-  <p>O retângulo é o modo sóbrio. Raio <code class="doc-code">--radius</code>, borda fina <code class="doc-code">--line</code> e legenda em <code class="doc-code">.b-figcap</code> logo abaixo. Nada de recorte: a imagem é exibida inteira, sem teatro, porque seu papel é servir de evidência. A legenda contextualiza o que se vê, na própria frase, sem depender do parágrafo anterior.</p>
+  <p>O retângulo é a forma única da casa. Raio <code class="doc-code">--radius</code>, borda fina <code class="doc-code">--line</code> e legenda em <code class="doc-code">.b-figcap</code> logo abaixo. A imagem é exibida inteira, sem teatro, porque seu papel é servir de evidência. A legenda contextualiza o que se vê, na própria frase, sem depender do parágrafo anterior.</p>
 
   <div class="doc-specimen">
     <span class="doc-specimen-label">Retangular com raio, borda e legenda</span>
@@ -265,10 +215,10 @@
 </div></section>
 
 <!-- ============================================================
-     03 - FULL-BLEED
+     02 - FULL-BLEED
      ============================================================ -->
 <section class="doc-section"><div class="doc-wrap">
-  <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">Modo full-bleed</p></div>
+  <div class="doc-shoulder"><span class="doc-num">02</span><p class="doc-kicker">Modo full-bleed</p></div>
   <h2>A imagem que toma a <em>tela</em></h2>
   <p>O full-bleed rompe a coluna de leitura e ocupa toda a largura da viewport via <code class="doc-code">.b-figure.bleed</code>. É o modo de imersão e de separatriz: marca a virada entre dois movimentos do documento e dá ao leitor um instante sem texto para respirar. Por ser dominante, aparece poucas vezes, em momentos de transição.</p>
 </div></section>
@@ -296,15 +246,15 @@
 </div></section>
 
 <!-- ============================================================
-     04 - COM TEXTO SOBREPOSTO (overlay)
+     03 - COM TEXTO SOBREPOSTO (overlay)
      ============================================================ -->
 <section class="doc-section"><div class="doc-wrap">
-  <div class="doc-shoulder"><span class="doc-num">04</span><p class="doc-kicker">Modo sobreposto</p></div>
+  <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">Modo sobreposto</p></div>
   <h2>O título que pousa na <em>imagem</em></h2>
-  <p>No modo sobreposto, o componente <code class="doc-code">.b-overlay</code> coloca um título branco por cima da foto, com um scrim em gradiente preto subindo da base para garantir contraste. O texto fica ancorado embaixo, sobre a parte mais escura, e a imagem vira o palco de uma capa de seção. É o único lugar onde o display branco encosta diretamente em fotografia.</p>
+  <p>No modo sobreposto, o componente <code class="doc-code">.b-overlay</code> coloca um título claro por cima da foto reta, com um scrim em gradiente escuro subindo da base para garantir contraste. O texto fica ancorado embaixo, sobre a parte mais densa, e a imagem vira o palco de uma capa de seção. É o único lugar onde o display claro encosta diretamente em fotografia.</p>
 
   <div class="doc-specimen plain">
-    <span class="doc-specimen-label">Overlay: scrim preto + título branco</span>
+    <span class="doc-specimen-label">Overlay: scrim escuro + título claro</span>
     <div class="ph ph-overlay" aria-hidden="true">
       <div class="ph-overlay-body">
         <p class="ph-eyebrow">Capítulo dois</p>
@@ -317,7 +267,7 @@
   <div class="doc-grid doc-2" style="margin-top:24px;">
     <div class="doc-note do">
       <span class="doc-note-tag">Faça</span>
-      <span>Manter o scrim escuro o suficiente para o branco passar com folga. Ancorar o texto na base, onde o gradiente é mais denso. Reservar este modo para títulos curtos.</span>
+      <span>Manter o scrim escuro o suficiente para o título passar com folga. Ancorar o texto na base, onde o gradiente é mais denso. Reservar este modo para títulos curtos.</span>
     </div>
     <div class="doc-note dont">
       <span class="doc-note-tag">Não faça</span>
@@ -328,10 +278,10 @@
 </div></section>
 
 <!-- ============================================================
-     05 - GRADE DE FOTOS
+     04 - GRADE DE FOTOS
      ============================================================ -->
 <section class="doc-section"><div class="doc-wrap">
-  <div class="doc-shoulder"><span class="doc-num">05</span><p class="doc-kicker">Modo em grade</p></div>
+  <div class="doc-shoulder"><span class="doc-num">04</span><p class="doc-kicker">Modo em grade</p></div>
   <h2>O mosaico que dá <em>contexto</em></h2>
   <p>A grade reúne várias imagens num mosaico de proporções constantes. Serve para contexto coletivo: um conjunto de cenas, uma amostra de campo, um painel de referências. Nenhuma imagem domina, e é justamente a soma que conta a história. A grade responde aos breakpoints da casa, recompondo de três colunas para duas em telas menores.</p>
 
@@ -355,16 +305,16 @@
     </div>
     <div class="doc-note dont">
       <span class="doc-note-tag">Não faça</span>
-      <span>Misturar recorte orgânico com retângulo na mesma grade, nem variar a proporção célula a célula. O mosaico vive da regularidade; a quebra vira ruído.</span>
+      <span>Variar a proporção célula a célula, nem alternar raio e espessura de borda entre as imagens. O mosaico vive da regularidade; a quebra vira ruído.</span>
     </div>
   </div>
 </div></section>
 
 <!-- ============================================================
-     06 - PLACEHOLDER e TINT
+     05 - PLACEHOLDER e TINT
      ============================================================ -->
 <section class="doc-section"><div class="doc-wrap">
-  <div class="doc-shoulder"><span class="doc-num">06</span><p class="doc-kicker">Placeholder e tingimento</p></div>
+  <div class="doc-shoulder"><span class="doc-num">05</span><p class="doc-kicker">Placeholder e tingimento</p></div>
   <h2>O lugar reservado e o tom que <em>unifica</em></h2>
   <p>Antes de a foto chegar, o lugar dela já existe. O placeholder padrão preenche o espaço com uma superfície neutra escura e um rótulo, mantendo o layout estável e indicando ali vai imagem. É o mesmo princípio do retrato em <code class="doc-code">.b-persona .b-portrait</code> e da mídia em <code class="doc-code">.b-infocard.rich .b-ic-media</code>.</p>
 
@@ -414,9 +364,9 @@
      RESUMO: tabela de decisao
      ============================================================ -->
 <section class="doc-section"><div class="doc-wrap">
-  <div class="doc-shoulder"><span class="doc-num">07</span><p class="doc-kicker">Decisão rápida</p></div>
+  <div class="doc-shoulder"><span class="doc-num">06</span><p class="doc-kicker">Decisão rápida</p></div>
   <h2>Qual modo para cada <em>função</em></h2>
-  <p>O modo segue a função da imagem na página. Esta é a leitura rápida para decidir sem hesitação na hora de inserir uma foto.</p>
+  <p>A forma é sempre o retângulo reto. O que muda é a função da imagem na página. Esta é a leitura rápida para decidir sem hesitação na hora de inserir uma foto.</p>
 
   <div style="overflow-x:auto;">
   <table class="doc-table">
@@ -424,12 +374,6 @@
       <tr><th>Modo</th><th>Classe</th><th>Função</th><th>Quando</th></tr>
     </thead>
     <tbody>
-      <tr>
-        <td><strong>Recortado</strong></td>
-        <td><span class="doc-code">.b-figure.organica</span></td>
-        <td>Emocionar, dar presença</td>
-        <td>Retrato, abertura, protagonista emocional</td>
-      </tr>
       <tr>
         <td><strong>Retangular</strong></td>
         <td><span class="doc-code">.b-figure.rect</span></td>
@@ -456,7 +400,7 @@
       </tr>
       <tr>
         <td><strong>Tingido</strong></td>
-        <td><span class="doc-code">multiply</span> + <span class="doc-code">--paper</span></td>
+        <td><span class="doc-code">multiply</span> + <span class="doc-code">--8020-laranja</span></td>
         <td>Unificar fotos heterogêneas</td>
         <td>Material de fontes diversas</td>
       </tr>
@@ -466,7 +410,7 @@
 
   <div class="doc-note dont" style="margin-top:28px;">
     <span class="doc-note-tag">A falha que não se perdoa</span>
-    <span>Foto solta, crua, colada direto sobre o laranja sem invólucro nem tratamento. Se uma imagem não se encaixa em nenhum dos seis modos, a pergunta não é qual estilo aplicar: é se aquela imagem precisa mesmo estar ali.</span>
+    <span>Foto solta, crua, colada direto sobre o laranja sem invólucro nem tratamento, ou recortada em forma orgânica. Se uma imagem não se encaixa em nenhum dos modos retos, a pergunta não é qual estilo aplicar: é se aquela imagem precisa mesmo estar ali.</span>
   </div>
 </div></section>
 

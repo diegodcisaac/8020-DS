@@ -12,7 +12,7 @@
      scaffolding local SO desta página (antipatterns/forbidden.html)
      Reaproveita o cromo .doc-* das páginas de catálogo. Aqui
      o trabalho é mostrar o erro em miniatura, marcado como
-     "Não use", ao lado do certo. A joia entra escassa, dentro
+     "Não use", ao lado do certo. O acento entra escasso, dentro
      do teto de três por página de peça de exemplo.
      ============================================================ */
 
@@ -24,7 +24,7 @@
   /* aviso de que tudo aqui é exemplo fictício */
   .ap-disclaimer {
     display: flex; gap: 12px; align-items: flex-start;
-    border: 1px solid var(--line); border-left: 3px solid var(--accent-areia);
+    border: 1px solid var(--line); border-left: 3px solid var(--accent);
     border-radius: var(--radius-sm); padding: 14px 18px; margin: 22px 0 0;
     background: color-mix(in srgb, var(--ink) 5%, transparent);
   }
@@ -74,17 +74,17 @@
   .ap-onorange .ap-t.voice { color: var(--8020-branco); }
 
   /* 03 · gradiente */
-  .ap-grad-bad { background: linear-gradient(135deg, #37b34a 0%, #f5c542 100%); border-radius: var(--radius-sm); padding: 18px 20px; }
+  .ap-grad-bad { background: linear-gradient(135deg, #1f4ea8 0%, #f5c542 100%); border-radius: var(--radius-sm); padding: 18px 20px; }
   .ap-grad-bad p { color: #fff; font-size: var(--fs-small); line-height: 1.5; margin: 0; max-width: 44ch; }
   .ap-grad-good { border-radius: var(--radius-sm); overflow: hidden; }
-  .ap-grad-hero { background: var(--jewel-quente); height: 64px; display: flex; align-items: center; justify-content: center; }
-  .ap-grad-hero span { font-family: var(--font-display); font-weight: var(--w-black); font-size: 30px; color: var(--8020-preto); font-variant-numeric: tabular-nums; }
+  .ap-grad-hero { background: var(--grad-quente); height: 64px; display: flex; align-items: center; justify-content: center; }
+  .ap-grad-hero span { font-family: var(--font-display); font-weight: var(--w-black); font-size: 30px; color: var(--surface-ink); font-variant-numeric: tabular-nums; }
   .ap-grad-good .ap-grad-cap { background: color-mix(in srgb, var(--ink) 5%, transparent); padding: 11px 14px; font-size: var(--fs-small); color: var(--ink-body); line-height: 1.45; margin: 0; }
 
   /* 04 · imagem */
-  .ap-photo-bad { display: inline-block; transform: rotate(-3deg); box-shadow: 0 6px 18px rgba(0,0,0,.35); border: 5px solid #fff; }
-  .ap-photo-bad img { display: block; width: 150px; height: 100px; object-fit: cover; }
-  .ap-photo-good { border-radius: var(--radius-sm); overflow: hidden; }
+  .ap-photo-bad { display: inline-block; }
+  .ap-photo-bad img { display: block; width: 160px; height: 120px; object-fit: cover; clip-path: ellipse(48% 46% at 50% 50%); }
+  .ap-photo-good { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); }
   .ap-photo-good img { display: block; width: 100%; height: 118px; object-fit: cover; }
   .ap-photo-cap { font-size: var(--fs-micro); color: var(--muted); margin: 10px 0 0; letter-spacing: .02em; }
 
@@ -147,7 +147,7 @@
   <p class="doc-lead">Um sistema fica de pé tanto pelo que permite quanto pelo que recusa. Cada regra abaixo aparece em par: à esquerda o erro, renderizado em miniatura e marcado para não restar dúvida; à direita a forma aprovada, com a razão da escolha. A leitura é rápida de propósito, para servir de conferência antes de fechar qualquer peça.</p>
 
   <div class="ap-disclaimer">
-    <svg viewBox="0 0 20 20" fill="none" stroke="var(--accent-areia)" stroke-width="1.6" width="20" height="20" style="flex:none; margin-top:1px" aria-hidden="true">
+    <svg viewBox="0 0 20 20" fill="none" stroke="var(--accent)" stroke-width="1.6" width="20" height="20" style="flex:none; margin-top:1px" aria-hidden="true">
       <circle cx="10" cy="10" r="8"/>
       <path d="M10 6.4 v4.4 M10 13.6 h.01" stroke-linecap="round"/>
     </svg>
@@ -157,11 +157,11 @@
   <ol class="ap-index" aria-label="Regras desta página">
     <li><span class="ap-ix-n">01</span><span class="ap-ix-t"><b>Laranja</b> só o da marca</span></li>
     <li><span class="ap-ix-n">02</span><span class="ap-ix-t"><b>Corpo</b> em preto sobre o laranja</span></li>
-    <li><span class="ap-ix-n">03</span><span class="ap-ix-t"><b>Gradiente</b> só como joia heroína</span></li>
-    <li><span class="ap-ix-n">04</span><span class="ap-ix-t"><b>Foto</b> recortada, com respiro</span></li>
+    <li><span class="ap-ix-n">03</span><span class="ap-ix-t"><b>Gradiente</b> só de marca, como herói</span></li>
+    <li><span class="ap-ix-n">04</span><span class="ap-ix-t"><b>Foto</b> reta, com respiro</span></li>
     <li><span class="ap-ix-n">05</span><span class="ap-ix-t"><b>Seta</b> sempre via marcador</span></li>
     <li><span class="ap-ix-n">06</span><span class="ap-ix-t"><b>Barra</b> de dado em SVG real</span></li>
-    <li><span class="ap-ix-n">07</span><span class="ap-ix-t"><b>Joia</b> escassa, no máximo três</span></li>
+    <li><span class="ap-ix-n">07</span><span class="ap-ix-t"><b>Acento</b> escasso, no máximo três</span></li>
     <li><span class="ap-ix-n">08</span><span class="ap-ix-t"><b>Montserrat</b> em tudo</span></li>
     <li><span class="ap-ix-n">09</span><span class="ap-ix-t"><b>Logo</b> intacta</span></li>
     <li><span class="ap-ix-n">10</span><span class="ap-ix-t"><b>Título</b> que atiça, não conta</span></li>
@@ -240,9 +240,9 @@
 
 <!-- ============ 03 · GRADIENTE ============ -->
 <section class="doc-section"><div class="doc-wrap">
-  <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">Gradiente joia</p></div>
+  <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">Gradiente</p></div>
   <h2>Gradiente é superfície heroína, nunca <em>tapete</em></h2>
-  <p>Os gradientes de joia, <span class="doc-code">--jewel-quente</span> e <span class="doc-code">--jewel-frio</span>, foram feitos para um momento de destaque: um número que precisa saltar, uma capa de parte, um cartão único. Posto sob texto corrido, o gradiente muda de luminosidade ao longo da frase e arruína o contraste palavra a palavra. Ele é fundo de herói, não papel de parede de parágrafo.</p>
+  <p>Os gradientes da casa são só de marca, <span class="doc-code">--grad-quente</span> (laranja para o laranja aprofundado) e <span class="doc-code">--grad-fundo</span> (laranja aprofundado para o chumbo). Servem para um momento de destaque: um número que precisa saltar, uma capa de parte, um cartão único. Posto sob texto corrido, o gradiente muda de luminosidade ao longo da frase e arruína o contraste palavra a palavra. Ele é fundo de herói, não papel de parede de parágrafo.</p>
 
   <div class="ap-pair">
     <div class="ap-side errado">
@@ -250,7 +250,7 @@
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 3 L11 11 M11 3 L3 11" stroke-linecap="round"/></svg>
         Errado
       </p>
-      <p class="ap-why">Texto longo sobre o gradiente. No verde lê, no ouro some. O contraste oscila e nenhuma palavra fica segura.</p>
+      <p class="ap-why">Texto longo sobre um gradiente de cor fora do sistema. O contraste oscila ao longo da frase e nenhuma palavra fica segura.</p>
       <div class="ap-stage ap-marked">
         <div class="ap-grad-bad">
           <p>A rede tem boa presença na praça, mas falta um sistema que organize a casa antes de produzir a próxima peça. Sobre este gradiente, esta mesma frase já começa a desaparecer no canto claro.</p>
@@ -276,8 +276,8 @@
 <!-- ============ 04 · IMAGEM ============ -->
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">04</span><p class="doc-kicker">Imagem</p></div>
-  <h2>Foto recortada, com <em>respiro</em></h2>
-  <p>A imagem entra no sistema como um retângulo limpo, recortada por <span class="doc-code">object-fit: cover</span> e cercada de margem vertical generosa. Foto solta, inclinada, com sombra de polaroide e moldura branca, remete a álbum de família, não a marca. O recorte reto e o espaço ao redor é que fazem a imagem conversar com o resto da página.</p>
+  <h2>Imagem sempre reta, com <em>respiro</em></h2>
+  <p>A imagem entra no sistema como um retângulo limpo, ajustada por <span class="doc-code">object-fit: cover</span>, com raio discreto, borda fina e margem vertical generosa. Recorte orgânico, máscara em forma de bolha ou <span class="doc-code">clip-path</span> arredondando a foto remete a colagem, não a marca. A casa usa só a forma reta: é o retângulo e o espaço ao redor que fazem a imagem conversar com o resto da página.</p>
 
   <div class="ap-pair">
     <div class="ap-side errado">
@@ -285,10 +285,10 @@
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 3 L11 11 M11 3 L3 11" stroke-linecap="round"/></svg>
         Errado
       </p>
-      <p class="ap-why">Foto inclinada, com moldura e sombra de instantâneo, colada sem respiro. Lê como recorte, não como peça.</p>
+      <p class="ap-why">Foto recortada em forma de bolha, com máscara orgânica. Vira colagem solta e foge da grade reta da casa.</p>
       <div class="ap-stage framed ap-marked" style="display:flex; justify-content:center; align-items:center; min-height:140px;">
         <span class="ap-photo-bad">
-          <img src="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='150' height='100'&gt;&lt;defs&gt;&lt;linearGradient id='g' x1='0' y1='0' x2='1' y2='1'&gt;&lt;stop offset='0' stop-color='%23c9a063'/&gt;&lt;stop offset='1' stop-color='%238a6a3c'/&gt;&lt;/linearGradient&gt;&lt;/defs&gt;&lt;rect width='150' height='100' fill='url(%23g)'/&gt;&lt;path d='M0 72 L40 50 L74 68 L110 42 L150 66 L150 100 L0 100 Z' fill='%23000' opacity='.28'/&gt;&lt;circle cx='118' cy='26' r='12' fill='%23fff' opacity='.7'/&gt;&lt;/svg&gt;" alt="Cerrado ao entardecer, exemplo fictício de foto mal tratada">
+          <img src="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='160' height='120'&gt;&lt;defs&gt;&lt;linearGradient id='g' x1='0' y1='0' x2='0' y2='1'&gt;&lt;stop offset='0' stop-color='%23e9b873'/&gt;&lt;stop offset='1' stop-color='%23b07d3e'/&gt;&lt;/linearGradient&gt;&lt;/defs&gt;&lt;rect width='160' height='120' fill='url(%23g)'/&gt;&lt;path d='M0 88 L36 64 L70 80 L104 56 L134 74 L160 60 L160 120 L0 120 Z' fill='%23000' opacity='.22'/&gt;&lt;/svg&gt;" alt="Cerrado ao entardecer, exemplo fictício de imagem recortada em forma orgânica">
         </span>
       </div>
     </div>
@@ -297,7 +297,7 @@
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2.5 7.5 L6 11 L11.5 3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Certo
       </p>
-      <p class="ap-why">Retângulo reto, preenchido por recorte, com margem acima e abaixo. A imagem assenta na grade da página.</p>
+      <p class="ap-why">Retângulo reto, com raio discreto e borda fina, ajustado por <span class="doc-code">cover</span> e com margem acima e abaixo. A imagem assenta na grade da página.</p>
       <div class="ap-stage">
         <div class="ap-photo-good">
           <img src="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='320' height='200'&gt;&lt;defs&gt;&lt;linearGradient id='h' x1='0' y1='0' x2='0' y2='1'&gt;&lt;stop offset='0' stop-color='%23e9b873'/&gt;&lt;stop offset='1' stop-color='%23b07d3e'/&gt;&lt;/linearGradient&gt;&lt;/defs&gt;&lt;rect width='320' height='200' fill='url(%23h)'/&gt;&lt;path d='M0 150 L70 120 L130 142 L200 104 L260 130 L320 110 L320 200 L0 200 Z' fill='%23000' opacity='.22'/&gt;&lt;/svg&gt;" alt="Cerrado de Mato Grosso do Sul ao entardecer, exemplo fictício de foto bem tratada">
@@ -326,7 +326,7 @@
           <!-- linha inclinada -->
           <path d="M24,96 L236,30" fill="none" stroke="var(--muted)" stroke-width="2.4"/>
           <!-- triangulo desenhado a mao, sempre horizontal, desalinhado -->
-          <path d="M236,24 L252,30 L236,36 z" fill="var(--negative)"/>
+          <path d="M236,24 L252,30 L236,36 z" style="fill:var(--ink); fill-opacity:.55"/>
           <text x="150" y="112" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="11" font-weight="600" fill="var(--muted)">ponta não gira com a linha</text>
         </svg>
       </div>
@@ -370,15 +370,15 @@
         <div style="display:grid; gap:10px;">
           <div style="display:flex; align-items:center; gap:10px;">
             <span style="font-size:11px; color:var(--ink-body); min-width:66px;">Campo Grande</span>
-            <div style="flex:1; height:14px; background:rgba(255,255,255,.16); border-radius:3px;"><div style="width:72%; height:100%; background:var(--ink); border-radius:3px;"></div></div>
+            <div style="flex:1; height:14px; background:var(--hairline); border-radius:3px;"><div style="width:72%; height:100%; background:var(--ink-body); border-radius:3px;"></div></div>
           </div>
           <div style="display:flex; align-items:center; gap:10px;">
             <span style="font-size:11px; color:var(--ink-body); min-width:66px;">Dourados</span>
-            <div style="flex:1; height:14px; background:rgba(255,255,255,.16); border-radius:3px;"><div style="width:48%; height:100%; background:var(--ink); border-radius:3px;"></div></div>
+            <div style="flex:1; height:14px; background:var(--hairline); border-radius:3px;"><div style="width:48%; height:100%; background:var(--ink-body); border-radius:3px;"></div></div>
           </div>
           <div style="display:flex; align-items:center; gap:10px;">
             <span style="font-size:11px; color:var(--ink-body); min-width:66px;">Três Lagoas</span>
-            <div style="flex:1; height:14px; background:rgba(255,255,255,.16); border-radius:3px;"><div style="width:33%; height:100%; background:var(--ink); border-radius:3px;"></div></div>
+            <div style="flex:1; height:14px; background:var(--hairline); border-radius:3px;"><div style="width:33%; height:100%; background:var(--ink-body); border-radius:3px;"></div></div>
           </div>
         </div>
       </div>
@@ -388,7 +388,7 @@
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2.5 7.5 L6 11 L11.5 3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Certo
       </p>
-      <p class="ap-why">Cada barra é um <span class="doc-code">&lt;rect&gt;</span> com valor escrito ao lado e uma joia única para o destaque. O SVG é descrito para leitor de tela.</p>
+      <p class="ap-why">Cada barra é um <span class="doc-code">&lt;rect&gt;</span> com valor escrito ao lado e um único acento para o destaque. O SVG é descrito para leitor de tela.</p>
       <div class="ap-stage framed">
         <svg class="ap-svg" viewBox="0 0 320 150" role="img" aria-labelledby="ap-bar-t ap-bar-d">
           <title id="ap-bar-t">Reconhecimento da marca por cidade</title>
@@ -396,17 +396,17 @@
           <!-- eixo -->
           <line x1="92" y1="14" x2="92" y2="128" stroke="var(--line)" stroke-width="1.5"/>
           <g font-family="Montserrat, sans-serif" font-size="11" font-weight="600">
-            <!-- Campo Grande — destaque em ouro (a joia desta secao) -->
+            <!-- Campo Grande, dado-heroi: acento cheio -->
             <text x="84" y="34" text-anchor="end" fill="var(--ink-body)">Campo Grande</text>
-            <rect x="92" y="22" width="180" height="18" rx="3" fill="var(--accent)"/>
+            <rect x="92" y="22" width="180" height="18" rx="3" style="fill:var(--accent)"/>
             <text x="280" y="35" fill="var(--ink)" font-weight="700">72%</text>
-            <!-- Dourados -->
+            <!-- Dourados: serie secundaria, ink com opacidade -->
             <text x="84" y="72" text-anchor="end" fill="var(--ink-body)">Dourados</text>
-            <rect x="92" y="60" width="120" height="18" rx="3" fill="var(--ink)"/>
+            <rect x="92" y="60" width="120" height="18" rx="3" style="fill:var(--ink); fill-opacity:.58"/>
             <text x="220" y="73" fill="var(--ink)" font-weight="700">48%</text>
-            <!-- Tres Lagoas -->
+            <!-- Tres Lagoas: terceira serie, opacidade menor -->
             <text x="84" y="110" text-anchor="end" fill="var(--ink-body)">Três Lagoas</text>
-            <rect x="92" y="98" width="82" height="18" rx="3" fill="rgba(255,255,255,.55)"/>
+            <rect x="92" y="98" width="82" height="18" rx="3" style="fill:var(--ink); fill-opacity:.40"/>
             <text x="182" y="111" fill="var(--ink)" font-weight="700">33%</text>
           </g>
         </svg>
@@ -415,11 +415,11 @@
   </div>
 </div></section>
 
-<!-- ============ 07 · JOIA ESCASSA ============ -->
+<!-- ============ 07 · ACENTO ESCASSO ============ -->
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">07</span><p class="doc-kicker">Acento</p></div>
-  <h2>A joia vale porque é <em>rara</em></h2>
-  <p>Azul, verde, ouro e areia são acento, não paleta de preenchimento. Distribuídos por toda parte, viram arco-íris e nada salta. Em peça de exemplo o teto é de três joias por página ou slide: o impacto vem da escassez. Reserve a cor para o ponto que precisa ser visto e deixe o resto respirar em branco e nos brancos esmaecidos.</p>
+  <h2>O acento vale porque é <em>raro</em></h2>
+  <p>A casa trabalha com laranja, branco, preto e chumbos quentes, e mais nada. Trazer azul, verde, ouro ou qualquer cor de fora para colorir etiqueta vira arco-íris, e nada salta. O acento é o branco sobre o laranja, ou o laranja sobre o escuro e o claro, sempre por <span class="doc-code">--accent</span>. Em peça de exemplo o teto é de três acentos por página ou slide: o impacto vem da escassez. Reserve o destaque para o ponto que precisa ser visto e deixe o resto respirar em contorno.</p>
 
   <div class="ap-pair">
     <div class="ap-side errado">
@@ -427,7 +427,7 @@
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 3 L11 11 M11 3 L3 11" stroke-linecap="round"/></svg>
         Errado
       </p>
-      <p class="ap-why">Uma joia por etiqueta. Tudo grita ao mesmo tempo, então nada se destaca, e a página perde hierarquia.</p>
+      <p class="ap-why">Uma cor de fora do sistema por etiqueta. Azul, verde, ouro: tudo grita ao mesmo tempo, então nada se destaca e a página perde hierarquia.</p>
       <div class="ap-stage framed ap-marked">
         <div class="ap-chips">
           <span class="ap-chip" style="background:#1f4ea8; color:#fff;">Descoberta</span>
@@ -444,7 +444,7 @@
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2.5 7.5 L6 11 L11.5 3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Certo
       </p>
-      <p class="ap-why">Uma joia só, na etapa que importa agora. As demais ficam neutras, em contorno, e o olho vai direto ao destaque.</p>
+      <p class="ap-why">Um acento só, na etapa que importa agora. As demais ficam neutras, em contorno, e o olho vai direto ao destaque.</p>
       <div class="ap-stage framed">
         <div class="ap-chips">
           <span class="ap-chip" style="border:1px solid var(--line); color:var(--ink-body);">Descoberta</span>
@@ -503,7 +503,7 @@
         <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 3 L11 11 M11 3 L3 11" stroke-linecap="round"/></svg>
         Errado
       </p>
-      <p class="ap-why">Logo repintada em joia, com gradiente por cima. A marca vira ilustração e perde o reconhecimento imediato.</p>
+      <p class="ap-why">Logo repintada em cor de fora do sistema, com gradiente por cima. A marca vira ilustração e perde o reconhecimento imediato.</p>
       <div class="ap-stage framed ap-marked" style="display:flex; align-items:center; justify-content:center; min-height:96px;">
         <svg width="170" height="50" viewBox="0 0 515.15 130" aria-hidden="true">
           <defs>
@@ -633,7 +633,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">13</span><p class="doc-kicker">Conferência</p></div>
   <h2>Antes de fechar, passe os olhos por <em>tudo</em></h2>
-  <p>As doze regras acima cabem em uma pergunta antes de entregar: a peça usa o laranja certo, lê bem sobre ele, guarda a joia para o destaque, desenha dado de verdade, mantém a logo e a fonte intactas, e fala pelo assunto sem travessão nem autorreferência? Quando a resposta é sim, a casa está em ordem e a peça soa como parte do mesmo sistema.</p>
+  <p>As doze regras acima cabem em uma pergunta antes de entregar: a peça usa o laranja certo, lê bem sobre ele, guarda o acento para o destaque, desenha dado de verdade, mantém a logo e a fonte intactas, e fala pelo assunto sem travessão nem autorreferência? Quando a resposta é sim, a casa está em ordem e a peça soa como parte do mesmo sistema.</p>
 
   <div class="doc-note do" style="margin-top:22px">
     <span class="doc-note-tag">Regra de ouro</span>

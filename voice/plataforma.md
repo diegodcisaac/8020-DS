@@ -4,7 +4,7 @@ Este arquivo reúne o essencial que o sistema de design precisa para falar de fo
 
 ## O nome
 
-**80 20 Marketing.** A forma própria é com espaços. O princípio que dá nome organiza o trabalho: poucas escolhas certas respondem pela maior parte do efeito. O sistema inteiro é uma aposta nessa economia, e a escassez da joia na página é a tradução visual dela.
+**80 20 Marketing.** A forma própria é com espaços. O princípio que dá nome organiza o trabalho: poucas escolhas certas respondem pela maior parte do efeito. O sistema inteiro é uma aposta nessa economia, e a escassez do acento na página é a tradução visual dela.
 
 ## A filosofia
 
@@ -16,7 +16,7 @@ Consultoria de marketing e comunicação estratégica. Transforma dado e investi
 
 ## A identidade, em uma linha
 
-A casa fala em laranja. O `#fa4616` é o mundo, o branco é a voz, o preto é o chão, e a joia entra por exceção. A forma é sóbria de propósito, para que o realce, quando vem, pese.
+A casa fala em laranja. O `#fa4616` é o mundo, o branco é a voz, o preto é o chão, e o acento entra por exceção. A paleta é fechada (laranja, laranja aprofundado, branco, preto e chumbos), e a forma é sóbria de propósito, para que o realce, quando vem, pese.
 
 ## Endereços
 

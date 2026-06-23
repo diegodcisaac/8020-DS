@@ -5,19 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>O território como ele é · Parte 1 · Exemplo de book · 80 20 Marketing</title>
 <meta name="description" content="Parte 1 do exemplo fictício de book longform da 80 20 Marketing: retrato do território de Mato Grosso do Sul.">
-<link rel="stylesheet" href="../../../tokens/8020.css">
+<link id="tk-8020" rel="stylesheet" href="../../../tokens/8020.css">
+<link id="tk-8020-noite" rel="stylesheet" href="../../../tokens/8020-noite.css" disabled>
+<link id="tk-8020-claro" rel="stylesheet" href="../../../tokens/8020-claro.css" disabled>
 <link rel="stylesheet" href="../../../assets/book.css">
 <script src="../../../assets/book.js" defer></script>
 <style>
   /* CSS local: placeholder de imagem fiel onde a produção usaria <img>.
      Mesmo tratamento da página de catálogo, via papéis semânticos. */
+  .vswitch{position:fixed;top:14px;right:14px;z-index:100;display:flex;gap:3px;background:rgba(10,10,10,.6);padding:5px;border-radius:999px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  .vswitch button{border:0;background:transparent;color:#fff;font:600 11px/1 var(--font-body);letter-spacing:.03em;padding:6px 13px;border-radius:999px;cursor:pointer;opacity:.65}
+  .vswitch button.on{background:#fa4616;opacity:1}
+  @media print{.vswitch{display:none!important}}
   .ph { position: relative; display: grid; place-items: center; overflow: hidden;
+    border-radius: var(--radius); border: 1px solid var(--line);
     color: color-mix(in srgb, var(--ink) 78%, transparent);
     background: linear-gradient(135deg,
       color-mix(in srgb, var(--floor) 92%, transparent) 0%,
       color-mix(in srgb, var(--surface) 70%, var(--floor)) 100%); }
   .ph::before { content: ""; position: absolute; inset: 0; pointer-events: none;
-    background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.05) 0 2px, transparent 2px 18px); }
+    background-image: repeating-linear-gradient(135deg, color-mix(in srgb, var(--floor-ink) 8%, transparent) 0 2px, transparent 2px 18px); }
   .ph-tag { position: relative; z-index: 1; font-family: var(--font-data); font-size: var(--fs-micro);
     letter-spacing: var(--tracking-label); text-transform: uppercase;
     color: color-mix(in srgb, var(--floor-ink) 70%, transparent);
@@ -32,6 +39,8 @@
 </style>
 </head>
 <body class="book">
+
+<div class="vswitch" aria-label="Variante de cor"><button data-v="8020" class="on">Laranja</button><button data-v="8020-noite">Escuro</button><button data-v="8020-claro">Claro</button></div>
 
 <div class="book-progress"></div>
 
@@ -136,7 +145,7 @@
     <div class="b-diagram reveal">
       <svg viewBox="0 0 720 300" width="100%" role="img" aria-label="Distribuição do público por praça: Campo Grande com 31 por cento, Dourados com 12 por cento, Três Lagoas com 9 por cento, Corumbá com 6 por cento, e demais cidades somando 42 por cento.">
         <title>Distribuição do público por praça em Mato Grosso do Sul</title>
-        <desc>Gráfico de barras horizontais. Campo Grande tem 31 por cento, Dourados 12, Três Lagoas 9, Corumbá 6, e as demais cidades reunidas somam 42 por cento, a maior fatia e destacada em ouro.</desc>
+        <desc>Gráfico de barras horizontais. Campo Grande tem 31 por cento, Dourados 12, Três Lagoas 9, Corumbá 6, e as demais cidades reunidas somam 42 por cento, a maior fatia e o dado em destaque.</desc>
         <!-- eixo base -->
         <line x1="170" y1="20" x2="170" y2="270" stroke="var(--hairline)" stroke-width="1"/>
         <!-- réguas de referência -->
@@ -154,27 +163,27 @@
         <!-- barras: largura proporcional. escala: 10 px por ponto percentual a partir de x=170 -->
         <g font-family="var(--font-body)" font-size="13" fill="var(--ink)">
           <text x="0" y="46">Campo Grande</text>
-          <rect x="170" y="32" width="310" height="20" rx="4" fill="rgba(255,255,255,.62)"/>
+          <rect x="170" y="32" width="310" height="20" rx="4" style="fill:var(--ink)" fill-opacity=".58"/>
           <text x="490" y="47" font-size="12" fill="var(--ink)">31%</text>
 
           <text x="0" y="92">Demais cidades</text>
-          <rect x="170" y="78" width="420" height="20" rx="4" fill="var(--accent)"/>
+          <rect x="170" y="78" width="420" height="20" rx="4" style="fill:var(--accent)"/>
           <text x="600" y="93" font-size="12" fill="var(--accent-ink)" text-anchor="end" dx="-8">42%</text>
 
           <text x="0" y="138">Dourados</text>
-          <rect x="170" y="124" width="120" height="20" rx="4" fill="rgba(255,255,255,.46)"/>
+          <rect x="170" y="124" width="120" height="20" rx="4" style="fill:var(--ink)" fill-opacity=".40"/>
           <text x="300" y="139" font-size="12" fill="var(--ink)">12%</text>
 
           <text x="0" y="184">Três Lagoas</text>
-          <rect x="170" y="170" width="90" height="20" rx="4" fill="rgba(255,255,255,.40)"/>
+          <rect x="170" y="170" width="90" height="20" rx="4" style="fill:var(--ink)" fill-opacity=".30"/>
           <text x="270" y="185" font-size="12" fill="var(--ink)">9%</text>
 
           <text x="0" y="230">Corumbá</text>
-          <rect x="170" y="216" width="60" height="20" rx="4" fill="rgba(255,255,255,.34)"/>
+          <rect x="170" y="216" width="60" height="20" rx="4" style="fill:var(--ink)" fill-opacity=".26"/>
           <text x="240" y="231" font-size="12" fill="var(--ink)">6%</text>
         </g>
       </svg>
-      <p class="b-figcap">A maior fatia, em ouro, é o conjunto das demais cidades reunidas: 42% do público mora fora das quatro maiores praças. Os percentuais são ilustrativos, para demonstração do sistema.</p>
+      <p class="b-figcap">A maior fatia, em destaque, é o conjunto das demais cidades reunidas: 42% do público mora fora das quatro maiores praças. Os percentuais são ilustrativos, para demonstração do sistema.</p>
     </div>
   </div></section>
 
@@ -186,8 +195,8 @@
         <p style="color:var(--ink-body);margin:0 0 14px;">O bioma do cerrado molda o calendário, a economia e o jeito de viver do estado. A safra organiza o ano, a seca marca o meio dele, e a chegada das chuvas reabre o ciclo. Uma marca que ignora esse relógio fala fora de hora.</p>
         <p style="color:var(--ink-body);margin:0;">Ler o território é também ler esse ritmo. A imagem ao lado serve de lembrete: o cenário não é pano de fundo bonito para um anúncio, é a estrutura que organiza a vida de quem se quer alcançar.</p>
       </div>
-      <div class="b-figure organica" style="margin-block:0;">
-        <div class="ph" style="aspect-ratio:6/5;clip-path:path('M 0 80 C 120 0 460 0 600 70 C 740 140 760 360 640 460 C 520 560 160 580 60 500 C -40 420 -20 160 0 80 Z');" aria-hidden="true"><span class="ph-tag">imagem · cerrado</span></div>
+      <div class="b-figure" style="margin-block:0;">
+        <div class="ph" style="aspect-ratio:6/5;" aria-hidden="true"><span class="ph-tag">imagem · cerrado</span></div>
       </div>
     </div>
   </div></section>
@@ -267,6 +276,8 @@
     <div class="b-addr"><span>São Paulo · SP</span><span>Campo Grande · MS</span><span>Cuiabá · MT</span></div>
   </div>
 </footer>
+
+<script>(function(){var ids=['8020','8020-noite','8020-claro'];function set(v){ids.forEach(function(k){var el=document.getElementById('tk-'+k);if(el)el.disabled=(k!==v);});document.querySelectorAll('.vswitch button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v);});}var h=(location.hash||'').replace('#','');set(ids.indexOf(h)>=0?h:'8020');document.querySelectorAll('.vswitch button').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.v);location.hash=b.dataset.v;});});})();</script>
 
 </body>
 </html>

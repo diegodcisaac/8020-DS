@@ -8,17 +8,18 @@
 @import "8020.css";
 
 :root {
-  --paper:       var(--8020-preto);
+  --paper:       #120e0b;                /* chumbo bem profundo e quente, nao preto flat */
   --ink:         var(--8020-branco);
-  --ink-body:    rgba(255, 255, 255, .88);
-  --surface:     #161616;
+  --ink-body:    rgba(255, 255, 255, .86);
+  --surface:     var(--8020-chumbo-2);   /* #221813 superficie escura elevada */
   --surface-ink: var(--8020-branco);
-  --accent:      var(--8020-laranja);   /* laranja vira o acento raro */
+  --accent:      var(--8020-laranja);    /* o laranja vira o ponto de luz */
   --accent-ink:  var(--8020-branco);
-  --floor:       var(--8020-laranja);   /* faixa de chao em laranja */
+  --floor:       var(--8020-laranja);    /* faixa de chao em laranja */
   --floor-ink:   var(--8020-branco);
-  --line:        rgba(255, 255, 255, .18);
-  --hairline:    rgba(255, 255, 255, .10);
-  --muted:       rgba(255, 255, 255, .66);
-  --meta:        rgba(255, 255, 255, .48);
+  --line:        rgba(255, 255, 255, .16);
+  --hairline:    rgba(255, 255, 255, .09);
+  --muted:       rgba(255, 255, 255, .64);
+  --meta:        rgba(255, 255, 255, .46);
+  --negative:    rgba(255, 255, 255, .5);
 }

@@ -5,18 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>O caminho de entrada e o cronograma · Parte 3 · Exemplo de book · 80 20 Marketing</title>
 <meta name="description" content="Parte 3 do exemplo fictício de book longform da 80 20 Marketing: caminho de entrada por fases e cronograma até a presença reconhecida.">
-<link rel="stylesheet" href="../../../tokens/8020.css">
+<link id="tk-8020" rel="stylesheet" href="../../../tokens/8020.css">
+<link id="tk-8020-noite" rel="stylesheet" href="../../../tokens/8020-noite.css" disabled>
+<link id="tk-8020-claro" rel="stylesheet" href="../../../tokens/8020-claro.css" disabled>
 <link rel="stylesheet" href="../../../assets/book.css">
 <script src="../../../assets/book.js" defer></script>
 <style>
+  .vswitch{position:fixed;top:14px;right:14px;z-index:100;display:flex;gap:3px;background:rgba(10,10,10,.6);padding:5px;border-radius:999px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  .vswitch button{border:0;background:transparent;color:#fff;font:600 11px/1 var(--font-body);letter-spacing:.03em;padding:6px 13px;border-radius:999px;cursor:pointer;opacity:.65}
+  .vswitch button.on{background:#fa4616;opacity:1}
+  @media print{.vswitch{display:none!important}}
   .ph { position: relative; display: grid; place-items: center; overflow: hidden;
+    border-radius: var(--radius); border: 1px solid var(--line);
     color: color-mix(in srgb, var(--ink) 78%, transparent);
     background: linear-gradient(135deg,
       color-mix(in srgb, var(--floor) 92%, transparent) 0%,
       color-mix(in srgb, var(--surface) 70%, var(--floor)) 100%); }
   .ph::before { content: ""; position: absolute; inset: 0; pointer-events: none;
-    background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.05) 0 2px, transparent 2px 18px); }
-  .ph-fill { position: absolute; inset: 0; }
+    background-image: repeating-linear-gradient(135deg, color-mix(in srgb, var(--floor-ink) 8%, transparent) 0 2px, transparent 2px 18px); }
+  .ph-fill { position: absolute; inset: 0; border: 0; border-radius: 0; }
   .ph-tag { position: relative; z-index: 1; font-family: var(--font-data); font-size: var(--fs-micro);
     letter-spacing: var(--tracking-label); text-transform: uppercase;
     color: color-mix(in srgb, var(--floor-ink) 70%, transparent);
@@ -30,6 +37,8 @@
 </style>
 </head>
 <body class="book">
+
+<div class="vswitch" aria-label="Variante de cor"><button data-v="8020" class="on">Laranja</button><button data-v="8020-noite">Escuro</button><button data-v="8020-claro">Claro</button></div>
 
 <div class="book-progress"></div>
 
@@ -107,18 +116,18 @@
     <p class="b-prose" style="margin-bottom:0;"><span class="b-lede">Cada peça de comunicação move o público um passo adiante. O destino é a aceitação, o ponto em que a marca já não disputa, porque virou a escolha de quem mora no território.</span></p>
 
     <div class="b-diagram reveal">
-      <svg viewBox="0 0 720 170" width="100%" role="img" aria-label="Fluxo das três fases: Conviver leva a Avaliar, que leva a Aceitar. A fase de Aceitar, o destino, está destacada em ouro.">
+      <svg viewBox="0 0 720 170" width="100%" role="img" aria-label="Fluxo das três fases: Conviver leva a Avaliar, que leva a Aceitar. A fase de Aceitar, o destino, está em destaque.">
         <title>Fluxo das três fases da entrada</title>
-        <desc>Três caixas ligadas por setas da esquerda para a direita: Conviver, Avaliar e Aceitar. A última caixa, o destino, está em ouro.</desc>
+        <desc>Três caixas ligadas por setas da esquerda para a direita: Conviver, Avaliar e Aceitar. A última caixa, o destino, está em destaque.</desc>
         <defs>
           <marker id="arw-fases-p3" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
             <path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/>
           </marker>
         </defs>
-        <!-- conectores primeiro, para os nós ficarem por cima -->
+        <!-- conectores em segmento reto (angulo reto), primeiro para os nos ficarem por cima -->
         <g fill="none" stroke="currentColor" stroke-width="2" color="var(--ink)">
-          <path d="M214 85 C 234 85, 246 85, 266 85" marker-end="url(#arw-fases-p3)"/>
-          <path d="M454 85 C 474 85, 486 85, 506 85" marker-end="url(#arw-fases-p3)"/>
+          <path d="M214 85 H 266" marker-end="url(#arw-fases-p3)"/>
+          <path d="M454 85 H 506" marker-end="url(#arw-fases-p3)"/>
         </g>
         <!-- nós -->
         <g>
@@ -135,7 +144,7 @@
           <text x="607" y="103" text-anchor="middle" font-family="var(--font-body)" font-size="11" fill="var(--accent-ink)" opacity="0.75">a escolha</text>
         </g>
       </svg>
-      <p class="b-figcap">As setas saem de um marcador único em defs. O nó final, em ouro, é o destino do fluxo: a aceitação que dispensa nova disputa.</p>
+      <p class="b-figcap">As setas saem de um marcador único em defs e seguem em segmento reto. O nó final, em destaque, é o destino do fluxo: a aceitação que dispensa nova disputa.</p>
     </div>
   </div></section>
 
@@ -210,6 +219,8 @@
     <div class="b-addr"><span>São Paulo · SP</span><span>Campo Grande · MS</span><span>Cuiabá · MT</span></div>
   </div>
 </footer>
+
+<script>(function(){var ids=['8020','8020-noite','8020-claro'];function set(v){ids.forEach(function(k){var el=document.getElementById('tk-'+k);if(el)el.disabled=(k!==v);});document.querySelectorAll('.vswitch button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v);});}var h=(location.hash||'').replace('#','');set(ids.indexOf(h)>=0?h:'8020');document.querySelectorAll('.vswitch button').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.v);location.hash=b.dataset.v;});});})();</script>
 
 </body>
 </html>

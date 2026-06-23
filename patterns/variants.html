@@ -39,7 +39,7 @@
     --ink-body: #0a0a0a;
     --surface: #d63a10;
     --surface-ink: #ffffff;
-    --accent: #f5c542;
+    --accent: #ffffff;
     --accent-ink: #0a0a0a;
     --floor: #0a0a0a;
     --floor-ink: #ffffff;
@@ -47,15 +47,15 @@
     --hairline: rgba(255, 255, 255, .14);
     --muted: rgba(255, 255, 255, .72);
     --meta: rgba(255, 255, 255, .56);
-    --negative: #1f4ea8;
+    --negative: #0a0a0a;
   }
 
   /* PALCO ESCURO: espelha tokens/8020-noite.css */
   .vr-noite {
-    --paper: #0a0a0a;
+    --paper: #120e0b;
     --ink: #ffffff;
-    --ink-body: rgba(255, 255, 255, .88);
-    --surface: #161616;
+    --ink-body: rgba(255, 255, 255, .86);
+    --surface: #221813;
     --surface-ink: #ffffff;
     --accent: #fa4616;
     --accent-ink: #ffffff;
@@ -65,25 +65,25 @@
     --hairline: rgba(255, 255, 255, .10);
     --muted: rgba(255, 255, 255, .66);
     --meta: rgba(255, 255, 255, .48);
-    --negative: #1f4ea8;
+    --negative: #15110d;
   }
 
   /* PAPEL CLARO: espelha tokens/8020-claro.css */
   .vr-claro {
     --paper: #faf7f2;
-    --ink: #111111;
-    --ink-body: #1a1a1a;
+    --ink: #1a140f;
+    --ink-body: #2a201a;
     --surface: #ffffff;
-    --surface-ink: #111111;
+    --surface-ink: #1a140f;
     --accent: #fa4616;
     --accent-ink: #ffffff;
-    --floor: #0a0a0a;
+    --floor: #15110d;
     --floor-ink: #ffffff;
     --line: rgba(0, 0, 0, .12);
     --hairline: rgba(0, 0, 0, .07);
     --muted: rgba(0, 0, 0, .58);
     --meta: rgba(0, 0, 0, .45);
-    --negative: #1f4ea8;
+    --negative: #15110d;
   }
 
   /* cabecalho de cada coluna */
@@ -189,7 +189,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">01</span><p class="doc-kicker">O princípio</p></div>
   <h2>Componente lê <em>papel</em>, não cor</h2>
-  <p>Nenhum bloco do sistema escreve <span class="doc-code">#fa4616</span> ou <span class="doc-code">#0a0a0a</span> direto. Ele pede <span class="doc-code">var(--paper)</span> para o fundo, <span class="doc-code">var(--ink)</span> para o título, <span class="doc-code">var(--ink-body)</span> para o corpo, <span class="doc-code">var(--accent)</span> para a joia. Trocar a variante é redeclarar esse punhado de propriedades. O mesmo <span class="doc-code">.b-statement</span> que aparece branco sobre laranja vira branco sobre preto ou quase-preto sobre off-white sem que uma linha do componente mude.</p>
+  <p>Nenhum bloco do sistema escreve <span class="doc-code">#fa4616</span> ou <span class="doc-code">#0a0a0a</span> direto. Ele pede <span class="doc-code">var(--paper)</span> para o fundo, <span class="doc-code">var(--ink)</span> para o título, <span class="doc-code">var(--ink-body)</span> para o corpo, <span class="doc-code">var(--accent)</span> para o acento. Trocar a variante é redeclarar esse punhado de propriedades. O mesmo <span class="doc-code">.b-statement</span> que aparece branco sobre laranja vira branco sobre preto ou quase-preto sobre off-white sem que uma linha do componente mude.</p>
   <p>As três colunas abaixo provam isso na prática. Cada uma aplica o conjunto completo de papéis da sua variante, com os valores exatos dos arquivos <span class="doc-code">tokens/8020.css</span>, <span class="doc-code">tokens/8020-noite.css</span> e <span class="doc-code">tokens/8020-claro.css</span>. O que está dentro de cada coluna é, caractere por caractere, o mesmo markup.</p>
 
   <div class="doc-grid doc-3 vr-rail">
@@ -223,7 +223,7 @@
         <div class="b-insight-bar"></div>
         <div>
           <p class="b-insight-label">Leitura do sistema</p>
-          <p class="b-insight-text">A joia entra <strong>uma vez</strong> e some. Escassez é o que faz o acento valer.</p>
+          <p class="b-insight-text">O acento entra <strong>uma vez</strong> e some. Escassez é o que faz o acento valer.</p>
         </div>
       </div>
       <hr class="vr-rule">
@@ -285,7 +285,7 @@
         <div class="b-insight-bar"></div>
         <div>
           <p class="b-insight-label">Leitura do sistema</p>
-          <p class="b-insight-text">A joia entra <strong>uma vez</strong> e some. Escassez é o que faz o acento valer.</p>
+          <p class="b-insight-text">O acento entra <strong>uma vez</strong> e some. Escassez é o que faz o acento valer.</p>
         </div>
       </div>
       <hr class="vr-rule">
@@ -347,7 +347,7 @@
         <div class="b-insight-bar"></div>
         <div>
           <p class="b-insight-label">Leitura do sistema</p>
-          <p class="b-insight-text">A joia entra <strong>uma vez</strong> e some. Escassez é o que faz o acento valer.</p>
+          <p class="b-insight-text">O acento entra <strong>uma vez</strong> e some. Escassez é o que faz o acento valer.</p>
         </div>
       </div>
       <hr class="vr-rule">
@@ -391,7 +391,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">02</span><p class="doc-kicker">O delta</p></div>
   <h2>O que cada papel <em>vale</em></h2>
-  <p>A variante canônica é a base. As outras duas fazem <span class="doc-code">@import</span> dela e redeclaram só os deltas. A tabela abaixo lê na horizontal: o mesmo papel, três significados. O laranja é substrato no campo-laranja e vira acento escasso nas outras duas. O preto é chão de rodapé no campo, sobe a fundo no palco escuro e volta a chão no papel claro.</p>
+  <p>A variante canônica é a base. As outras duas fazem <span class="doc-code">@import</span> dela e redeclaram só os deltas. A tabela abaixo lê na horizontal: o mesmo papel, três significados. O laranja é substrato no campo-laranja e vira acento escasso nas outras duas. O chumbo é chão de rodapé no campo, sobe a fundo no palco escuro e volta a chão no papel claro.</p>
 
   <div class="doc-specimen plain">
     <span class="doc-specimen-label">Mapa de papéis por variante</span>
@@ -409,38 +409,38 @@
         <tr>
           <td><span class="doc-code">--paper</span><br>fundo da página</td>
           <td><span class="vr-role-dot" style="background:#fa4616"></span>Laranja #fa4616</td>
-          <td><span class="vr-role-dot" style="background:#0a0a0a"></span>Preto #0a0a0a</td>
+          <td><span class="vr-role-dot" style="background:#120e0b"></span>Chumbo quente #120e0b</td>
           <td><span class="vr-role-dot" style="background:#faf7f2"></span>Off-white #faf7f2</td>
         </tr>
         <tr>
           <td><span class="doc-code">--ink</span><br>título e display</td>
           <td><span class="vr-role-dot" style="background:#ffffff"></span>Branco</td>
           <td><span class="vr-role-dot" style="background:#ffffff"></span>Branco</td>
-          <td><span class="vr-role-dot" style="background:#111111"></span>Quase-preto #111</td>
+          <td><span class="vr-role-dot" style="background:#1a140f"></span>Quase-preto #1a140f</td>
         </tr>
         <tr>
           <td><span class="doc-code">--ink-body</span><br>corpo de texto</td>
           <td><span class="vr-role-dot" style="background:#0a0a0a"></span>Preto sobre laranja</td>
-          <td><span class="vr-role-dot" style="background:rgba(255,255,255,.88)"></span>Branco a 88%</td>
-          <td><span class="vr-role-dot" style="background:#1a1a1a"></span>Tinta #1a1a1a</td>
+          <td><span class="vr-role-dot" style="background:rgba(255,255,255,.86)"></span>Branco a 86%</td>
+          <td><span class="vr-role-dot" style="background:#2a201a"></span>Tinta #2a201a</td>
         </tr>
         <tr>
-          <td><span class="doc-code">--accent</span><br>a joia escassa</td>
-          <td><span class="vr-role-dot" style="background:#f5c542"></span>Ouro #f5c542</td>
+          <td><span class="doc-code">--accent</span><br>o acento escasso</td>
+          <td><span class="vr-role-dot" style="background:#ffffff"></span>Branco sobre laranja</td>
           <td><span class="vr-role-dot" style="background:#fa4616"></span>Laranja vira acento</td>
           <td><span class="vr-role-dot" style="background:#fa4616"></span>Laranja vira acento</td>
         </tr>
         <tr>
           <td><span class="doc-code">--surface</span><br>card elevado</td>
           <td><span class="vr-role-dot" style="background:#d63a10"></span>Laranja aprofundado</td>
-          <td><span class="vr-role-dot" style="background:#161616"></span>Cinza-noite #161616</td>
+          <td><span class="vr-role-dot" style="background:#221813"></span>Chumbo #221813</td>
           <td><span class="vr-role-dot" style="background:#ffffff"></span>Branco</td>
         </tr>
         <tr>
           <td><span class="doc-code">--floor</span><br>rodapé e contracapa</td>
           <td><span class="vr-role-dot" style="background:#0a0a0a"></span>Preto</td>
           <td><span class="vr-role-dot" style="background:#fa4616"></span>Faixa laranja</td>
-          <td><span class="vr-role-dot" style="background:#0a0a0a"></span>Preto</td>
+          <td><span class="vr-role-dot" style="background:#15110d"></span>Chumbo profundo #15110d</td>
         </tr>
       </tbody>
     </table>

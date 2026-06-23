@@ -5,17 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>A distância entre o que se diz e o que se ouve · Parte 2 · Exemplo de book · 80 20 Marketing</title>
 <meta name="description" content="Parte 2 do exemplo fictício de book longform da 80 20 Marketing: a distância entre a mensagem da marca e o que o público registra.">
-<link rel="stylesheet" href="../../../tokens/8020.css">
+<link id="tk-8020" rel="stylesheet" href="../../../tokens/8020.css">
+<link id="tk-8020-noite" rel="stylesheet" href="../../../tokens/8020-noite.css" disabled>
+<link id="tk-8020-claro" rel="stylesheet" href="../../../tokens/8020-claro.css" disabled>
 <link rel="stylesheet" href="../../../assets/book.css">
 <script src="../../../assets/book.js" defer></script>
 <style>
+  .vswitch{position:fixed;top:14px;right:14px;z-index:100;display:flex;gap:3px;background:rgba(10,10,10,.6);padding:5px;border-radius:999px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  .vswitch button{border:0;background:transparent;color:#fff;font:600 11px/1 var(--font-body);letter-spacing:.03em;padding:6px 13px;border-radius:999px;cursor:pointer;opacity:.65}
+  .vswitch button.on{background:#fa4616;opacity:1}
+  @media print{.vswitch{display:none!important}}
   .ph { position: relative; display: grid; place-items: center; overflow: hidden;
+    border-radius: var(--radius); border: 1px solid var(--line);
     color: color-mix(in srgb, var(--ink) 78%, transparent);
     background: linear-gradient(135deg,
       color-mix(in srgb, var(--floor) 92%, transparent) 0%,
       color-mix(in srgb, var(--surface) 70%, var(--floor)) 100%); }
   .ph::before { content: ""; position: absolute; inset: 0; pointer-events: none;
-    background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.05) 0 2px, transparent 2px 18px); }
+    background-image: repeating-linear-gradient(135deg, color-mix(in srgb, var(--floor-ink) 8%, transparent) 0 2px, transparent 2px 18px); }
   .ph-fill { position: absolute; inset: 0; }
   .ph-tag { position: relative; z-index: 1; font-family: var(--font-data); font-size: var(--fs-micro);
     letter-spacing: var(--tracking-label); text-transform: uppercase;
@@ -30,6 +37,8 @@
 </style>
 </head>
 <body class="book">
+
+<div class="vswitch" aria-label="Variante de cor"><button data-v="8020" class="on">Laranja</button><button data-v="8020-noite">Escuro</button><button data-v="8020-claro">Claro</button></div>
 
 <div class="book-progress"></div>
 
@@ -100,7 +109,7 @@
     </div>
 
     <blockquote class="b-quote reveal" style="margin-top:36px;">
-      <p>A gente não desconfia de marca grande. A gente desconfia de marca que some quando o problema aparece.</p>
+      <p>A gente desconfia de marca que some quando o problema aparece.</p>
       <cite>Participante de grupo de pesquisa, Campo Grande (fala fictícia, ilustrativa)</cite>
     </blockquote>
   </div></section>
@@ -149,10 +158,10 @@
     <div class="b-diagram reveal">
       <svg viewBox="0 0 460 320" width="100%" style="max-width:480px;" role="img" aria-label="Diagrama de Venn de três conjuntos: Público, Território e Marca. A região comum aos três, no centro, é onde a comunicação encontra eco.">
         <title>Interseção de público, território e marca</title>
-        <desc>Três círculos sobrepostos. O círculo da marca, embaixo, está destacado em ouro. A região central comum aos três conjuntos é rotulada como encontro.</desc>
-        <circle cx="175" cy="130" r="98" fill="rgba(255,255,255,.28)" stroke="var(--line)"/>
-        <circle cx="285" cy="130" r="98" fill="rgba(255,255,255,.28)" stroke="var(--line)"/>
-        <circle cx="230" cy="215" r="98" fill="var(--accent)" fill-opacity="0.30" stroke="var(--line)"/>
+        <desc>Três círculos sobrepostos. O círculo da marca, embaixo, está em destaque. A região central comum aos três conjuntos é rotulada como encontro.</desc>
+        <circle cx="175" cy="130" r="98" style="fill:var(--ink)" fill-opacity="0.16" stroke="var(--line)"/>
+        <circle cx="285" cy="130" r="98" style="fill:var(--ink)" fill-opacity="0.16" stroke="var(--line)"/>
+        <circle cx="230" cy="215" r="98" style="fill:var(--accent)" fill-opacity="0.36" stroke="var(--line)"/>
         <g font-family="var(--font-body)" font-size="14" fill="var(--ink)" font-weight="600">
           <text x="120" y="100" text-anchor="middle">Público</text>
           <text x="340" y="100" text-anchor="middle">Território</text>
@@ -160,7 +169,7 @@
         </g>
         <text x="230" y="170" text-anchor="middle" font-family="var(--font-body)" font-size="12" fill="var(--ink)">encontro</text>
       </svg>
-      <p class="b-figcap">A região comum aos três conjuntos é onde a comunicação encontra eco. Só o conjunto da marca recebe joia, porque é a variável que a comunicação controla.</p>
+      <p class="b-figcap">A região comum aos três conjuntos é onde a comunicação encontra eco. Só o conjunto da marca recebe o acento, porque é a variável que a comunicação controla.</p>
     </div>
   </div></section>
 
@@ -217,6 +226,8 @@
     <div class="b-addr"><span>São Paulo · SP</span><span>Campo Grande · MS</span><span>Cuiabá · MT</span></div>
   </div>
 </footer>
+
+<script>(function(){var ids=['8020','8020-noite','8020-claro'];function set(v){ids.forEach(function(k){var el=document.getElementById('tk-'+k);if(el)el.disabled=(k!==v);});document.querySelectorAll('.vswitch button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v);});}var h=(location.hash||'').replace('#','');set(ids.indexOf(h)>=0?h:'8020');document.querySelectorAll('.vswitch button').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.v);location.hash=b.dataset.v;});});})();</script>
 
 </body>
 </html>

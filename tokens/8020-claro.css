@@ -9,17 +9,18 @@
 
 :root {
   --paper:       #faf7f2;            /* off-white levissimo */
-  --ink:         #111111;
-  --ink-body:    #1a1a1a;
+  --ink:         #1a140f;            /* chumbo quente, mais macio que o preto puro */
+  --ink-body:    #2a201a;
   --surface:     var(--8020-branco); /* card branco elevado sobre o off-white */
-  --surface-ink: #111111;
+  --surface-ink: #1a140f;
   --accent:      var(--8020-laranja);
   --accent-ink:  var(--8020-branco); /* texto sobre laranja: branco em area/titulo */
-  --floor:       var(--8020-preto);
+  --floor:       var(--8020-chumbo); /* chumbo profundo, nao preto flat */
   --floor-ink:   var(--8020-branco);
-  --line:        rgba(0, 0, 0, .12);
-  --hairline:    rgba(0, 0, 0, .07);
-  --muted:       rgba(0, 0, 0, .58);
-  --meta:        rgba(0, 0, 0, .45);
-  --negative:    var(--8020-azul);
+  --line:        rgba(26, 20, 15, .12);
+  --hairline:    rgba(26, 20, 15, .07);
+  --muted:       rgba(26, 20, 15, .56);
+  --meta:        rgba(26, 20, 15, .44);
+  --negative:    #1a140f;            /* dado negativo: chumbo, nunca vermelho/azul */
+  --logo-invert: 1;                  /* papel claro: inverte a logo branca para escura */
 }

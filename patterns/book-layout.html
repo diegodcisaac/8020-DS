@@ -32,24 +32,23 @@
     position: relative; display: grid; place-items: center;
     color: color-mix(in srgb, var(--ink) 78%, transparent);
     background: linear-gradient(135deg,
-      color-mix(in srgb, var(--floor) 92%, transparent) 0%,
-      color-mix(in srgb, var(--surface) 70%, var(--floor)) 100%);
+      color-mix(in srgb, var(--surface) 88%, var(--floor)) 0%,
+      color-mix(in srgb, var(--surface) 60%, var(--floor)) 100%);
     overflow: hidden;
   }
   .ph::before {
     content: ""; position: absolute; inset: 0;
     background-image: repeating-linear-gradient(135deg,
-      rgba(255,255,255,.05) 0 2px, transparent 2px 18px);
+      color-mix(in srgb, var(--ink) 6%, transparent) 0 2px, transparent 2px 18px);
     pointer-events: none;
   }
   .ph-tag {
     position: relative; z-index: 1; font-family: var(--font-data);
     font-size: var(--fs-micro); letter-spacing: var(--tracking-label);
-    text-transform: uppercase; color: color-mix(in srgb, var(--floor-ink) 70%, transparent);
+    text-transform: uppercase; color: color-mix(in srgb, var(--surface-ink) 78%, transparent);
     padding: 5px 12px; border: 1px solid var(--line); border-radius: var(--radius-pill);
   }
   .ph-rect { aspect-ratio: 16 / 10; border-radius: var(--radius); border: 1px solid var(--line); }
-  .ph-organica { aspect-ratio: 6 / 5; clip-path: path("M 0 80 C 120 0 460 0 600 70 C 740 140 760 360 640 460 C 520 560 160 580 60 500 C -40 420 -20 160 0 80 Z"); }
   .ph-fill { position: absolute; inset: 0; }
 
   /* SUPERMENU: na pagina de catalogo a barra .book-nav nao deve
@@ -106,7 +105,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">00</span><p class="doc-kicker">Como o book se compõe</p></div>
   <h2>Seções compostáveis sobre o campo <em>laranja</em></h2>
-  <p>O book roda na variante canônica, o campo-laranja: fundo laranja, títulos brancos, corpo em preto, joia escassa. Cada seção do documento é uma peça de um catálogo, e o autor escolhe quais usar e em que ordem para construir o arco de leitura. As seções se encaixam dentro de <code class="doc-code">.container</code> para respeitar a coluna de leitura, ou rompem a coluna de propósito, sangrando de borda a borda quando o momento pede imersão.</p>
+  <p>O book roda na variante canônica, o campo-laranja: fundo laranja, títulos brancos, corpo em preto, acento escasso. O mesmo documento se sustenta nas três variantes da casa, o campo-laranja, o palco escuro e o papel claro, porque cada seção compõe com papéis semânticos em vez de cores cravadas. Cada seção do documento é uma peça de um catálogo, e o autor escolhe quais usar e em que ordem para construir o arco de leitura. As seções se encaixam dentro de <code class="doc-code">.container</code> para respeitar a coluna de leitura, ou rompem a coluna de propósito, sangrando de borda a borda quando o momento pede imersão.</p>
   <p>A densidade é a do livro digital. Um número grande nunca aparece sozinho: ele traz o rótulo do que mede e a frase que diz por que importa. Uma citação carrega a atribuição. Um diagrama vem com legenda que se lê sem voltar ao parágrafo anterior. O leitor pode abrir o documento em qualquer ponto e se localizar, porque o contexto vive na própria frase.</p>
 
   <div class="doc-grid doc-2" style="margin-top:28px;">
@@ -116,7 +115,7 @@
     </div>
     <div class="doc-note dont">
       <span class="doc-note-tag">Não faça</span>
-      <span>Empilhar declaração sobre declaração sem texto que explique. Tratar o book como deck, com pouca palavra por tela. Gastar joia em cada seção: no book ela continua acento, não enchimento.</span>
+      <span>Empilhar declaração sobre declaração sem texto que explique. Tratar o book como deck, com pouca palavra por tela. Gastar acento em cada seção: no book ele continua escasso, não enchimento.</span>
     </div>
   </div>
   <p class="doc-classnote">Nesta página de referência os exemplos vivos aparecem dentro de <code class="doc-code">.doc-specimen.plain</code>. As seções que sangram (faixas, statement e citação full-bleed, separatriz, overlay) ficam soltas, fora da <code class="doc-code">.doc-wrap</code>, para o efeito de borda a borda se mostrar de verdade. Onde a produção usaria <code class="doc-code">&lt;img&gt;</code>, há um placeholder rotulado com o mesmo tratamento.</p>
@@ -150,7 +149,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">02</span><p class="doc-kicker">Virada entre movimentos</p></div>
   <h2>O número grande que abre um <em>capítulo</em></h2>
-  <p>A separatriz <code class="doc-code">.b-chapter</code> marca a fronteira entre dois movimentos do documento. Sangra de borda a borda, ocupa quase a altura da tela e traz um numeral gigante em joia mais o título do capítulo em display. É um dos poucos lugares onde a joia aparece em escala, justamente porque a virada precisa de peso. Funciona como respiro: o leitor fecha um assunto e entra no próximo.</p>
+  <p>A separatriz <code class="doc-code">.b-chapter</code> marca a fronteira entre dois movimentos do documento. Sangra de borda a borda, ocupa quase a altura da tela e traz um numeral gigante em acento mais o título do capítulo em display. É um dos poucos lugares onde o acento aparece em escala, justamente porque a virada precisa de peso. Funciona como respiro: o leitor fecha um assunto e entra no próximo.</p>
 </div></section>
 
 <section class="doc-section" style="border-top:0;padding-block:0;">
@@ -175,7 +174,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">Mapa do documento</p></div>
   <h2>O índice que se navega em <em>cartões</em></h2>
-  <p>Logo após a capa, o índice em cards dá a planta do documento. Cada cartão <code class="doc-code">.b-card</code> traz um numeral em joia, o título da parte e uma frase do que ela cobre, mais um link de entrada. A grade se reorganiza sozinha conforme a tela. É o sumário navegável: o leitor decide por onde começar e volta a ele quando quiser.</p>
+  <p>Logo após a capa, o índice em cards dá a planta do documento. Cada cartão <code class="doc-code">.b-card</code> traz um numeral em acento, o título da parte e uma frase do que ela cobre, mais um link de entrada. A grade se reorganiza sozinha conforme a tela. É o sumário navegável: o leitor decide por onde começar e volta a ele quando quiser.</p>
 
   <div class="doc-specimen plain">
     <span class="doc-specimen-label">Índice em hub-grid de cards</span>
@@ -388,19 +387,19 @@
 </div></section>
 
 <!-- ============================================================
-     10 - IMAGENS (figure: organica, rect, bleed) + OVERLAY
+     10 - IMAGENS (figure: rect, bleed) + OVERLAY
      ============================================================ -->
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">10</span><p class="doc-kicker">Figuras no fluxo</p></div>
   <h2>A foto que entra com <em>tratamento</em></h2>
-  <p>No book, toda imagem vive dentro de um invólucro com respiro vertical generoso. O <code class="doc-code">.b-figure</code> tem três modos: orgânico, recortado por <code class="doc-code">clip-path</code> para o momento emocional; retangular, com raio e borda finos para evidência, acompanhado de legenda em <code class="doc-code">.b-figcap</code>; e full-bleed, que rompe a coluna e toma a viewport. A página de Imagens detalha cada modo; aqui mostramos os três no contexto do book.</p>
+  <p>No book, toda imagem vive dentro de um invólucro com respiro vertical generoso. A imagem é sempre um retângulo reto: nada de máscara orgânica nem recorte irregular. O <code class="doc-code">.b-figure</code> tem dois modos: retangular, com raio e borda finos para evidência, acompanhado de legenda em <code class="doc-code">.b-figcap</code>; e full-bleed, que rompe a coluna e toma a viewport. A página de Imagens detalha cada modo; aqui mostramos os dois no contexto do book.</p>
 
   <div class="doc-specimen plain">
-    <span class="doc-specimen-label">Figura orgânica e figura retangular com legenda</span>
+    <span class="doc-specimen-label">Figura retangular com legenda</span>
     <div class="book">
       <div class="b-split">
-        <div class="b-figure organica" style="margin-block:0;">
-          <div class="ph ph-organica" aria-hidden="true"><span class="ph-tag">imagem · retrato</span></div>
+        <div class="b-figure rect" style="margin-block:0;">
+          <div class="ph ph-rect" aria-hidden="true"><span class="ph-tag">imagem · retrato</span></div>
         </div>
         <div class="b-figure rect" style="margin-block:0;">
           <div class="ph ph-rect" aria-hidden="true"><span class="ph-tag">imagem · evidência</span></div>
@@ -442,14 +441,14 @@
   <div class="doc-grid doc-2">
     <div class="doc-note do">
       <span class="doc-note-tag">Faça</span>
-      <span>Escolher o modo pela função: orgânico para afeto, retangular para prova, full-bleed para imersão, overlay para capa. Manter o respiro vertical de <code class="doc-code">.b-figure</code>.</span>
+      <span>Escolher o modo pela função: retangular para prova, full-bleed para imersão, overlay para capa. Manter a imagem reta, com raio e borda fina, e o respiro vertical de <code class="doc-code">.b-figure</code>.</span>
     </div>
     <div class="doc-note dont">
       <span class="doc-note-tag">Não faça</span>
-      <span>Colar foto crua sobre o laranja sem invólucro. Recortar tabela ou gráfico no modo orgânico. Empilhar corpo de texto sobre a imagem no overlay: ali só entra display.</span>
+      <span>Colar foto crua sobre o laranja sem invólucro. Recortar a imagem com máscara orgânica, blob ou clip-path irregular. Empilhar corpo de texto sobre a imagem no overlay: ali só entra display.</span>
     </div>
   </div>
-  <p class="doc-classnote">Classes: <code class="doc-code">.b-figure.organica</code> / <code class="doc-code">.b-figure.rect</code> + <code class="doc-code">.b-figcap</code> / <code class="doc-code">.b-figure.bleed</code>; <code class="doc-code">.b-overlay</code> &gt; <code class="doc-code">&lt;img&gt;</code> + <code class="doc-code">.container</code> &gt; <code class="doc-code">h2</code>. Detalhe completo na página de Imagens.</p>
+  <p class="doc-classnote">Classes: <code class="doc-code">.b-figure.rect</code> + <code class="doc-code">.b-figcap</code> / <code class="doc-code">.b-figure.bleed</code>; <code class="doc-code">.b-overlay</code> &gt; <code class="doc-code">&lt;img&gt;</code> + <code class="doc-code">.container</code> &gt; <code class="doc-code">h2</code>. Imagem sempre reta, com raio e borda fina. Detalhe completo na página de Imagens.</p>
 </div></section>
 
 <!-- ============================================================
@@ -497,7 +496,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">12</span><p class="doc-kicker">Ordem que importa</p></div>
   <h2>A sequência que se lê em <em>ordem</em></h2>
-  <p>Quando a ordem dos itens carrega significado, a numeração precisa aparecer. A <code class="doc-code">.b-seq</code> alinha numerais em joia à esquerda, com título e descrição à direita. É o formato para etapas de um método, camadas de um raciocínio ou fases que se sucedem, onde o item dois só faz sentido depois do item um.</p>
+  <p>Quando a ordem dos itens carrega significado, a numeração precisa aparecer. A <code class="doc-code">.b-seq</code> alinha numerais em acento à esquerda, com título e descrição à direita. É o formato para etapas de um método, camadas de um raciocínio ou fases que se sucedem, onde o item dois só faz sentido depois do item um.</p>
 
   <div class="doc-specimen plain">
     <span class="doc-specimen-label">Sequência numerada</span>
@@ -578,14 +577,14 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">14</span><p class="doc-kicker">Diagramas de dado</p></div>
   <h2>Cronograma de barras e conjuntos que se <em>cruzam</em></h2>
-  <p>Para o cronograma com duração de cada frente, o Gantt em SVG real desenha as barras com largura proporcional ao tempo. As barras são <code class="doc-code">&lt;rect&gt;</code> de geometria verdadeira, não divs com largura em porcentagem, então o desenho aparece igual com ou sem JavaScript. A massa fica em branco e esmaecido; uma única frente recebe joia para sinalizar o foco.</p>
+  <p>Para o cronograma com duração de cada frente, o Gantt em SVG real desenha as barras com largura proporcional ao tempo. As barras são <code class="doc-code">&lt;rect&gt;</code> de geometria verdadeira, não divs com largura em porcentagem, então o desenho aparece igual com ou sem JavaScript. A massa fica em tinta esmaecida, com a opacidade decrescendo por série; uma única frente recebe o acento cheio para sinalizar o foco.</p>
 
   <div class="doc-specimen plain">
     <span class="doc-specimen-label">Gantt em SVG, barras com duração real</span>
     <div class="b-diagram">
       <svg viewBox="0 0 720 220" width="100%" role="img" aria-label="Cronograma em barras: Escuta de janeiro a marco, Plataforma de marco a maio em destaque, Canais de maio a setembro, Medicao de julho a dezembro.">
         <title>Cronograma de frentes em 2026</title>
-        <desc>Quatro frentes de trabalho posicionadas ao longo do ano, com a frente de plataforma destacada em ouro.</desc>
+        <desc>Quatro frentes de trabalho posicionadas ao longo do ano, com a frente de plataforma destacada no acento.</desc>
         <!-- grade de meses -->
         <g stroke="var(--hairline)" stroke-width="1">
           <line x1="120" y1="20" x2="120" y2="190"/>
@@ -606,16 +605,16 @@
         <!-- frentes (rect de largura verdadeira) -->
         <g font-family="var(--font-body)" font-size="13" fill="var(--ink)">
           <text x="0" y="48">Escuta</text>
-          <rect x="120" y="36" width="120" height="18" rx="4" fill="rgba(255,255,255,.62)"/>
+          <rect x="120" y="36" width="120" height="18" rx="4" style="fill:var(--ink)" fill-opacity=".58"/>
           <text x="0" y="84">Plataforma</text>
-          <rect x="200" y="72" width="120" height="18" rx="4" fill="var(--accent)"/>
+          <rect x="200" y="72" width="120" height="18" rx="4" style="fill:var(--accent)"/>
           <text x="0" y="120">Canais</text>
-          <rect x="320" y="108" width="200" height="18" rx="4" fill="rgba(255,255,255,.40)"/>
+          <rect x="320" y="108" width="200" height="18" rx="4" style="fill:var(--ink)" fill-opacity=".40"/>
           <text x="0" y="156">Medição</text>
-          <rect x="420" y="144" width="200" height="18" rx="4" fill="rgba(255,255,255,.24)"/>
+          <rect x="420" y="144" width="200" height="18" rx="4" style="fill:var(--ink)" fill-opacity=".26"/>
         </g>
       </svg>
-      <p class="b-figcap">Cada barra tem largura proporcional à duração. A frente de plataforma, em ouro, é o foco do semestre.</p>
+      <p class="b-figcap">Cada barra tem largura proporcional à duração. A frente de plataforma, no acento, é o foco do semestre.</p>
     </div>
   </div>
 
@@ -627,9 +626,9 @@
       <svg viewBox="0 0 420 300" width="100%" style="max-width:460px;" role="img" aria-label="Diagrama de Venn de tres conjuntos: Publico, Territorio e Marca, com a intersecao central representando o ponto de encontro.">
         <title>Interseção de público, território e marca</title>
         <desc>Três círculos sobrepostos cuja região comum representa onde a comunicação encontra eco.</desc>
-        <circle cx="160" cy="120" r="92" fill="rgba(255,255,255,.30)" stroke="var(--line)"/>
-        <circle cx="260" cy="120" r="92" fill="rgba(255,255,255,.30)" stroke="var(--line)"/>
-        <circle cx="210" cy="200" r="92" fill="var(--accent)" fill-opacity="0.30" stroke="var(--line)"/>
+        <circle cx="160" cy="120" r="92" style="fill:var(--ink)" fill-opacity=".26" stroke="var(--line)"/>
+        <circle cx="260" cy="120" r="92" style="fill:var(--ink)" fill-opacity=".26" stroke="var(--line)"/>
+        <circle cx="210" cy="200" r="92" style="fill:var(--accent)" fill-opacity=".42" stroke="var(--line)"/>
         <g font-family="var(--font-body)" font-size="14" fill="var(--ink)" font-weight="600">
           <text x="110" y="96" text-anchor="middle">Público</text>
           <text x="310" y="96" text-anchor="middle">Território</text>
@@ -637,7 +636,7 @@
         </g>
         <text x="210" y="158" text-anchor="middle" font-family="var(--font-body)" font-size="12" fill="var(--ink)">encontro</text>
       </svg>
-      <p class="b-figcap">A região comum aos três conjuntos é onde a comunicação encontra eco. Só o conjunto da marca recebe joia.</p>
+      <p class="b-figcap">A região comum aos três conjuntos é onde a comunicação encontra eco. Só o conjunto da marca recebe o acento.</p>
     </div>
   </div>
   <p class="doc-classnote">Classes: <code class="doc-code">.b-diagram</code> &gt; <code class="doc-code">svg</code>. Gantt e Venn são SVG real, com <code class="doc-code">role="img"</code>, <code class="doc-code">aria-label</code> numérico e <code class="doc-code">&lt;title&gt;</code> mais <code class="doc-code">&lt;desc&gt;</code> internos. A geometria é verdadeira, sem depender de JavaScript.</p>
@@ -662,10 +661,10 @@
             <path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/>
           </marker>
         </defs>
-        <!-- conectores primeiro (z-order) -->
+        <!-- conectores primeiro (z-order): segmentos retos, sem curva bezier -->
         <g fill="none" stroke="currentColor" stroke-width="2" color="var(--ink)">
-          <path d="M214 80 C 234 80, 246 80, 266 80" marker-end="url(#arw-fluxo)"/>
-          <path d="M454 80 C 474 80, 486 80, 506 80" marker-end="url(#arw-fluxo)"/>
+          <path d="M214 80 H 266" marker-end="url(#arw-fluxo)"/>
+          <path d="M454 80 H 506" marker-end="url(#arw-fluxo)"/>
         </g>
         <!-- nos por cima -->
         <g>
@@ -677,7 +676,7 @@
           <text x="607" y="86" text-anchor="middle" font-family="var(--font-body)" font-size="15" fill="var(--accent-ink)" font-weight="600">Aceitar</text>
         </g>
       </svg>
-      <p class="b-figcap">As setas saem de um <code class="doc-code">&lt;marker&gt;</code> em <code class="doc-code">&lt;defs&gt;</code>. O nó final, em ouro, é o destino do fluxo.</p>
+      <p class="b-figcap">As setas saem de um <code class="doc-code">&lt;marker&gt;</code> em <code class="doc-code">&lt;defs&gt;</code> e ligam os nós só por segmentos retos. O nó final, no acento, é o destino do fluxo.</p>
     </div>
   </div>
   <div class="doc-note do" style="margin-top:24px;">
@@ -775,7 +774,7 @@
   </div>
 
   <h3>Roadmap de fases, o caminho que se lê na horizontal</h3>
-  <p>O <code class="doc-code">.b-roadmap</code> alinha fases lado a lado, cada uma com numeral em joia e descrição. É o roteiro do que vem em cada etapa, lido da esquerda para a direita. Em telas menores, empilha na vertical mantendo a ordem.</p>
+  <p>O <code class="doc-code">.b-roadmap</code> alinha fases lado a lado, cada uma com numeral em acento e descrição. É o roteiro do que vem em cada etapa, lido da esquerda para a direita. Em telas menores, empilha na vertical mantendo a ordem.</p>
   <div class="doc-specimen plain">
     <span class="doc-specimen-label">Roadmap de fases</span>
     <div class="book">
@@ -913,7 +912,7 @@
 <section class="doc-section"><div class="doc-wrap">
   <div class="doc-shoulder"><span class="doc-num">22</span><p class="doc-kicker">Convite ao próximo passo</p></div>
   <h2>O fechamento que aponta um <em>passo</em></h2>
-  <p>Perto do fim, a <code class="doc-code">.b-cta</code> reúne o leitor em torno de uma ação. Título em display, uma frase e um botão de acento. No book, ela costura o documento ao que vem depois: uma conversa, um próximo material, uma decisão. O botão é o único lugar da seção onde a joia aparece como superfície cheia.</p>
+  <p>Perto do fim, a <code class="doc-code">.b-cta</code> reúne o leitor em torno de uma ação. Título em display, uma frase e um botão de acento. No book, ela costura o documento ao que vem depois: uma conversa, um próximo material, uma decisão. O botão é o único lugar da seção onde o acento aparece como superfície cheia.</p>
 
   <div class="doc-specimen plain">
     <span class="doc-specimen-label">Faixa de chamada com botão</span>

@@ -2,7 +2,7 @@
 
 Sistema de design da **80 20 Marketing**. Standalone, sem build, sem dependência: HTML, CSS, JavaScript e SVG puros. Quando ligado ao Claude, faz gerar decks, books, páginas, componentes e textos no padrão da casa.
 
-A casa fala em laranja. O `#fa4616` é o substrato, o branco é a voz, o preto é o chão, e a joia entra só quando precisa pesar. Montserrat em todo lugar.
+A casa fala em laranja. O `#fa4616` é o substrato, o branco é a voz, o preto é o chão, e o acento entra só quando precisa pesar. Montserrat em todo lugar. A paleta é fechada: laranja, laranja aprofundado, branco, preto e chumbos profundos.
 
 ## Para que serve
 
@@ -49,7 +49,7 @@ Para um cliente ou ambiente novo, copia-se a base e redeclaram-se só os papéis
 1. Escolher o formato: deck (camada `assets/deck.css` + `deck.js`) ou book (camada `assets/book.css` + `book.js`).
 2. Escolher a variante de cor pela pergunta de onde a peça será vista.
 3. Compor as seções a partir dos catálogos em `patterns/`, copiando os componentes existentes em vez de inventar.
-4. Gráfico e diagrama em SVG real, com as escalas de cor do `brand.json` (massa em branco e brancos esmaecidos, joia só no dado-herói).
+4. Gráfico e diagrama em SVG real, com as escalas de cor do `brand.json` (massa em branco e brancos esmaecidos, o cheio só no dado-herói). Diagramas em ângulo reto, imagens sempre retas, sem sombras.
 5. Conferir contra o [RULES.md](RULES.md) e o [antipatterns/forbidden.html](antipatterns/forbidden.html).
 6. Passar o texto pela última revisão de tom antes de entregar, conforme `voice/tom-de-voz.md`.
 
