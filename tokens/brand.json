@@ -1,0 +1,91 @@
+{
+  "system": "80 20 Editorial House",
+  "id": "8020",
+  "version": "1.0",
+  "snapshot": "2026-06-22",
+  "source": {
+    "logo": "logo 80 20 Marketing (#fa4616 + branco)",
+    "padrao_visual": "deck de campo 80 20 (Montserrat, campo laranja, foto recortada, dash-glyphs)",
+    "fonte": "Montserrat (OFL), self-hosted em assets/fonts/"
+  },
+  "brand": {
+    "laranja": "#fa4616",
+    "laranja_d": "#d63a10",
+    "branco": "#ffffff",
+    "preto": "#0a0a0a",
+    "joias": {
+      "azul": "#1f4ea8",
+      "verde": "#37b34a",
+      "ouro": "#f5c542",
+      "areia": "#c9a063"
+    }
+  },
+  "variants": {
+    "8020": { "uso": "campo-laranja (canonica)", "paper": "#fa4616", "ink": "#ffffff", "ink_body": "#0a0a0a", "accent": "joia" },
+    "8020-noite": { "uso": "palco escuro", "paper": "#0a0a0a", "ink": "#ffffff", "accent": "#fa4616" },
+    "8020-claro": { "uso": "papel claro / documento", "paper": "#faf7f2", "ink": "#111111", "accent": "#fa4616" }
+  },
+  "type": {
+    "family": "Montserrat",
+    "display_weight": 800,
+    "black_weight": 900,
+    "body_weight": 400,
+    "label_weight": 600,
+    "assinatura": "ultimo termo do titulo salta de tamanho e vai a italico"
+  },
+  "dataviz": {
+    "categorical_order": [
+      "#ffffff",
+      "rgba(255,255,255,0.62)",
+      "rgba(255,255,255,0.40)",
+      "rgba(255,255,255,0.24)",
+      "#1f4ea8",
+      "#37b34a",
+      "#f5c542",
+      "#c9a063"
+    ],
+    "sequential_scale": [
+      "rgba(255,255,255,0.16)",
+      "rgba(255,255,255,0.34)",
+      "rgba(255,255,255,0.55)",
+      "rgba(255,255,255,0.80)",
+      "#ffffff",
+      "#f5c542"
+    ],
+    "negative": "#1f4ea8",
+    "regra": "massa das series em branco e brancos esmaecidos sobre o laranja; joia so no dado-heroi (1-3). Nunca arco-iris. Nunca laranja-sobre-laranja para dado."
+  },
+  "accent_ink": {
+    "#1f4ea8": "#ffffff",
+    "#37b34a": "#0a0a0a",
+    "#f5c542": "#0a0a0a",
+    "#c9a063": "#0a0a0a",
+    "#fa4616": "#ffffff (titulo/area) | #0a0a0a (corpo)"
+  },
+  "contrast_matrix": [
+    { "fg": "#ffffff", "bg": "#fa4616", "ratio": 3.53, "level": "AA-large", "use": "titulo/display em branco sobre laranja; NUNCA corpo pequeno" },
+    { "fg": "#0a0a0a", "bg": "#fa4616", "ratio": 5.61, "level": "AA", "use": "corpo denso em preto sobre laranja" },
+    { "fg": "#ffffff", "bg": "#0a0a0a", "ratio": 19.8, "level": "AAA", "use": "tinta sobre palco escuro / contracapa" },
+    { "fg": "#111111", "bg": "#faf7f2", "ratio": 17.6, "level": "AAA", "use": "corpo no papel claro" },
+    { "fg": "#fa4616", "bg": "#faf7f2", "ratio": 3.30, "level": "AA-large", "use": "laranja como acento de titulo no papel claro; nao usar em corpo pequeno" },
+    { "fg": "#ffffff", "bg": "#1f4ea8", "ratio": 7.74, "level": "AAA", "use": "rotulo de dado negativo (azul)" },
+    { "fg": "#0a0a0a", "bg": "#37b34a", "ratio": 7.27, "level": "AAA", "use": "texto sobre joia verde" },
+    { "fg": "#0a0a0a", "bg": "#f5c542", "ratio": 12.2, "level": "AAA", "use": "texto sobre joia ouro" }
+  ],
+  "forbidden_pairs": [
+    { "fg": "#ffffff", "bg": "#f5c542", "ratio": 1.62, "motivo": "branco sobre ouro ilegivel" },
+    { "fg": "#ffffff", "bg": "#37b34a", "ratio": 2.72, "motivo": "branco sobre verde reprova" },
+    { "fg": "vermelho", "bg": "qualquer", "motivo": "vermelho proibido (regra editorial; dado negativo usa azul)" },
+    { "fg": "#fa4616", "bg": "#fa4616-tonal", "motivo": "laranja-sobre-laranja para dado: sem contraste" }
+  ],
+  "hard_rules": [
+    { "id": "laranja-substrato", "regra": "laranja #fa4616 e o fundo/substrato na canonica; nunca outro laranja", "check": "todo --paper canonico == #fa4616" },
+    { "id": "acento-escasso", "regra": "joia em no maximo 3 momentos por pagina", "check": "contar usos de joia <= 3" },
+    { "id": "svg-real", "regra": "charts e diagramas em SVG real, nunca div com width%", "check": "nenhuma barra de dado e <div style=width:%>" },
+    { "id": "seta-marker", "regra": "setas via <marker> em <defs>", "check": "toda seta de diagrama usa marker-end" },
+    { "id": "aria-dado", "regra": "SVG de dado leva role=img + aria-label; decorativo aria-hidden", "check": "svg de dado tem role e aria-label" },
+    { "id": "montserrat", "regra": "so Montserrat; sem CDN; self-hosted woff/ttf", "check": "font-family resolve para Montserrat" },
+    { "id": "logo-intacta", "regra": "logo 80 20 nunca recolorida fora das variantes branca/preta/original", "check": "logo usa um dos 3 SVG aprovados" },
+    { "id": "par-aprovado", "regra": "texto so em par presente em contrast_matrix", "check": "fg/bg consta na matriz com level != forbidden" }
+  ]
+}

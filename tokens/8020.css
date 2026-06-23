@@ -1,0 +1,103 @@
+/* ============================================================
+   8020-DS — tokens/8020.css
+   Variante CANONICA: Campo-laranja.
+   Laranja #fa4616 e o substrato; branco e a tinta;
+   joias (azul/verde/ouro/areia) sao acento escasso.
+   Esta e a base. As variantes noite/claro fazem @import deste
+   arquivo e redeclaram so os deltas.
+   ============================================================ */
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("../assets/fonts/Montserrat-variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("../assets/fonts/Montserrat-Italic-variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* ---------- paleta crua ---------- */
+  --8020-laranja:   #fa4616;   /* a marca */
+  --8020-laranja-d: #d63a10;   /* laranja aprofundado: superficie / corpo denso */
+  --8020-branco:    #ffffff;
+  --8020-preto:     #0a0a0a;
+  /* joias-gradiente (acento escasso) */
+  --8020-azul:      #1f4ea8;
+  --8020-verde:     #37b34a;
+  --8020-ouro:      #f5c542;
+  --8020-areia:     #c9a063;
+
+  /* ---------- papeis semanticos — Campo-laranja ---------- */
+  --paper:      var(--8020-laranja);  /* fundo: o mundo */
+  --ink:        var(--8020-branco);   /* tinta de display/titulo (texto grande) */
+  --ink-body:   var(--8020-preto);    /* corpo denso: preto sobre laranja (~5.6:1, AA) */
+  --surface:    var(--8020-laranja-d);/* card / bloco elevado sobre o laranja */
+  --surface-ink: var(--8020-branco);
+  --accent:     var(--8020-ouro);     /* acento escasso default (joia) */
+  --accent-ink: var(--8020-preto);    /* texto sobre ouro/verde/areia */
+  --accent-azul:  var(--8020-azul);
+  --accent-verde: var(--8020-verde);
+  --accent-areia: var(--8020-areia);
+  --floor:      var(--8020-preto);    /* rodape / contracapa */
+  --floor-ink:  var(--8020-branco);
+  --line:       rgba(255,255,255,.24);/* grade / divisoria */
+  --hairline:   rgba(255,255,255,.14);
+  --muted:      rgba(255,255,255,.72);/* texto secundario sobre laranja */
+  --meta:       rgba(255,255,255,.56);/* eyebrow / micro */
+  --negative:   var(--8020-azul);     /* dado negativo/alerta: nunca vermelho */
+
+  /* gradientes-joia (superficie-heroi, nunca sob texto) */
+  --jewel-quente: linear-gradient(135deg, var(--8020-verde) 0%, var(--8020-ouro) 100%);
+  --jewel-frio:   linear-gradient(135deg, var(--8020-azul) 0%, var(--8020-areia) 100%);
+
+  /* ---------- tipografia (Montserrat) ---------- */
+  --font-display: "Montserrat", system-ui, sans-serif;
+  --font-body:    "Montserrat", system-ui, sans-serif;
+  --font-data:    "Montserrat", ui-monospace, monospace;
+  --w-black: 900; --w-display: 800; --w-title: 700;
+  --w-medium: 500; --w-body: 400; --w-label: 600;
+  --fs-display:   clamp(44px, 7vw, 92px);
+  --fs-statement: clamp(30px, 4.5vw, 52px);
+  --fs-title:     clamp(26px, 3.4vw, 40px);
+  --fs-h2:        clamp(20px, 2.4vw, 28px);
+  --fs-lead:      clamp(18px, 1.6vw, 22px);
+  --fs-body:      16px;
+  --fs-small:     13.5px;
+  --fs-micro:     11px;
+  --lh-tight: 1.05; --lh-body: 1.55;
+  --tracking-eyebrow: .16em; --tracking-label: .12em;
+
+  /* ---------- forma / motion / grade ---------- */
+  --radius: 12px; --radius-sm: 7px; --radius-lg: 16px; --radius-pill: 999px;
+  --ease: cubic-bezier(.4, 0, .2, 1);
+  --dur: .4s; --dur-fast: .15s;
+  --max: 1180px; --gutter: clamp(22px, 6vw, 92px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur: .001s; --dur-fast: .001s; }
+}
+
+/* base de conveniencia (especificidade zero, sobrescrevivel) */
+:where(html) { -webkit-text-size-adjust: 100%; }
+:where(body) {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: var(--w-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+:where(h1, h2, h3, h4) { font-family: var(--font-display); line-height: var(--lh-tight); }
+/* numerais tabulares para dado */
+:where(.num, .stat-number, [data-count]) { font-variant-numeric: tabular-nums; }

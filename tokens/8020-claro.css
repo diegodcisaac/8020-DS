@@ -1,0 +1,25 @@
+/* ============================================================
+   8020-DS — tokens/8020-claro.css
+   Variante PAPEL CLARO. Para documento, leitura longa, peca sobria.
+   Fundo off-white, tinta quase-preta, e o LARANJA como acento.
+   So deltas sobre a base.
+   ============================================================ */
+
+@import "8020.css";
+
+:root {
+  --paper:       #faf7f2;            /* off-white levissimo */
+  --ink:         #111111;
+  --ink-body:    #1a1a1a;
+  --surface:     var(--8020-branco); /* card branco elevado sobre o off-white */
+  --surface-ink: #111111;
+  --accent:      var(--8020-laranja);
+  --accent-ink:  var(--8020-branco); /* texto sobre laranja: branco em area/titulo */
+  --floor:       var(--8020-preto);
+  --floor-ink:   var(--8020-branco);
+  --line:        rgba(0, 0, 0, .12);
+  --hairline:    rgba(0, 0, 0, .07);
+  --muted:       rgba(0, 0, 0, .58);
+  --meta:        rgba(0, 0, 0, .45);
+  --negative:    var(--8020-azul);
+}

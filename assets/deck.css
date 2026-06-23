@@ -1,0 +1,187 @@
+/* ============================================================
+   8020-DS — assets/deck.css
+   Camada de layout de DECK 16:9 (1280x720). Consome SO papeis
+   semanticos (--paper/--ink/--accent...), nunca cor crua --8020-*.
+   Roda em qualquer variante de token (campo-laranja, noite, claro).
+   ============================================================ */
+
+.deck {
+  position: fixed; inset: 0;
+  background: #1c1c1c;
+  display: grid; place-items: center;
+  overflow: hidden;
+}
+.stage {
+  position: relative;
+  width: 1280px; height: 720px;
+  transform-origin: center center; /* deck.js calcula a escala */
+  box-shadow: 0 24px 80px rgba(0,0,0,.5);
+}
+
+/* ---------- slide ---------- */
+.slide {
+  position: absolute; inset: 0;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 64px 80px 0;
+  opacity: 0; visibility: hidden;
+  transition: opacity var(--dur) var(--ease);
+  overflow: hidden;
+}
+.slide.active { opacity: 1; visibility: visible; }
+.slide.print-page { /* impressao: ver @media print */ }
+
+/* ---------- mobilia ---------- */
+.s-logo, .s-cobrand {
+  position: absolute; top: 40px; height: 30px; z-index: 3;
+}
+.s-logo { left: 80px; }
+.s-cobrand { right: 80px; font-weight: var(--w-display);
+  font-size: 22px; letter-spacing: -.01em; color: var(--ink); }
+.s-logo img { height: 100%; width: auto; display: block; }
+.s-foot {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 40px;
+  background: var(--floor); color: var(--floor-ink);
+  display: flex; align-items: center; justify-content: flex-end;
+  padding: 0 80px; font-size: var(--fs-micro);
+  letter-spacing: var(--tracking-label); z-index: 3;
+}
+
+/* ---------- tipografia de slide ---------- */
+.s-eyebrow {
+  font-size: var(--fs-micro); font-weight: var(--w-label);
+  letter-spacing: var(--tracking-eyebrow); text-transform: uppercase;
+  color: var(--muted); margin: 0 0 18px;
+}
+.s-title {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: var(--fs-title); line-height: var(--lh-tight);
+  letter-spacing: -.02em; margin: 0 0 20px; color: var(--ink);
+}
+/* assinatura: ultimo termo salta e vira italico */
+.s-title em, .s-title .grow {
+  font-style: italic; font-size: 1.18em; font-weight: var(--w-black);
+}
+.s-statement {
+  font-family: var(--font-display); font-weight: var(--w-display);
+  font-size: var(--fs-statement); line-height: 1.08;
+  letter-spacing: -.02em; margin: 0; max-width: 16ch;
+}
+.s-lead { font-size: var(--fs-lead); font-weight: var(--w-medium); margin: 0 0 16px; }
+.s-body { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--ink); margin: 0 0 14px; max-width: 52ch; }
+.slide:not(.cover):not(.divider):not(.close) .s-body { color: var(--ink-body); }
+.s-muted { color: var(--muted); }
+
+/* ---------- listas ---------- */
+.s-list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 12px; }
+.s-list li { position: relative; padding-left: 22px; font-size: var(--fs-body); line-height: 1.4; color: var(--ink-body); }
+.slide.cover .s-list li, .slide.divider .s-list li, .slide.close .s-list li { color: var(--ink); }
+.s-list li::before { content: ""; position: absolute; left: 0; top: .52em; width: 9px; height: 9px; border-radius: 50%; background: var(--ink); }
+.s-label { font-weight: var(--w-label); color: var(--ink); display: block; margin-bottom: 4px; }
+
+/* ---------- citacao ---------- */
+.s-quote { font-family: var(--font-display); font-weight: var(--w-medium); font-style: italic; font-size: var(--fs-h2); line-height: 1.25; max-width: 30ch; }
+.s-attrib { margin-top: 14px; font-style: normal; font-weight: var(--w-label); font-size: var(--fs-small); color: var(--muted); }
+
+/* ---------- split 50/50 ---------- */
+.s-split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; height: 100%; padding-bottom: 56px; }
+.s-split.img-left { grid-template-columns: 1fr 1fr; }
+.s-col { min-width: 0; }
+
+/* ---------- imagem ---------- */
+.s-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+.s-photo--organica { clip-path: path("M 0 60 C 80 -10 320 0 420 70 C 520 140 540 360 460 470 C 380 580 120 600 40 520 C -40 440 -10 130 0 60 Z"); }
+.s-photo--blob { border-radius: 48% 52% 56% 44% / 52% 44% 56% 48%; overflow: hidden; }
+.s-photo--rect { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); }
+.s-figcap { font-size: var(--fs-small); color: var(--muted); margin-top: 12px; }
+
+/* ---------- numero grande (stat) ---------- */
+.s-stat-num { font-family: var(--font-display); font-weight: var(--w-black); font-size: clamp(80px, 12vw, 168px); line-height: .92; letter-spacing: -.04em; color: var(--ink); }
+.s-stat-unit { font-size: .42em; font-weight: var(--w-display); vertical-align: super; }
+.s-stat-desc { font-size: var(--fs-lead); color: var(--muted); max-width: 28ch; margin-top: 8px; }
+
+/* ---------- dash-glyphs (assinatura grafica) ---------- */
+.s-glyphs { display: flex; gap: 10px; align-items: center; opacity: .9; }
+.s-glyphs svg { height: 26px; width: auto; fill: var(--ink); }
+
+/* ---------- modificadores de slide ---------- */
+.slide.cover { padding: 56px 80px; }
+.slide.cover .s-title, .slide.cover .s-statement { color: var(--ink); }
+
+.slide.divider { display: flex; flex-direction: column; justify-content: center; }
+.slide.divider .s-title { font-size: var(--fs-statement); max-width: 22ch; }
+
+.slide.close { background: var(--floor); color: var(--floor-ink); display: flex; flex-direction: column; justify-content: space-between; }
+.slide.close .s-addr { display: flex; gap: 48px; font-weight: var(--w-display); font-size: var(--fs-body); }
+.slide.close .s-foot { background: var(--accent); color: var(--accent-ink); }
+
+/* aparte: respiro dramatico nas costuras (cartao invertido) */
+.slide.aparte { display: grid; place-items: center; }
+.slide.aparte .s-card {
+  background: var(--surface); color: var(--surface-ink);
+  border-radius: var(--radius-lg); padding: 56px 64px; max-width: 60ch;
+  font-family: var(--font-display); font-weight: var(--w-medium); font-size: var(--fs-statement);
+  line-height: 1.12; box-shadow: 0 24px 60px rgba(0,0,0,.28);
+}
+
+/* viz embed (chart / diagrama) */
+.s-viz { width: 100%; }
+.s-viz svg { width: 100%; height: auto; overflow: visible; }
+
+/* ---------- statement full-bleed ---------- */
+.slide.statement-bleed { display: grid; place-items: center; text-align: center; padding: 80px; }
+.slide.statement-bleed .s-statement { font-size: clamp(40px, 6vw, 80px); max-width: 20ch; }
+
+/* ---------- separatriz de capitulo ---------- */
+.slide.chapter { display: grid; align-content: center; gap: 14px; }
+.slide.chapter .s-chap-num { font-family: var(--font-display); font-weight: var(--w-black); font-size: clamp(120px, 20vw, 240px); line-height: .8; color: var(--accent); letter-spacing: -.04em; }
+.slide.chapter .s-chap-title { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-statement); max-width: 22ch; }
+
+/* ---------- itens numerados sequenciais (ordem) ---------- */
+.s-seq { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; counter-reset: seq; }
+.s-seq li { display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: start; }
+.s-seq li::before { counter-increment: seq; content: counter(seq, decimal-leading-zero); font-family: var(--font-display); font-weight: var(--w-black); font-size: var(--fs-title); color: var(--accent); line-height: 1; }
+.s-seq .s-seq-title { font-weight: var(--w-label); color: var(--ink); }
+.s-seq .s-seq-desc { font-size: var(--fs-small); color: var(--ink-body); }
+
+/* ---------- imagem com texto sobreposto ---------- */
+.s-overlay { position: absolute; inset: 0; }
+.s-overlay img { width: 100%; height: 100%; object-fit: cover; }
+.s-overlay::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,10,10,.74), rgba(10,10,10,.12) 60%, transparent); }
+.s-overlay .s-overlay-text { position: absolute; z-index: 2; left: 80px; bottom: 80px; max-width: 52%; color: #fff; }
+
+/* ---------- persona (placeholder de imagem) ---------- */
+.s-persona { display: grid; grid-template-columns: 320px 1fr; gap: 48px; align-items: center; height: 100%; padding-bottom: 56px; }
+.s-persona .s-portrait { aspect-ratio: 3/4; border-radius: var(--radius-lg); background: var(--surface); display: grid; place-items: center; color: var(--muted); border: 1px dashed var(--line); overflow: hidden; font-size: var(--fs-small); }
+.s-persona .s-portrait img { width: 100%; height: 100%; object-fit: cover; }
+.s-persona .s-persona-name { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-title); }
+.s-persona .s-persona-role { color: var(--muted); margin-bottom: 14px; }
+.s-persona .s-attr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+.s-persona .s-attr { background: var(--surface); border-left: 3px solid var(--accent); padding: 12px 14px; border-radius: var(--radius-sm); }
+.s-persona .s-attr b { display: block; font-size: var(--fs-micro); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+
+/* ---------- quadrante 2x2 ---------- */
+.s-quad { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; background: var(--line); border-radius: var(--radius); overflow: hidden; height: 72%; }
+.s-quad .s-cell { background: var(--paper); padding: 22px; }
+.s-quad .s-cell.hot { background: var(--surface); }
+
+/* ---------- tabela comparativa ---------- */
+.s-table { width: 100%; border-collapse: collapse; font-size: var(--fs-small); }
+.s-table th, .s-table td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); }
+.s-table th { font-weight: var(--w-label); color: var(--muted); text-transform: uppercase; letter-spacing: var(--tracking-label); font-size: var(--fs-micro); }
+.s-table td { color: var(--ink-body); }
+.s-table .col-hot { color: var(--ink); font-weight: var(--w-label); }
+
+/* ---------- navegacao opcional ---------- */
+.deck-progress { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
+.deck-progress button { width: 8px; height: 8px; border-radius: 50%; border: 0; padding: 0; background: rgba(255,255,255,.3); cursor: pointer; transition: transform var(--dur-fast) var(--ease); }
+.deck-progress button.active { background: var(--accent); transform: scale(1.4); }
+
+/* ---------- impressao / PDF ---------- */
+@media print {
+  @page { size: 1280px 720px; margin: 0; }
+  .deck { position: static; background: none; display: block; }
+  .stage { transform: none !important; box-shadow: none; }
+  .slide { position: relative; opacity: 1 !important; visibility: visible !important; page-break-after: always; break-after: page; }
+  .deck-progress { display: none; }
+}

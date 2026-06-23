@@ -1,0 +1,5 @@
+_planning/
+playwright/
+.DS_Store
+.playwright-mcp/
+*.tmp

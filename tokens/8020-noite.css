@@ -1,0 +1,24 @@
+/* ============================================================
+   8020-DS — tokens/8020-noite.css
+   Variante PALCO ESCURO. Para apresentacao ao vivo / sala escura.
+   O preto vira o fundo, branco a tinta, e o LARANJA recua para
+   acento escasso. So deltas sobre a base.
+   ============================================================ */
+
+@import "8020.css";
+
+:root {
+  --paper:       var(--8020-preto);
+  --ink:         var(--8020-branco);
+  --ink-body:    rgba(255, 255, 255, .88);
+  --surface:     #161616;
+  --surface-ink: var(--8020-branco);
+  --accent:      var(--8020-laranja);   /* laranja vira o acento raro */
+  --accent-ink:  var(--8020-branco);
+  --floor:       var(--8020-laranja);   /* faixa de chao em laranja */
+  --floor-ink:   var(--8020-branco);
+  --line:        rgba(255, 255, 255, .18);
+  --hairline:    rgba(255, 255, 255, .10);
+  --muted:       rgba(255, 255, 255, .66);
+  --meta:        rgba(255, 255, 255, .48);
+}
