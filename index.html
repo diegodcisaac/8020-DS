@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8020-DS · Sistema de Design da 80 20 Marketing</title>
+<link rel="stylesheet" href="tokens/8020.css">
+<link rel="stylesheet" href="patterns/_docs.css">
+<style>
+  /* cartoes de navegacao da porta de entrada (so papeis semanticos) */
+  .ix-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+  .ix-card {
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 24px; border-radius: var(--radius); text-decoration: none;
+    background: color-mix(in srgb, var(--ink) 6%, transparent);
+    border: 1px solid var(--line); color: var(--ink);
+    transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  }
+  .ix-card:hover { transform: translateY(-4px); border-color: var(--ink); }
+  .ix-card h3 { font-family: var(--font-display); font-weight: var(--w-title); font-size: var(--fs-lead); margin: 0; color: var(--ink); }
+  .ix-card p { font-size: var(--fs-small); color: var(--muted); margin: 0; flex-grow: 1; line-height: 1.5; }
+  .ix-card .ix-go { font-size: var(--fs-small); font-weight: var(--w-label); margin-top: 6px; }
+  .ix-card.alt { background: var(--surface); color: var(--surface-ink); }
+  .ix-card.alt h3 { color: var(--surface-ink); }
+</style>
+</head>
+<body class="doc">
+
+<header class="doc-head">
+  <a class="doc-brand" href="index.html"><img src="assets/logos/logo-8020-branco.svg" alt="80 20 Marketing"><span>Sistema de Design</span></a>
+  <nav class="doc-nav" aria-label="Seções do sistema">
+    <a href="#fundamentos">Fundamentos</a>
+    <a href="#componentes">Componentes</a>
+    <a href="#dados">Dados</a>
+    <a href="#catalogos">Catálogos</a>
+    <a href="#exemplos">Exemplos</a>
+    <a href="#governanca">Governança</a>
+  </nav>
+</header>
+
+<header class="doc-hero"><div class="doc-wrap">
+  <p class="doc-eyebrow">Sistema de Design · 80 20 Marketing</p>
+  <h1>A casa fala em <em>laranja</em></h1>
+  <p class="doc-lead">O laranja é o substrato, o branco é a voz, o preto é o chão, e a joia entra só quando precisa pesar. Montserrat em todo lugar. Tudo o que está aqui é HTML, CSS e SVG puros: abra qualquer arquivo no navegador.</p>
+</div></header>
+
+<section class="doc-section" id="fundamentos"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">01</span><p class="doc-kicker">Fundamentos</p></div>
+  <h2>A cor, a letra e a <em>forma</em></h2>
+  <p>A base do sistema: a paleta e os pares de contraste, as três variantes de luz, a tipografia única e o vocabulário gráfico da casa.</p>
+  <div class="ix-grid" style="margin-top:24px">
+    <a class="ix-card" href="patterns/colors.html"><h3>Cores</h3><p>Paleta, papéis semânticos, pares de contraste aprovados e as escalas de dado.</p><span class="ix-go">Abrir →</span></a>
+    <a class="ix-card" href="patterns/variants.html"><h3>Variantes</h3><p>O mesmo componente nas três luzes: campo-laranja, palco escuro e papel claro.</p><span class="ix-go">Abrir →</span></a>
+    <a class="ix-card" href="patterns/typography.html"><h3>Tipografia</h3><p>Montserrat: papéis, escala, pesos e a assinatura do último termo em itálico.</p><span class="ix-go">Abrir →</span></a>
+    <a class="ix-card" href="patterns/graphic-elements.html"><h3>Elementos gráficos</h3><p>Dash-glyphs, máscaras orgânicas, paralelogramos e as joias-gradiente.</p><span class="ix-go">Abrir →</span></a>
+    <a class="ix-card" href="patterns/images.html"><h3>Imagens</h3><p>Os modos de imagem da casa: recortada, retangular, full-bleed e sobreposta.</p><span class="ix-go">Abrir →</span></a>
+  </div>
+</div></section>
+
+<section class="doc-section" id="componentes"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">02</span><p class="doc-kicker">Componentes e facilitação</p></div>
+  <h2>As caixas que carregam o <em>argumento</em></h2>
+  <p>Os blocos que organizam o conteúdo e os dispositivos que mastigam a informação para quem lê.</p>
+  <div class="ix-grid" style="margin-top:24px">
+    <a class="ix-card" href="patterns/cards.html"><h3>Cards e persona</h3><p>Grade navegável, cartões de número, infocards em três níveis e a persona.</p><span class="ix-go">Abrir →</span></a>
+    <a class="ix-card" href="patterns/facilitacao-visual.html"><h3>Facilitação visual</h3><p>Número e prova, insight-box, destaque, realce, callout, anotação e aparte.</p><span class="ix-go">Abrir →</span></a>
+  </div>
+</div></section>
+
+<section class="doc-section" id="dados"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">03</span><p class="doc-kicker">Dados</p></div>
+  <h2>Tudo se desenha em <em>vetor</em></h2>
+  <p>Gráfico e diagrama em SVG real, com as escalas de cor do sistema e setas via marcador.</p>
+  <div class="ix-grid" style="margin-top:24px">
+    <a class="ix-card" href="patterns/diagrams.html"><h3>Diagramas</h3><p>Fluxo, decisão, hierarquia, ciclo, Venn, jornada e mais, todos em SVG.</p><span class="ix-go">Abrir →</span></a>
+    <a class="ix-card" href="patterns/charts.html"><h3>Gráficos</h3><p>Barra, linha, área, donut, funil, Gantt, heatmap e o número grande.</p><span class="ix-go">Abrir →</span></a>
+  </div>
+</div></section>
+
+<section class="doc-section" id="catalogos"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">04</span><p class="doc-kicker">Catálogos de layout</p></div>
+  <h2>As formas de deck e de <em>book</em></h2>
+  <p>O catálogo das peças de slide 16:9 e o catálogo das seções de longform.</p>
+  <div class="ix-grid" style="margin-top:24px">
+    <a class="ix-card" href="patterns/layouts.html"><h3>Catálogo de deck</h3><p>As formas de slide em miniatura, da capa à contracapa.</p><span class="ix-go">Abrir →</span></a>
+    <a class="ix-card" href="patterns/book-layout.html"><h3>Catálogo de book</h3><p>As seções de longform, da hero ao rodapé, com o supermenu.</p><span class="ix-go">Abrir →</span></a>
+  </div>
+</div></section>
+
+<section class="doc-section" id="exemplos"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">05</span><p class="doc-kicker">Exemplos e limites</p></div>
+  <h2>O sistema em <em>uso</em></h2>
+  <p>Um deck e um book de exemplo, com conteúdo fictício, exercitando tudo. E a galeria do que o sistema recusa.</p>
+  <div class="ix-grid" style="margin-top:24px">
+    <a class="ix-card alt" href="examples/8020-deck/deck.html"><h3>Deck de exemplo</h3><p>Apresentação 16:9 completa, com aparte, trecho em palco escuro e contracapa.</p><span class="ix-go">Abrir →</span></a>
+    <a class="ix-card alt" href="examples/8020-book/index.html"><h3>Book de exemplo</h3><p>Longform multipágina, hub e três partes, com o supermenu integrado.</p><span class="ix-go">Abrir →</span></a>
+    <a class="ix-card alt" href="antipatterns/forbidden.html"><h3>Antipatterns</h3><p>O que não fazer, errado ao lado de certo, com a razão de cada escolha.</p><span class="ix-go">Abrir →</span></a>
+  </div>
+</div></section>
+
+<section class="doc-section" id="governanca"><div class="doc-wrap">
+  <div class="doc-shoulder"><span class="doc-num">06</span><p class="doc-kicker">Governança e voz</p></div>
+  <h2>O que a casa decide e como <em>fala</em></h2>
+  <p>As regras inegociáveis, a plataforma da marca, o tom de voz e o vocabulário. Os arquivos de texto abrem no GitHub ou em qualquer leitor de Markdown.</p>
+  <div class="ix-grid" style="margin-top:24px">
+    <a class="ix-card" href="RULES.md"><h3>Regras</h3><p>As regras inegociáveis de marca, construção, facilitação e editorial.</p><span class="ix-go">Ler →</span></a>
+    <a class="ix-card" href="README.md"><h3>Leia-me</h3><p>Para que serve, como está organizado e como a 80 20 gera com o sistema.</p><span class="ix-go">Ler →</span></a>
+    <a class="ix-card" href="voice/plataforma.md"><h3>Plataforma</h3><p>A base de onde a voz e a forma da marca partem.</p><span class="ix-go">Ler →</span></a>
+    <a class="ix-card" href="voice/tom-de-voz.md"><h3>Tom de voz</h3><p>O contrato de tom para gerar peça no padrão da casa.</p><span class="ix-go">Ler →</span></a>
+    <a class="ix-card" href="voice/vocabulario.md"><h3>Vocabulário</h3><p>A tabela de evitar e usar, da palavra à pontuação.</p><span class="ix-go">Ler →</span></a>
+  </div>
+</div></section>
+
+<footer class="doc-foot"><div class="doc-wrap">
+  <img src="assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+  <div class="doc-addr"><span>São Paulo · SP</span><span>Campo Grande · MS</span><span>Cuiabá · MT</span></div>
+  <p class="doc-foot-meta">Sistema de Design 80 20 · Montserrat · campo-laranja, palco escuro, papel claro</p>
+</div></footer>
+
+</body>
+</html>
