@@ -181,7 +181,13 @@
 @media print {
   @page { size: 1280px 720px; margin: 0; }
   .deck { position: static; background: none; display: block; }
-  .stage { transform: none !important; box-shadow: none; }
-  .slide { position: relative; opacity: 1 !important; visibility: visible !important; page-break-after: always; break-after: page; }
+  /* o palco cresce para empilhar os slides; cada slide vira uma pagina 1280x720 */
+  .stage { transform: none !important; box-shadow: none; width: 1280px; height: auto; }
+  .slide {
+    position: relative; width: 1280px; height: 720px; overflow: hidden;
+    opacity: 1 !important; visibility: visible !important;
+    page-break-after: always; break-after: page;
+  }
+  .slide:last-child { page-break-after: avoid; break-after: avoid; }
   .deck-progress { display: none; }
 }

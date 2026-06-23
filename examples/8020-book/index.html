@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presença de marca no cerrado · Exemplo de book · 80 20 Marketing</title>
+<meta name="description" content="Exemplo fictício de book longform do sistema de design da 80 20 Marketing. Marca regional, território do cerrado em Mato Grosso do Sul.">
+<link rel="stylesheet" href="../../tokens/8020.css">
+<link rel="stylesheet" href="../../assets/book.css">
+<script src="../../assets/book.js" defer></script>
+<style>
+  /* CSS local desta página: só ajustes de composição do hub.
+     Tudo o mais herda de book.css via papéis semânticos. */
+  .b-hubgrid { margin-top: 8px; }
+  .hub-meta { display: flex; flex-wrap: wrap; gap: 28px 56px; margin-top: 40px; }
+  .hub-meta div { min-width: 160px; }
+  .hub-meta .hm-num { font-family: var(--font-display); font-weight: var(--w-black); font-size: clamp(34px, 4vw, 52px); line-height: 1; color: var(--ink); }
+  .hub-meta .hm-desc { font-size: var(--fs-small); color: var(--muted); margin-top: 8px; max-width: 26ch; }
+  .hub-ficcao { font-size: var(--fs-micro); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--meta); border: 1px solid var(--hairline); border-radius: var(--radius-pill); padding: 5px 12px; display: inline-block; }
+</style>
+</head>
+<body class="book">
+
+<div class="book-progress"></div>
+
+<nav class="book-nav" aria-label="Navegação do documento">
+  <a href="index.html" aria-label="Início do documento"><img src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing"></a>
+  <div class="b-nav-links">
+    <a href="#abertura">Abertura</a>
+    <a href="#partes">Partes</a>
+    <a href="#leitura">Leitura</a>
+  </div>
+  <button class="book-menu-toggle" type="button" aria-haspopup="dialog">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12"/></svg>
+    Índice
+  </button>
+</nav>
+
+<div class="book-menu" role="dialog" aria-modal="true" aria-label="Índice do documento">
+  <button class="book-menu-close" type="button" aria-label="Fechar índice">&times;</button>
+  <ol>
+    <li><a href="index.html">Abertura e mapa do documento</a></li>
+    <li><a href="partes/parte-1.html">O território como ele é</a></li>
+    <li><a href="partes/parte-2.html">A distância entre o que se diz e o que se ouve</a></li>
+    <li><a href="partes/parte-3.html">O caminho de entrada e o cronograma</a></li>
+  </ol>
+</div>
+
+<main>
+
+  <section class="b-hero" id="abertura"><div class="container">
+    <p class="b-eyebrow">Exemplo fictício · Relatório de território · 2026</p>
+    <h1>Presença de marca no <em>cerrado</em></h1>
+    <p class="b-lead">Leitura de território para uma marca regional que quer estar em Mato Grosso do Sul: como o público vive, avalia e aceita uma comunicação que chega de fora e pretende ficar. O conteúdo é demonstrativo e serve para mostrar o sistema de design em uso.</p>
+    <p class="hub-ficcao" style="margin-top:28px;">Conteúdo fictício para demonstração</p>
+  </div></section>
+
+  <section id="partes"><div class="container">
+    <p class="b-eyebrow">Mapa do documento</p>
+    <h2 style="font-family:var(--font-display);font-weight:var(--w-display);font-size:var(--fs-title);color:var(--ink);max-width:18ch;margin:0 0 14px;">Do retrato à <em style="font-style:italic;font-weight:var(--w-black);">decisão</em></h2>
+    <p class="b-lead" style="max-width:62ch;margin-top:0;">Cada parte cobre um movimento da leitura. A primeira mostra o território sem suposição. A segunda mede a distância entre o que a marca diz e o que o público ouve. A terceira propõe o caminho de entrada e o cronograma. A leitura pode começar por qualquer uma, porque o contexto vive na própria frase.</p>
+
+    <div class="b-hubgrid">
+      <a class="b-card" href="partes/parte-1.html">
+        <span class="b-card-num">01</span>
+        <h3>O território como ele é</h3>
+        <p>Quem vive em Mato Grosso do Sul, onde está o público e como ele decide. O retrato de partida, com os números que situam a escala do estado.</p>
+        <span class="b-card-link">Ler a parte &rarr;</span>
+      </a>
+      <a class="b-card" href="partes/parte-2.html">
+        <span class="b-card-num">02</span>
+        <h3>A distância entre o que se diz e o que se ouve</h3>
+        <p>O que a marca comunica, o que o público de fato registra e o espaço em aberto entre as duas coisas. A leitura que orienta a entrada.</p>
+        <span class="b-card-link">Ler a parte &rarr;</span>
+      </a>
+      <a class="b-card" href="partes/parte-3.html">
+        <span class="b-card-num">03</span>
+        <h3>O caminho de entrada e o cronograma</h3>
+        <p>Por onde entrar, em que ordem e com que prova de que vale ficar. As fases da comunicação e a linha do tempo até a presença reconhecida.</p>
+        <span class="b-card-link">Ler a parte &rarr;</span>
+      </a>
+    </div>
+  </div></section>
+
+  <section class="b-band" id="leitura"><div class="container">
+    <p class="b-eyebrow" style="color:var(--muted);">A leitura de partida</p>
+    <h2 style="font-family:var(--font-display);font-weight:var(--w-display);font-size:var(--fs-title);color:var(--ink);max-width:24ch;margin:0 0 16px;">Marca que chega de fora não compra presença, conquista o direito de ficar</h2>
+    <p style="max-width:60ch;color:var(--muted);margin:0;">O território de Mato Grosso do Sul tem atenção disponível: o público lembra da categoria, mas ainda não associou a uma marca confiável. Esse espaço em aberto é a oportunidade, e também a régua. Quem entra prometendo é mais um nome. Quem entra pelo problema de quem mora aqui, e confirma a promessa na primeira experiência, passa a fazer parte do lugar.</p>
+
+    <div class="hub-meta">
+      <div>
+        <div class="hm-num">3</div>
+        <p class="hm-desc">partes de leitura, do retrato do território à proposta de entrada.</p>
+      </div>
+      <div>
+        <div class="hm-num">3,2 mi</div>
+        <p class="hm-desc">habitantes no estado, segundo a contagem mais recente usada no exemplo.</p>
+      </div>
+      <div>
+        <div class="hm-num">68%</div>
+        <p class="hm-desc">do público lembra da categoria, mas não da marca: a atenção está em aberto.</p>
+      </div>
+    </div>
+  </div></section>
+
+</main>
+
+<footer class="b-footer">
+  <div class="container">
+    <img src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <div class="b-addr"><span>São Paulo · SP</span><span>Campo Grande · MS</span><span>Cuiabá · MT</span></div>
+  </div>
+</footer>
+
+</body>
+</html>

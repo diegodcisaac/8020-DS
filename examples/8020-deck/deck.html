@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8020-DS · Deck de exemplo · Presença de marca no Cerrado</title>
+<meta name="description" content="Exemplo fictício do design system 80 20 Marketing: deck de apresentação sobre presença de marca no Cerrado de Mato Grosso do Sul.">
+<link rel="stylesheet" href="../../tokens/8020.css">
+<link rel="stylesheet" href="../../assets/deck.css">
+<style>
+  /* ----------------------------------------------------------------
+     Ajustes locais SO deste deck de exemplo. Consomem papeis
+     semanticos (--paper/--ink/--accent...), nunca cor crua.
+     Nada aqui redefine o sistema: e mobilia de palco do exemplo.
+     ---------------------------------------------------------------- */
+
+  /* faixa-de-prova ficticia: rotulo discreto no topo da capa */
+  .ex-tag {
+    position: absolute; top: 40px; right: 80px; z-index: 4;
+    font-size: var(--fs-micro); font-weight: var(--w-label);
+    letter-spacing: var(--tracking-label); text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* placeholder de imagem do split: bloco de superficie com legenda */
+  .ex-imgbox {
+    width: 100%; height: 100%; min-height: 360px;
+    border-radius: var(--radius-lg);
+    background: var(--surface); color: var(--surface-ink);
+    display: grid; place-items: center; text-align: center;
+    border: 1px dashed var(--line);
+  }
+  .ex-imgbox span {
+    font-size: var(--fs-small); color: var(--muted);
+    max-width: 22ch; line-height: 1.4;
+  }
+
+  /* linha de tres indicadores lado a lado */
+  .ex-statline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; align-items: center; height: 100%; padding: 132px 0 72px; }
+  .ex-statline .ex-stat .ex-n { font-family: var(--font-display); font-weight: var(--w-black); font-size: clamp(56px, 8vw, 104px); line-height: .9; letter-spacing: -.04em; color: var(--ink); }
+  .ex-statline .ex-stat .ex-n .ex-u { font-size: .4em; font-weight: var(--w-display); vertical-align: super; margin-left: 2px; }
+  .ex-statline .ex-stat .ex-d { font-size: var(--fs-small); color: var(--ink-body); margin-top: 8px; max-width: 22ch; }
+  .ex-statline .ex-stat.hero .ex-n { color: var(--accent); }
+
+  /* tres pilares lado a lado */
+  .ex-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-content: center; height: 100%; padding: 60px 0 60px; }
+  .ex-pillar { background: var(--surface); color: var(--surface-ink); border-radius: var(--radius); padding: 30px 28px; display: grid; align-content: start; gap: 10px; }
+  .ex-pillar .ex-p-num { font-family: var(--font-display); font-weight: var(--w-black); font-size: var(--fs-h2); color: var(--accent); line-height: 1; }
+  .ex-pillar h3 { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-h2); margin: 4px 0 0; letter-spacing: -.01em; }
+  .ex-pillar p { margin: 0; font-size: var(--fs-small); color: var(--muted); line-height: 1.45; }
+
+  /* de / para */
+  .ex-depara { display: grid; grid-template-columns: 1fr auto 1fr; gap: 32px; align-items: center; height: 100%; padding: 128px 0 72px; }
+  .ex-depara .ex-side { background: var(--surface); color: var(--surface-ink); border-radius: var(--radius); padding: 28px 30px; align-self: stretch; display: grid; align-content: start; gap: 12px; }
+  .ex-depara .ex-side h3 { margin: 0; font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-h2); }
+  .ex-depara .ex-side ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 9px; }
+  .ex-depara .ex-side li { font-size: var(--fs-small); color: var(--muted); padding-left: 18px; position: relative; line-height: 1.4; }
+  .ex-depara .ex-side li::before { content: ""; position: absolute; left: 0; top: .5em; width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: .5; }
+  .ex-depara .ex-side.dest { border: 2px solid var(--accent); }
+  .ex-depara .ex-side.dest li::before { background: currentColor; opacity: .5; }
+  .ex-depara .ex-arrow { display: grid; place-items: center; }
+  .ex-depara .ex-arrow svg { width: 56px; height: 28px; }
+  .ex-depara .ex-eyebrow { font-size: var(--fs-micro); font-weight: var(--w-label); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--muted); }
+
+  /* legenda de grafico / diagrama dentro do slide */
+  .ex-legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 18px; font-size: var(--fs-small); color: var(--muted); }
+  .ex-legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .ex-legend i { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+
+  /* tipografia interna dos SVG do exemplo */
+  .ex-svg text { font-family: var(--font-display); }
+  .ex-svg .ex-val { font-weight: var(--w-black); font-size: 14px; fill: var(--ink); }
+  .ex-svg .ex-axis { font-family: var(--font-body); font-weight: var(--w-label); font-size: 11px; fill: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+  .ex-svg .ex-node-t { font-weight: var(--w-label); font-size: 12.5px; fill: var(--surface-ink); }
+  .ex-svg .ex-node-s { font-family: var(--font-body); font-weight: var(--w-body); font-size: 10.5px; fill: rgba(255,255,255,.8); }
+  .ex-svg .ex-edge-t { font-family: var(--font-body); font-weight: var(--w-label); font-size: 10px; fill: var(--ink); text-transform: uppercase; letter-spacing: .06em; }
+
+  /* timeline horizontal linear */
+  .ex-tl { width: 100%; }
+  .ex-tl text { font-family: var(--font-body); }
+  .ex-tl .ex-tl-date { font-family: var(--font-display); font-weight: var(--w-label); font-size: 12px; fill: var(--ink); }
+  .ex-tl .ex-tl-title { font-weight: var(--w-label); font-size: 12px; fill: var(--ink-body); }
+  .ex-tl .ex-tl-desc { font-weight: var(--w-body); font-size: 10.5px; fill: var(--muted); }
+  .ex-tl .ex-tl-now { font-weight: var(--w-label); font-size: 10px; fill: var(--accent); text-transform: uppercase; letter-spacing: .08em; }
+
+  /* quadrante 2x2 com eixos rotulados */
+  .ex-quad-wrap { display: grid; grid-template-columns: 24px 1fr; grid-template-rows: 1fr 24px; gap: 8px; height: 74%; }
+  .ex-quad-y { writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; font-size: var(--fs-micro); font-weight: var(--w-label); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--muted); align-self: center; }
+  .ex-quad-x { grid-column: 2; text-align: center; font-size: var(--fs-micro); font-weight: var(--w-label); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--muted); }
+  .ex-quad { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; background: var(--line); border-radius: var(--radius); overflow: hidden; }
+  .ex-quad .ex-cell { background: var(--paper); padding: 18px 20px; display: grid; align-content: start; gap: 6px; }
+  .ex-quad .ex-cell.hot { background: var(--surface); color: var(--surface-ink); border: 2px solid var(--accent); }
+  .ex-quad .ex-cell h4 { margin: 0; font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-body); }
+  .ex-quad .ex-cell p { margin: 0; font-size: var(--fs-small); color: var(--muted); line-height: 1.35; }
+  .ex-quad .ex-cell.hot p { color: rgba(255,255,255,.8); }
+
+  /* persona: grade de atributos com 4 caixas */
+  .ex-persona { display: grid; grid-template-columns: 300px 1fr; gap: 48px; align-items: center; height: 100%; padding-bottom: 64px; }
+  .ex-persona .ex-portrait { aspect-ratio: 3/4; border-radius: var(--radius-lg); background: var(--surface); color: var(--muted); display: grid; place-items: center; text-align: center; border: 1px dashed var(--line); font-size: var(--fs-small); padding: 16px; }
+  .ex-persona .ex-pname { font-family: var(--font-display); font-weight: var(--w-display); font-size: var(--fs-title); letter-spacing: -.02em; }
+  .ex-persona .ex-prole { color: var(--muted); margin: 2px 0 18px; font-size: var(--fs-small); }
+  .ex-persona .ex-attr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ex-persona .ex-attr { background: var(--surface); color: var(--surface-ink); border-left: 3px solid var(--line); padding: 13px 15px; border-radius: var(--radius-sm); }
+  /* uma joia so na persona: o primeiro atributo (o trabalho a resolver) e o destaque */
+  .ex-persona .ex-attr:first-child { border-left-color: var(--accent); }
+  .ex-persona .ex-attr b { display: block; font-size: var(--fs-micro); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .ex-persona .ex-attr span { font-size: var(--fs-small); color: var(--surface-ink); line-height: 1.35; }
+
+  /* agenda numerada */
+  .ex-agenda { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 16px; max-width: 38ch; counter-reset: ag; }
+  .ex-agenda li { display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: baseline; }
+  .ex-agenda li::before { counter-increment: ag; content: counter(ag, decimal-leading-zero); font-family: var(--font-display); font-weight: var(--w-black); font-size: var(--fs-h2); color: var(--ink); opacity: .55; line-height: 1; }
+  .ex-agenda li b { font-weight: var(--w-label); color: var(--ink); }
+
+  /* citacao com regua de acento */
+  .ex-quote-wrap { display: grid; align-content: center; height: 100%; padding-bottom: 64px; gap: 6px; max-width: 30ch; }
+  .ex-quote-mark { font-family: var(--font-display); font-weight: var(--w-black); font-size: 72px; line-height: .6; color: var(--accent); }
+
+  /* sequencia de proximos passos: numeros em tinta neutra para manter
+     o teto de joia (a ordem ja se le pela contagem, sem precisar de cor) */
+  .ex-seq-neutral li::before { color: var(--ink); opacity: .85; }
+</style>
+</head>
+<body>
+
+<div class="deck"><div class="stage">
+
+  <!-- ============================================================
+       01 · CAPA - descritiva e burocratica. A mensagem-mae NUNCA
+       aparece aqui. So o que o documento e, para quem e, e quando.
+       ============================================================ -->
+  <section class="slide cover active">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <span class="ex-tag">Exemplo fictício</span>
+    <div style="display:grid;align-content:center;height:100%;padding:40px 0 56px;gap:16px;">
+      <p class="s-eyebrow">Apresentação de plataforma de comunicação · Mato Grosso do Sul</p>
+      <h1 class="s-title" style="max-width:24ch;">Plano de presença de marca no <em>Cerrado</em></h1>
+      <p class="s-lead s-muted" style="max-width:46ch;">Documento de abertura para a Helena Vasconcelos e a equipe da Casa do Campo, rede de varejo regional. Diagnóstico, públicos, mensagem e cronograma de entrada no território.</p>
+      <p class="s-muted" style="font-size:var(--fs-small);margin-top:8px;">Versão de apresentação · Junho de 2026 · Conteúdo fictício, montado apenas para demonstrar o sistema.</p>
+    </div>
+    <div class="s-foot"><span>80 20 Marketing · Plataforma de comunicação · Casa do Campo (cliente fictício)</span></div>
+  </section>
+
+  <!-- ============================================================
+       02 · AGENDA - indice rotulado da sessao.
+       ============================================================ -->
+  <section class="slide">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <span class="s-cobrand">Casa do Campo</span>
+    <div style="display:grid;align-content:center;height:100%;padding-bottom:64px;">
+      <p class="s-eyebrow">Roteiro da conversa</p>
+      <h2 class="s-title">O caminho que esta apresentação <em>percorre</em></h2>
+      <ol class="ex-agenda">
+        <li><span><b>Onde a marca está hoje</b> conhecida na praça, sem sistema próprio.</span></li>
+        <li><span><b>Quem precisa nos receber</b> os públicos do território e a hierarquia entre eles.</span></li>
+        <li><span><b>O que vamos dizer</b> a mensagem central e as provas que a sustentam.</span></li>
+        <li><span><b>Por onde e quando</b> canais, momentos e o cronograma de entrada.</span></li>
+      </ol>
+    </div>
+    <div class="s-foot"><span>Índice</span></div>
+  </section>
+
+  <!-- ============================================================
+       03 · SEPARATRIZ CAPITULO 01 - numero gigante em joia.
+       ============================================================ -->
+  <section class="slide chapter">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <span class="s-cobrand">Casa do Campo</span>
+    <p class="s-eyebrow">Capítulo</p>
+    <div class="s-chap-num">01</div>
+    <h2 class="s-chap-title">Onde a marca está <em>hoje</em></h2>
+    <div class="s-foot"><span>Diagnóstico</span></div>
+  </section>
+
+  <!-- ============================================================
+       04 · STATEMENT FULL-BLEED - a mensagem-mae, apoteotica.
+       So aqui, no meio, depois do diagnostico abrir.
+       ============================================================ -->
+  <section class="slide statement-bleed">
+    <p class="s-statement">Marca que chega de fora não compra presença. Ela <em>conquista</em> o direito de ficar.</p>
+    <div class="s-foot"><span>Posicionamento</span></div>
+  </section>
+
+  <!-- ============================================================
+       05 · SPLIT texto / imagem (placeholder de cor).
+       ============================================================ -->
+  <section class="slide">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <span class="s-cobrand">Casa do Campo</span>
+    <div class="s-split">
+      <div class="s-col">
+        <p class="s-eyebrow">O ponto de partida</p>
+        <h2 class="s-title" style="margin-bottom:16px;">Conhecida na praça, sem sistema <em>próprio</em></h2>
+        <p class="s-body">A Casa do Campo é lembrada em Campo Grande, mas cada peça sai de um fornecedor diferente. O logo muda de espessura, a cor varia, a voz oscila entre o promocional e o institucional. O público reconhece o nome e ainda assim não reconhece a marca como uma coisa só.</p>
+        <p class="s-body">Antes de falar mais alto, a marca precisa falar igual em toda parte. Organizar a casa vem antes de produzir a próxima campanha.</p>
+      </div>
+      <div class="s-col">
+        <div class="ex-imgbox" role="img" aria-label="Espaço reservado para imagem da loja da Casa do Campo no Cerrado (exemplo fictício).">
+          <span>Imagem de apoio<br>fachada da loja no Cerrado<br>(marcador de exemplo)</span>
+        </div>
+      </div>
+    </div>
+    <div class="s-foot"><span>Diagnóstico · Situação atual</span></div>
+  </section>
+
+  <!-- ============================================================
+       06 · NUMERO GRANDE - valor final escrito no texto, data-count
+       so realca. Acento: ouro (1o de no maximo 3 nesta pagina).
+       ============================================================ -->
+  <section class="slide">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <span class="s-cobrand">Casa do Campo</span>
+    <div style="display:grid;align-content:center;height:100%;padding-bottom:64px;">
+      <p class="s-eyebrow">O tamanho da oportunidade</p>
+      <div class="s-stat-num" style="color:var(--accent);"><span data-count="72">72</span><span class="s-stat-unit">%</span></div>
+      <p class="s-stat-desc">do público entrevistado reconhece o nome Casa do Campo, mas só 1 em cada 4 sabe descrever o que a marca representa. A lembrança existe; o significado ainda está em aberto.</p>
+      <p class="s-muted" style="font-size:var(--fs-small);margin-top:18px;max-width:40ch;">Fonte fictícia: pesquisa de descoberta com 320 moradores de Campo Grande e Dourados, abril de 2026.</p>
+    </div>
+    <div class="s-foot"><span>Diagnóstico · Reconhecimento</span></div>
+  </section>
+
+  <!-- ============================================================
+       07 · LINHA DE STATS - tres indicadores. Acento so no heroi.
+       ============================================================ -->
+  <section class="slide">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <span class="s-cobrand">Casa do Campo</span>
+    <p class="s-eyebrow" style="position:absolute;top:96px;left:80px;">Três leituras do mesmo território</p>
+    <div class="ex-statline">
+      <div class="ex-stat">
+        <div class="ex-n"><span data-count="11">11</span></div>
+        <div class="ex-d">cidades do estado onde a rede já tem ao menos uma loja física.</div>
+      </div>
+      <div class="ex-stat">
+        <div class="ex-n"><span data-count="3">3</span><span class="ex-u">de 5</span></div>
+        <div class="ex-d">clientes voltam em até trinta dias, sinal de hábito já formado.</div>
+      </div>
+      <div class="ex-stat hero">
+        <div class="ex-n"><span data-count="1">1</span></div>
+        <div class="ex-d">mensagem só, repetida em todo lugar, é o que falta para a marca virar uma coisa reconhecível.</div>
+      </div>
+    </div>
+    <div class="s-foot"><span>Diagnóstico · Indicadores</span></div>
+  </section>
+
+  <!-- ============================================================
+       08 · DE / PARA - comparacao em duas colunas + seta marker.
+       ============================================================ -->
+  <section class="slide">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <span class="s-cobrand">Casa do Campo</span>
+    <p class="s-eyebrow" style="position:absolute;top:96px;left:80px;">O movimento que esta plataforma propõe</p>
+    <div class="ex-depara">
+      <div class="ex-side">
+        <p class="ex-eyebrow">De</p>
+        <h3>Marca dispersa</h3>
+        <ul>
+          <li>Cada peça com um visual diferente</li>
+          <li>Voz oscilando entre oferta e instituição</li>
+          <li>Reconhecimento sem significado</li>
+          <li>Decisão de comunicação caso a caso</li>
+        </ul>
+      </div>
+      <div class="ex-arrow" aria-hidden="true">
+        <svg viewBox="0 0 56 28" role="img" aria-label="Seta apontando da coluna De para a coluna Para.">
+          <defs>
+            <marker id="arw-depara" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--accent)"/></marker>
+          </defs>
+          <line x1="4" y1="14" x2="44" y2="14" stroke="var(--accent)" stroke-width="3" marker-end="url(#arw-depara)"/>
+        </svg>
+      </div>
+      <div class="ex-side dest">
+        <p class="ex-eyebrow">Para</p>
+        <h3>Marca reconhecível</h3>
+        <ul>
+          <li>Um sistema visual que se repete</li>
+          <li>Uma voz estável em todo canal</li>
+          <li>Significado que acompanha o nome</li>
+          <li>Decisão guiada por uma plataforma</li>
+        </ul>
+      </div>
+    </div>
+    <div class="s-foot"><span>Diagnóstico · De e para</span></div>
+  </section>
+
+  <!-- ============================================================
+       09 · PILARES - tres colunas. PALCO ESCURO (variante noite).
+       Prova que o mesmo layout roda no escuro.
+       ============================================================ -->
+  <section class="slide" style="--paper:#0a0a0a;--ink:#fff;--ink-body:rgba(255,255,255,.88);--surface:#161616;--surface-ink:#fff;--accent:#fa4616;--accent-ink:#fff;--floor:#fa4616;--floor-ink:#fff;--line:rgba(255,255,255,.18);--muted:rgba(255,255,255,.66)">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <span class="s-cobrand">Casa do Campo</span>
+    <p class="s-eyebrow" style="position:absolute;top:96px;left:80px;">O que sustenta a presença</p>
+    <div class="ex-pillars">
+      <div class="ex-pillar">
+        <div class="ex-p-num">01</div>
+        <h3>Constância</h3>
+        <p>A marca aparece igual em toda peça, de uma promoção de fim de semana ao patrocínio de uma feira agropecuária. O mesmo logo, a mesma cor, a mesma voz.</p>
+      </div>
+      <div class="ex-pillar">
+        <div class="ex-p-num">02</div>
+        <h3>Pertencimento</h3>
+        <p>A linguagem fala de quem vive o Cerrado, não de quem o observa de longe. A marca mostra que entende a rotina de quem mora no interior do estado.</p>
+      </div>
+      <div class="ex-pillar">
+        <div class="ex-p-num">03</div>
+        <h3>Prova</h3>
+        <p>Toda promessa nasce de algo que a experiência confirma na loja. A comunicação não inventa um atributo que o atendimento não entrega.</p>
+      </div>
+    </div>
+    <div class="s-foot"><span>Plataforma · Pilares · Palco escuro</span></div>
+  </section>
+
+  <!-- ============================================================
+       10 · APARTE DRAMATICO - respiro quase falado nas costuras.
+       PALCO ESCURO. Assinatura de deck. Acento em laranja.
+       ============================================================ -->
+  <section class="slide aparte" style="--paper:#0a0a0a;--ink:#fff;--ink-body:rgba(255,255,255,.88);--surface:#161616;--surface-ink:#fff;--accent:#fa4616;--accent-ink:#fff;--floor:#fa4616;--floor-ink:#fff;--line:rgba(255,255,255,.18);--muted:rgba(255,255,255,.66)">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <div class="s-card">
+      Aqui dá para respirar um segundo. Tudo até agora foi diagnóstico: o estado das coisas. O que vem a seguir é decisão. E decisão, no Cerrado, não se toma com pressa: <span style="color:var(--accent);">se toma com pé firme no chão</span>.
+    </div>
+    <div class="s-foot"><span>Aparte</span></div>
+  </section>
+
+  <!-- ============================================================
+       11 · SEPARATRIZ CAPITULO 02.
+       ============================================================ -->
+  <section class="slide chapter">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <span class="s-cobrand">Casa do Campo</span>
+    <p class="s-eyebrow">Capítulo</p>
+    <div class="s-chap-num">02</div>
+    <h2 class="s-chap-title">Quem precisa nos <em>receber</em></h2>
+    <div class="s-foot"><span>Públicos e plano</span></div>
+  </section>
+
+  <!-- ============================================================
+       12 · DIAGRAMA / FLUXO - jornada Conviver / Avaliar / Aceitar.
+       SVG real, marker unico, role=img + title + desc.
+       ============================================================ -->
+  <section class="slide">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <span class="s-cobrand">Casa do Campo</span>
+    <p class="s-eyebrow" style="position:absolute;top:96px;left:80px;">A jornada do público com a marca</p>
+    <div style="display:grid;align-content:center;height:100%;padding-bottom:72px;">
+      <h2 class="s-title" style="margin-bottom:24px;">Conviver, avaliar e por fim <em>aceitar</em></h2>
+      <div class="s-viz ex-svg">
+        <svg viewBox="0 0 980 220" role="img" aria-label="Jornada em três etapas ligadas por setas: Conviver leva a Avaliar, que leva a Aceitar. Aceitar é a etapa-destino, em destaque.">
+          <title>Jornada do público: Conviver, Avaliar, Aceitar</title>
+          <desc>Conviver conecta a Avaliar. Avaliar conecta a Aceitar. Aceitar é o destino que a comunicação quer construir, marcado em acento.</desc>
+          <defs>
+            <marker id="arw-jornada" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/></marker>
+          </defs>
+          <!-- conectores ANTES dos nos -->
+          <g fill="none" stroke="var(--line)" stroke-width="2.5">
+            <path d="M300,110 C330,110 340,110 360,110" marker-end="url(#arw-jornada)"/>
+            <path d="M620,110 C650,110 660,110 680,110" marker-end="url(#arw-jornada)"/>
+          </g>
+          <!-- no 1 -->
+          <rect x="40" y="62" width="260" height="96" rx="14" fill="var(--surface)"/>
+          <text class="ex-node-t" x="170" y="100" text-anchor="middle">Conviver</text>
+          <text class="ex-node-s" x="170" y="124" text-anchor="middle">A marca faz parte do dia,</text>
+          <text class="ex-node-s" x="170" y="140" text-anchor="middle">sem pedir atenção ainda</text>
+          <!-- no 2 -->
+          <rect x="360" y="62" width="260" height="96" rx="14" fill="var(--surface)"/>
+          <text class="ex-node-t" x="490" y="100" text-anchor="middle">Avaliar</text>
+          <text class="ex-node-s" x="490" y="124" text-anchor="middle">O público compara e</text>
+          <text class="ex-node-s" x="490" y="140" text-anchor="middle">decide se vale a pena</text>
+          <!-- no 3 - destino em acento -->
+          <rect x="680" y="62" width="260" height="96" rx="14" fill="var(--accent)"/>
+          <text class="ex-node-t" x="810" y="100" text-anchor="middle" fill="var(--accent-ink)">Aceitar</text>
+          <text class="ex-node-s" x="810" y="124" text-anchor="middle" fill="rgba(10,10,10,.72)">A marca vira escolha</text>
+          <text class="ex-node-s" x="810" y="140" text-anchor="middle" fill="rgba(10,10,10,.72)">e ganha o direito de ficar</text>
+        </svg>
+      </div>
+      <p class="s-body" style="margin-top:24px;">Cada etapa pede uma comunicação diferente. Conviver é presença discreta; avaliar é prova e comparação; aceitar é a confirmação de que a promessa se cumpre. O plano de canais que vem a seguir distribui as peças por essas três etapas.</p>
+    </div>
+    <div class="s-foot"><span>Públicos · Jornada</span></div>
+  </section>
+
+  <!-- ============================================================
+       13 · GRAFICO - barras verticais, heroi em joia (ouro).
+       Geometria real, valores no texto, role=img + title + desc.
+       ============================================================ -->
+  <section class="slide">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <span class="s-cobrand">Casa do Campo</span>
+    <div style="display:grid;align-content:center;height:100%;padding-bottom:72px;">
+      <p class="s-eyebrow">Como o público chega à marca</p>
+      <h2 class="s-title" style="margin-bottom:8px;">A indicação ainda traz mais gente que <em>tudo</em></h2>
+      <div class="s-viz ex-svg" style="max-width:760px;">
+        <svg viewBox="0 0 760 280" role="img" aria-label="Barra vertical de como o público conhece a Casa do Campo, em porcentagem: indicação de conhecidos 41, loja na rua 27, redes sociais 19, rádio e jornal local 13. Indicação é o canal-herói, em ouro.">
+          <title>Como o público conhece a marca, por canal de origem</title>
+          <desc>Indicação de conhecidos: 41 por cento. Loja na rua: 27. Redes sociais: 19. Rádio e jornal local: 13. Dados fictícios.</desc>
+          <!-- escala 0..50, base y=210, util 168px, fator 3.36px por ponto -->
+          <line x1="60" y1="210" x2="744" y2="210" stroke="var(--hairline)" stroke-width="1"/>
+          <!-- indicacao 41 -> 137.8 (heroi ouro) -->
+          <rect x="92"  y="72.2"  width="110" height="137.8" rx="5" fill="#f5c542"/>
+          <text class="ex-val" x="147" y="62" text-anchor="middle">41%</text>
+          <text class="ex-axis" x="147" y="232" text-anchor="middle">Indicação</text>
+          <!-- loja na rua 27 -> 90.7 -->
+          <rect x="252" y="119.3" width="110" height="90.7"  rx="5" fill="#ffffff"/>
+          <text class="ex-val" x="307" y="109" text-anchor="middle">27%</text>
+          <text class="ex-axis" x="307" y="232" text-anchor="middle">Loja na rua</text>
+          <!-- redes 19 -> 63.8 -->
+          <rect x="412" y="146.2" width="110" height="63.8"  rx="5" fill="rgba(255,255,255,.62)"/>
+          <text class="ex-val" x="467" y="136" text-anchor="middle">19%</text>
+          <text class="ex-axis" x="467" y="232" text-anchor="middle">Redes sociais</text>
+          <!-- radio/jornal 13 -> 43.7 -->
+          <rect x="572" y="166.3" width="110" height="43.7"  rx="5" fill="rgba(255,255,255,.40)"/>
+          <text class="ex-val" x="627" y="156" text-anchor="middle">13%</text>
+          <text class="ex-axis" x="627" y="232" text-anchor="middle">Rádio e jornal</text>
+        </svg>
+      </div>
+      <p class="s-body" style="margin-top:18px;"><b>A indicação de conhecidos responde por 41 por cento da chegada</b>, mais que loja na rua e redes somadas em cada uma. Por isso a recompra e a experiência na loja são o ativo de mídia mais barato que a marca tem: o cliente satisfeito é o canal.</p>
+    </div>
+    <div class="s-foot"><span>Públicos · Origem</span></div>
+  </section>
+
+  <!-- ============================================================
+       14 · CRONOGRAMA - timeline LINEAR horizontal, marcos em
+       sequencia. Nunca radial. Marco atual com halo (.now).
+       ============================================================ -->
+  <section class="slide">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <span class="s-cobrand">Casa do Campo</span>
+    <div style="display:grid;align-content:center;height:100%;padding-bottom:72px;">
+      <p class="s-eyebrow">O caminho no tempo</p>
+      <h2 class="s-title" style="margin-bottom:28px;">Até a marca ficar de <em>pé</em></h2>
+      <div class="ex-tl ex-svg">
+        <svg viewBox="0 0 980 200" role="img" aria-label="Linha do tempo horizontal de quatro fases: Fundações no terceiro trimestre de 2026, Entrada nos canais no quarto trimestre de 2026 que é a fase atual, Consolidação no primeiro semestre de 2027, e Presença reconhecida no segundo semestre de 2027.">
+          <title>Cronograma de entrada da marca no território</title>
+          <desc>Quatro fases em sequência sobre uma linha contínua: Fundações, Entrada nos canais (atual), Consolidação e Presença reconhecida.</desc>
+          <!-- linha continua -->
+          <line x1="70" y1="96" x2="910" y2="96" stroke="var(--line)" stroke-width="2"/>
+          <!-- marco 1 -->
+          <circle cx="120" cy="96" r="9" fill="var(--ink)"/>
+          <text class="ex-tl-date" x="120" y="58" text-anchor="middle">3º trim. 2026</text>
+          <text class="ex-tl-title" x="120" y="132" text-anchor="middle">Fundações</text>
+          <text class="ex-tl-desc" x="120" y="150" text-anchor="middle">Sistema visual e voz</text>
+          <text class="ex-tl-desc" x="120" y="165" text-anchor="middle">organizados</text>
+          <!-- marco 2 - ATUAL, halo de acento -->
+          <circle cx="370" cy="96" r="16" fill="none" stroke="var(--accent)" stroke-width="2"/>
+          <circle cx="370" cy="96" r="9" fill="var(--accent)"/>
+          <text class="ex-tl-now" x="370" y="40" text-anchor="middle">Estamos aqui</text>
+          <text class="ex-tl-date" x="370" y="58" text-anchor="middle">4º trim. 2026</text>
+          <text class="ex-tl-title" x="370" y="132" text-anchor="middle">Entrada nos canais</text>
+          <text class="ex-tl-desc" x="370" y="150" text-anchor="middle">Primeiras peças no ar,</text>
+          <text class="ex-tl-desc" x="370" y="165" text-anchor="middle">medição da presença</text>
+          <!-- marco 3 -->
+          <circle cx="620" cy="96" r="9" fill="var(--ink)"/>
+          <text class="ex-tl-date" x="620" y="58" text-anchor="middle">1º sem. 2027</text>
+          <text class="ex-tl-title" x="620" y="132" text-anchor="middle">Consolidação</text>
+          <text class="ex-tl-desc" x="620" y="150" text-anchor="middle">Repetição que fixa</text>
+          <text class="ex-tl-desc" x="620" y="165" text-anchor="middle">a marca na memória</text>
+          <!-- marco 4 -->
+          <circle cx="870" cy="96" r="9" fill="var(--ink)"/>
+          <text class="ex-tl-date" x="870" y="58" text-anchor="middle">2º sem. 2027</text>
+          <text class="ex-tl-title" x="870" y="132" text-anchor="middle">Presença reconhecida</text>
+          <text class="ex-tl-desc" x="870" y="150" text-anchor="middle">Significado já anda</text>
+          <text class="ex-tl-desc" x="870" y="165" text-anchor="middle">junto com o nome</text>
+        </svg>
+      </div>
+    </div>
+    <div class="s-foot"><span>Plano · Cronograma</span></div>
+  </section>
+
+  <!-- ============================================================
+       15 · QUADRANTE 2x2 - onde concentrar o esforco. Cell hot
+       com borda de acento.
+       ============================================================ -->
+  <section class="slide">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <span class="s-cobrand">Casa do Campo</span>
+    <p class="s-eyebrow" style="position:absolute;top:96px;left:80px;">Onde concentrar o investimento de comunicação</p>
+    <div style="height:100%;padding:124px 0 64px;">
+      <div class="ex-quad-wrap">
+        <div class="ex-quad-y">Maior efeito na presença</div>
+        <div class="ex-quad">
+          <div class="ex-cell hot">
+            <h4>Experiência na loja</h4>
+            <p>Alto efeito, baixo custo. É onde a indicação nasce. Prioridade desta fase.</p>
+          </div>
+          <div class="ex-cell">
+            <h4>Patrocínio de feiras</h4>
+            <p>Alto efeito, custo alto. Entra na fase de consolidação, com calendário escolhido.</p>
+          </div>
+          <div class="ex-cell">
+            <h4>Rádio local</h4>
+            <p>Efeito moderado, custo baixo. Sustenta lembrança entre campanhas maiores.</p>
+          </div>
+          <div class="ex-cell">
+            <h4>Mídia paga ampla</h4>
+            <p>Efeito incerto agora, custo alto. Esperar a marca estar de pé antes de escalar.</p>
+          </div>
+        </div>
+        <div class="ex-quad-x">Maior custo de produção e mídia</div>
+      </div>
+    </div>
+    <div class="s-foot"><span>Plano · Prioridade</span></div>
+  </section>
+
+  <!-- ============================================================
+       16 · PERSONA - ficticia, marcador de retrato.
+       ============================================================ -->
+  <section class="slide">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <span class="s-cobrand">Casa do Campo</span>
+    <p class="s-eyebrow" style="position:absolute;top:96px;left:80px;">Público primário · persona fictícia</p>
+    <div class="ex-persona" style="padding-top:48px;">
+      <div class="ex-portrait" role="img" aria-label="Marcador de retrato da persona Helena Vasconcelos (exemplo fictício).">Retrato<br>3 por 4<br>(marcador de exemplo)</div>
+      <div>
+        <div class="ex-pname">Helena Vasconcelos</div>
+        <p class="ex-prole">Gerente de marketing da Casa do Campo · 38 anos · Campo Grande, Mato Grosso do Sul · persona fictícia</p>
+        <div class="ex-attr-grid">
+          <div class="ex-attr"><b>Trabalho a resolver</b><span>Organizar a comunicação da rede antes de produzir a próxima campanha.</span></div>
+          <div class="ex-attr"><b>Estágio de consciência</b><span>Sabe que o problema existe, procura a solução certa para resolvê-lo.</span></div>
+          <div class="ex-attr"><b>O que busca</b><span>Uma base que dispense explicar a marca do zero a cada novo fornecedor.</span></div>
+          <div class="ex-attr"><b>O que a trava</b><span>Falta de tempo e o receio de investir numa direção e depois ter que refazer.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="s-foot"><span>Públicos · Persona</span></div>
+  </section>
+
+  <!-- ============================================================
+       17 · CITACAO - voz da persona, ficticia.
+       ============================================================ -->
+  <section class="slide">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <span class="s-cobrand">Casa do Campo</span>
+    <div class="ex-quote-wrap">
+      <span class="ex-quote-mark" aria-hidden="true">“</span>
+      <p class="s-quote">Eu canso de explicar a marca do zero para cada fornecedor. Queria que ela já chegasse pronta na mesa.</p>
+      <p class="s-attrib">Helena Vasconcelos · entrevista de descoberta · fala fictícia, montada para o exemplo</p>
+    </div>
+    <div class="s-foot"><span>Públicos · Na voz dela</span></div>
+  </section>
+
+  <!-- ============================================================
+       18 · PROXIMOS PASSOS - sequencia numerada.
+       ============================================================ -->
+  <section class="slide">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <span class="s-cobrand">Casa do Campo</span>
+    <div style="display:grid;align-content:center;height:100%;padding-bottom:72px;">
+      <p class="s-eyebrow">Do plano para a próxima reunião</p>
+      <h2 class="s-title" style="margin-bottom:24px;">O que acontece a partir <em>daqui</em></h2>
+      <ol class="s-seq ex-seq-neutral" style="max-width:62ch;">
+        <li>
+          <div><span class="s-seq-title">Fechar a plataforma de marca</span><div class="s-seq-desc">Validar mensagem central, pilares e voz com a equipe da Casa do Campo até o fim de julho.</div></div>
+        </li>
+        <li>
+          <div><span class="s-seq-title">Montar o sistema visual</span><div class="s-seq-desc">Logo, cor, tipografia e modelos de peça que se repetem em qualquer canal.</div></div>
+        </li>
+        <li>
+          <div><span class="s-seq-title">Pôr as primeiras peças no ar</span><div class="s-seq-desc">Começar pela experiência na loja e pela base de indicação, os canais de maior efeito.</div></div>
+        </li>
+        <li>
+          <div><span class="s-seq-title">Medir a presença reconhecida</span><div class="s-seq-desc">Repetir a pesquisa de descoberta em seis meses para acompanhar o significado andando junto com o nome.</div></div>
+        </li>
+      </ol>
+    </div>
+    <div class="s-foot"><span>Próximos passos</span></div>
+  </section>
+
+  <!-- ============================================================
+       19 · CONTRACAPA - piso preto, logo + os tres enderecos.
+       ============================================================ -->
+  <section class="slide close" style="padding-bottom:80px;">
+    <img class="s-logo" src="../../assets/logos/logo-8020-branco.svg" alt="80 20 Marketing">
+    <div style="display:grid;align-content:center;gap:18px;margin-top:auto;">
+      <p class="s-eyebrow">80 20 Marketing</p>
+      <p class="s-statement" style="max-width:24ch;">Organizar a casa antes de construir os <em>móveis</em>.</p>
+      <p class="s-muted" style="font-size:var(--fs-small);max-width:48ch;">Exemplo fictício produzido para demonstrar o sistema de design da casa. Nomes, dados e marca são ilustrativos.</p>
+    </div>
+    <div class="s-addr" style="margin-top:auto;">
+      <span>São Paulo · SP</span>
+      <span>Campo Grande · MS</span>
+      <span>Cuiabá · MT</span>
+    </div>
+    <div class="s-foot"><span>80 20 Marketing · Sistema de design</span></div>
+  </section>
+
+</div></div>
+
+<div class="deck-progress" aria-label="Progresso da apresentação"></div>
+
+<script src="../../assets/deck.js" defer></script>
+</body>
+</html>
