@@ -196,6 +196,10 @@
   .stage { transform: none !important; box-shadow: none; width: 1280px; height: auto; }
   .slide {
     position: relative; width: 1280px; height: 720px; overflow: hidden;
+    /* border-box: na tela o slide e ancorado por inset e o padding nao soma;
+       aqui a altura e fixa, e sem border-box o padding estoura a pagina e
+       cria uma pagina fantasma por slide no PDF */
+    box-sizing: border-box;
     opacity: 1 !important; visibility: visible !important;
     page-break-after: always; break-after: page;
   }
