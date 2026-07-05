@@ -19,6 +19,17 @@ Consultiva, em português do Brasil, falando para o cliente final. Observa e sug
 - **Statement com lastro.** Toda afirmação forte tem fonte. Leitura cultural entra rotulada como hipótese, com a fonte quando houver. Sem promessa absoluta sobre operação que ainda não rodou.
 - **Sem autoelogio do próprio trabalho.** Nada de "leitura honesta" ou "documento forte". O neutro factual basta.
 
+## Clareza radical (aprendizado do caso Stratos, julho de 2026)
+
+O texto explica e educa; não impressiona. As regras abaixo são inegociáveis e vieram de feedback direto do operador:
+
+- **Sem paradoxo.** "O programa que tenta mudar tudo não muda nada" vira "Concentrar em poucos comportamentos aumenta o efeito". O título afirma o aprendizado, não o enigma.
+- **Sem metáfora nem figura de linguagem difusa.** Terreno, palco, espinha, guardião, mapa, anatomia, zona cinzenta, matéria-prima: tudo isso sai. Dizer o que é, literalmente: canal principal, estrutura da peça, fonte de conteúdo.
+- **Sem personificação de conceito.** "A estatística conta", "a leitura sabe o que lhe falta", "o clima conta essa história": conceito não age. "A percepção melhora antes de a taxa de acidentes cair."
+- **Peça funcional tem nome funcional.** Sumário chama-se Sumário. Índice chama-se índice. Sem título criativo para seção de navegação.
+- **Palavra difícil no contexto sai.** "Eleitos" vira "escolhidos". "Declarada" e derivações não entram em peça nenhuma: virar "definida" ou reescrever a frase.
+- **Conclusão marca o conhecimento adquirido.** Todo capítulo de deck fecha com "O que aprendemos no capítulo NN", e cada aprendizado se sustenta lido isoladamente, com a fonte junto.
+
 ## Densidade
 
 Densidade de livro digital, não de slides. Toda declaração massiva vem com texto que explica e com um gráfico que mastiga. O número grande nunca aparece sozinho: ao lado, a frase que o nomeia.

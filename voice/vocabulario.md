@@ -17,6 +17,24 @@ Lista viva de substituições recorrentes. A coluna da direita não é traduçã
 | stack | conjunto, pilha |
 | insight (em excesso) | leitura, achado |
 
+## Clareza radical (caso Stratos)
+
+| Evitar | Usar |
+|---|---|
+| declarada, declarou, prioridade declarada | definida, definiu, prioridade da gestão |
+| o que se declara (camada de cultura) | o que se diz |
+| eleitos, eleição (de comportamentos) | escolhidos, escolha |
+| terreno (como imagem) | dizer o fato: onde acontece, na prática |
+| palco principal | canal principal, principal momento |
+| espinha (operacional, dorsal) | o que organiza, a estrutura |
+| guardião (de critério) | o que protege |
+| mapa (como imagem de método) | o caminho, as etapas, o que a ciência ensina |
+| anatomia (da peça) | a estrutura da peça |
+| zona cinzenta | dúvida de responsabilidade |
+| matéria-prima (editorial) | fonte de conteúdo |
+| paradoxo em título | afirmar o aprendizado de forma direta |
+| conceito agindo ("a estatística conta") | a pessoa ou o fato ("a taxa cai depois") |
+
 ## Vícios de linguagem
 
 | Evitar | Usar |
